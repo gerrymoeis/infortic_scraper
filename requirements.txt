@@ -1,0 +1,11 @@
+# Web Scraping
+requests
+beautifulsoup4
+playwright
+
+# Supabase Client
+supabase
+
+# Utilities
+python-dotenv
+dateparser

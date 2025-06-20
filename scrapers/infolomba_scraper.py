@@ -103,10 +103,22 @@ class InfolombaScraper(BaseScraper):
             registration_link_element = detail_container.select_one('a.btn.btn-primary[target="_blank"]')
             registration_link = registration_link_element['href'] if registration_link_element else None
 
+            # Logika fallback yang lebih cerdas untuk menemukan link pendaftaran
             if not registration_link and description_element:
-                 link_in_description = description_element.find('a', href=re.compile(r'^(http|https)'))
-                 if link_in_description:
-                     registration_link = link_in_description['href']
+                all_links = description_element.find_all('a', href=re.compile(r'^(http|https)'))
+                found_link = False
+                # Prioritaskan link dengan kata kunci pendaftaran
+                for link in all_links:
+                    link_text = link.get_text(strip=True).lower()
+                    if any(keyword in link_text for keyword in ['daftar', 'registrasi', 'pendaftaran', 'register', 'form']):
+                        registration_link = link['href']
+                        self.logger.info(f"Menemukan link pendaftaran via keyword: {registration_link}")
+                        found_link = True
+                        break
+                # Jika tidak ada keyword yang cocok, ambil link pertama sebagai fallback terakhir
+                if not found_link and all_links:
+                    registration_link = all_links[0]['href']
+                    self.logger.info(f"Menggunakan link pertama dari deskripsi sebagai fallback: {registration_link}")
 
             return {
                 'title': title,

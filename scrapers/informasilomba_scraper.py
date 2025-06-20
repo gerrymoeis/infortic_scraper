@@ -110,14 +110,26 @@ class InformasilombaScraper(BaseScraper):
     def _find_price_info(self, title, post_body):
         """
         Mencari informasi harga dengan lebih akurat.
-        Cek judul dan seluruh isi body untuk kata 'gratis'.
+        Cek judul dan seluruh isi body untuk kata kunci harga.
         """
+        # Jika 'gratis' ada di judul, langsung kembalikan 'Gratis'
         if 'gratis' in title.lower():
             return 'Gratis'
         
-        if 'gratis' in post_body.get_text().lower():
-            return 'Gratis'
-            
+        # Kata kunci untuk deteksi harga
+        price_keywords = ['gratis', 'free', 'rp', 'idr', 'biaya', 'htj']
+        
+        text_content = post_body.get_text().lower()
+        
+        # Jika ada kata kunci harga di body, kembalikan 'Lihat poster'
+        # karena detail harga (misal, jumlahnya) perlu dilihat manual.
+        if any(keyword in text_content for keyword in price_keywords):
+            # Jika kata kuncinya 'gratis', kembalikan 'Gratis'
+            if 'gratis' in text_content or 'free' in text_content:
+                return 'Gratis'
+            return 'Lihat poster'
+        
+        # Default jika tidak ada kata kunci yang ditemukan
         return 'Lihat poster'
 
     def _deep_scrape_detail(self, url):

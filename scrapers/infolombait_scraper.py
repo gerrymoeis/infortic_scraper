@@ -3,6 +3,7 @@ import re
 import os
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+from datetime import datetime, timezone
 from .base_scraper import BaseScraper
 from core.data_cleaner import clean_event_data, parse_price, parse_dates, clean_title
 
@@ -98,7 +99,25 @@ class InfolombaitScraper(BaseScraper):
         if poster_img:
             poster_url = poster_img.get('src')
 
-        date_data = parse_dates(description)
+        date_data = {}
+        # Prioritaskan parsing dari <abbr> tag karena lebih andal
+        time_tag = soup.select_one('abbr.timeago')
+        if time_tag and time_tag.has_attr('title'):
+            self.logger.info(f"Menemukan tag <abbr> untuk {url}. Mencoba parsing.")
+            try:
+                date_aware = datetime.fromisoformat(time_tag['title'])
+                date_utc = date_aware.astimezone(timezone.utc)
+                date_data['deadline'] = date_utc
+                date_data['event_date_start'] = date_utc
+                self.logger.info(f"Berhasil mem-parsing tanggal dari <abbr>: {date_utc}")
+            except (ValueError, KeyError):
+                self.logger.error(f"Gagal mem-parsing tanggal dari <abbr> title: {time_tag.get('title')}")
+
+        # Fallback: jika <abbr> gagal, coba parse dari deskripsi
+        if not date_data.get('deadline'):
+            self.logger.warning(f"Gagal mendapatkan tanggal dari <abbr> untuk {url}. Fallback ke parsing deskripsi.")
+            date_data = parse_dates(description)
+
         price_data = parse_price(description)
         
         organizer = self._find_organizer(post_body)

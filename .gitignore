@@ -14,7 +14,7 @@ __pycache__/
 .env
 
 # Logs
-logs/
+# logs/
 
 # Debug Output
-debug_output/
+# debug_output/

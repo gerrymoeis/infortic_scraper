@@ -1,0 +1,1028 @@
+[
+    {
+        "pk": 3659513536390521201,
+        "id": "3659513536390521201_10686548088",
+        "code": "DLJNCwjSmFx",
+        "taken_at": "2025-06-21 01:07:10+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        8060,
+                        16121,
+                        24182,
+                        32243,
+                        40304,
+                        45100,
+                        57392,
+                        65229,
+                        72548
+                    ],
+                    "height": 1080,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509917537_18166365304356089_2355972788044470467_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTA4MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=hP0VR4IGJVsQ7kNvwHElGg3&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTUxMzUzNjM5MDUyMTIwMQ%3D%3D.3-ccb7-5&oh=00_AfOO2AbOpDW-D9i8uqOnVORpqqreWL--6mBfLecEbyDrGg&oe=685BF79C&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2171,
+                        4342,
+                        6513,
+                        8684,
+                        10855,
+                        13069,
+                        377171,
+                        19540,
+                        19540
+                    ],
+                    "height": 360,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509917537_18166365304356089_2355972788044470467_n.webp?stp=dst-webp_s360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTA4MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=hP0VR4IGJVsQ7kNvwHElGg3&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTUxMzUzNjM5MDUyMTIwMQ%3D%3D.3-ccb7-5&oh=00_AfNM2XkeMrXcDfzS0g6SA1qik4irG2Q-4yzfWPqVH8zPTQ&oe=685BF79C&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509917537_18166365304356089_2355972788044470467_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTA4MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=hP0VR4IGJVsQ7kNvwHElGg3&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTUxMzUzNjM5MDUyMTIwMQ%3D%3D.3-ccb7-5&oh=00_AfOO2AbOpDW-D9i8uqOnVORpqqreWL--6mBfLecEbyDrGg&oe=685BF79C&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "10686548088",
+            "username": "lombamahasiswa.id",
+            "full_name": "Lomba Mahasiswa",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/51635746_2247885195490052_6498637804950519808_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=CP7JjWGq9PUQ7kNvwFq2JUD&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCLmEwMEs5KOcPwHAAAAAACnzC9abkULAAAB-ccb7-5&oh=00_AfMcowzgxMWDG6Ltey1Mxd01RRiiYO9E5v2fgh79TZHQiQ&oe=685C02DB&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 7,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 106,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "Terjebak dalam gelapnya gua, pria ini memegang lilin dan obor… Tapi apa yang harus ia nyalakan lebih dulu? \n\n#TebakTebakan #LogikaSederhana #GelapTerang #cahayadalamkegelapan",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "11608824089",
+                    "username": "eventmahasiswaid",
+                    "full_name": "event mahasiswa",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/57198880_435631863863710_1419366135890968576_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=zRO2pyE0XJEQ7kNvwHgbuou&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCDJaAOemX9yNIwBAAAAAAD7mbITbkULAAAB-ccb7-5&oh=00_AfPO81HOJMrR8FFlyr4Dif5zvsPNi8DTKhOhh334EwULoA&oe=685C1308&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "13320681262",
+                    "username": "infolombaevent.id",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "52702826773",
+                    "username": "infolombaevent_id",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/278407017_714153109605607_7158288780294332420_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=e0ieM-9ED0QQ7kNvwFWGsa1&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GGknmBDnzGm6hIkCAASgGy24WVdjbkULAAAB-ccb7-5&oh=00_AfPa7TL7TAmGDQiJuARMdF9BSqeoFJb6j-b_hl-E_PAMbw&oe=685C1853&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3659090581969565080,
+        "id": "3659090581969565080_13320681262",
+        "code": "DLHs39jRfWY",
+        "taken_at": "2025-06-20 11:06:50+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        17691,
+                        35383,
+                        53074,
+                        70766,
+                        88457,
+                        98983,
+                        125960,
+                        143160,
+                        159224
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/502604074_18129828496441263_8416280309392119782_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=QRM0Psp-UdQQ7kNvwEIqArQ&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTA5MDU4MTk2OTU2NTA4MA%3D%3D.3-ccb7-5&oh=00_AfPcdqcGVA_rkxQgSNmJT_Kku8Y3GoaqwJeid9z_EGzQbg&oe=685C062C&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3352,
+                        6704,
+                        10057,
+                        13409,
+                        16762,
+                        20180,
+                        582374,
+                        30172,
+                        30172
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/502604074_18129828496441263_8416280309392119782_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=QRM0Psp-UdQQ7kNvwEIqArQ&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTA5MDU4MTk2OTU2NTA4MA%3D%3D.3-ccb7-5&oh=00_AfNiR2dox-khQZNQWL17Urg5i1Sduzv6NqcQyJNwhTMPEg&oe=685C062C&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/502604074_18129828496441263_8416280309392119782_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=QRM0Psp-UdQQ7kNvwEIqArQ&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTA5MDU4MTk2OTU2NTA4MA%3D%3D.3-ccb7-5&oh=00_AfPcdqcGVA_rkxQgSNmJT_Kku8Y3GoaqwJeid9z_EGzQbg&oe=685C062C&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 31,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "‼️[PUSPRESMA PROUDLY PRESENT: WEBINAR CV DAN LINKEDIN]‼️\n\nHalo Gen Z dan Seluruh Masyarakat Indonesia! Kamu ingin kerja cepat? Atau kamu ingin memperbaiki personal branding mu biar lebih cakep dan gampang dilirik hrd?\n\nPasti kamu udah tahu jawabannya, yess *Upgrade CV dan LinkedIn* . Eiittss, tapi emang kamu tahu yang inceran perekrut kayak gimana??? 🤔  Yuk manfaatin kesempatan bagus nih buat curi ilmu langsung dari Kak Oliv, alumni *Clash of Champion* by Ruangguru, iya... yang kumpulan orang super jenius itu looh🤩\n\nLoh kok bisa? Makanya cuss catat webinar CV & LinkedIn-nya❗\n\nHari/tgl : Sabtu, 12 Juli 2025 \nPukul : 09-00 - Selesai\nLink Pendaftaran: bit.ly/PendaftaranPesertaWebinarCVdanLinkedIn\nMedia : Online Via Zoom Meeting\nBenefit: Ilmu baru, Sertifikat, Relasi, Hadiah*\n\nAda kendala?? Hubungi CP berikut ya🫰🏻\nAkmal : +62 821-4133-2205\nAndrea : +62813-8337-0459",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3658367732782844131,
+        "id": "3658367732782844131_13320681262",
+        "code": "DLFIhHyRcjj",
+        "taken_at": "2025-06-19 11:10:40+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        21810,
+                        43621,
+                        65432,
+                        87243,
+                        109053,
+                        122030,
+                        155288,
+                        176493,
+                        196297
+                    ],
+                    "height": 1106,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509176238_18129731080441263_8184699356195809740_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTEwNi5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=_XNq99QKZBcQ7kNvwFqYrdm&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODM2NzczMjc4Mjg0NDEzMQ%3D%3D.3-ccb7-5&oh=00_AfO4Umr7jlUWdpPriAtTXwFNaZhnJpJ9dk9hn8ubEN5_dw&oe=685BFB8A&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3328,
+                        6656,
+                        9984,
+                        13312,
+                        16640,
+                        20034,
+                        578154,
+                        29953,
+                        29953
+                    ],
+                    "height": 369,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509176238_18129731080441263_8184699356195809740_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTEwNi5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=_XNq99QKZBcQ7kNvwFqYrdm&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODM2NzczMjc4Mjg0NDEzMQ%3D%3D.3-ccb7-5&oh=00_AfMipwd889UsMgA2df8xjX3GzOZ2Vb9ahO2f9jfCnAxy7Q&oe=685BFB8A&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509176238_18129731080441263_8184699356195809740_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTEwNi5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=_XNq99QKZBcQ7kNvwFqYrdm&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODM2NzczMjc4Mjg0NDEzMQ%3D%3D.3-ccb7-5&oh=00_AfO4Umr7jlUWdpPriAtTXwFNaZhnJpJ9dk9hn8ubEN5_dw&oe=685BFB8A&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 80,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "📣 OPEN REGISTRATION COOLESTIVA SCARF 2025 📣\n\nHallo Fellas 🙌🏻\n‼️ We are Back ‼️\n\n*Come on, this opportunity is yours! Let's realize the fighting spirit together in \"porla Gloria y la Victoria\"*\n\n 𝙎𝘾𝘼𝙍𝙁 2025’𝙨 𝙧𝙚𝙜𝙞𝙨𝙩𝙧𝙖𝙩𝙞𝙤𝙣 𝙞𝙨 𝙊𝙋𝙀𝙉 𝙣𝙤𝙬‼️\n\n𝘿𝙤𝙣’𝙩 𝙛𝙤𝙧𝙜𝙚𝙩 𝙩𝙤 𝙨𝙖𝙫𝙚 𝙩𝙝𝙚 𝙙𝙖𝙩𝙚 : \nRegistration : 1 June - 15 August 2025\nD-Day : 27-28 September 2025\n\n🌟𝙏𝙝𝙚 𝘾𝙤𝙢𝙥𝙚𝙩𝙞𝙩𝙞𝙤𝙣🌟 : \n🏸 Badminton : Pelajar SMA/SMK Sederjat \n🎮 Mobile Legend : Pelajar SMA/SMK Sederjat \n\n📍 𝙑𝙀𝙉𝙐𝙀 : \n- GOR Johar, Jakarta Pusat\n- Aula Bung Hatta, Kampus A Universitas Negeri Jakarta\n\n💸 𝙍𝙀𝙂𝙄𝙎𝙏𝙍𝘼𝙏𝙄𝙊𝙉 𝙁𝙀𝙀 💸\n🏸 Badminton : Rp. 200.000 + Rp. 50.000 (WO)\n🎮 Mobile Legendd : Rp. 50.000 + Rp. 10.000 (WO)\n\n🤩 𝘽𝙀𝙉𝙀𝙁𝙄𝙏𝙎 🤩\n1. E-Sertificate\n2. Medal\n3. ⁠New Experiences \n4. ⁠And get total prize million rupiah\n\n✨ LINK PENDAFTARAN ✨\nhttps://msha.ke/administrationscarf2025\n\nSo, what are you waiting for? Don’t miss out your opportunity to have an amazing journey with us. Let’s register now and be the part of SCARF 2025\n\n☎️ FOR MORE INFORMATION ☎️ \nContact Person :\n👱 : 0895358549512 ( Dimas )\n👩 : 081291100791 ( Elisha )\n👱 : 081316948779 ( Rhafli )\n\n➖➖➖➖➖➖➖➖➖➖\n©️ ORSENI BEM P PPKN 2025/2026",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "52702826773",
+                    "username": "infolombaevent_id",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/278407017_714153109605607_7158288780294332420_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=e0ieM-9ED0QQ7kNvwFWGsa1&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GGknmBDnzGm6hIkCAASgGy24WVdjbkULAAAB-ccb7-5&oh=00_AfPa7TL7TAmGDQiJuARMdF9BSqeoFJb6j-b_hl-E_PAMbw&oe=685C1853&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "7559904610",
+                    "username": "scarfunj",
+                    "full_name": "SCARF PPKN UNJ 2025",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/500605617_18283769686248611_1095430179820070854_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=rJkxHxIyei4Q7kNvwGA04kp&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GLGi1h2jzE3d-fRAAMbnatjxvzMPbvEnAQAB-ccb7-5&oh=00_AfP6UuCs_BmUQm2NKl19RMHEtevXguPKiaIm0UwK5wLn9w&oe=685BE8ED&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3658366883042145296,
+        "id": "3658366883042145296_13320681262",
+        "code": "DLFIUwZx7QQ",
+        "taken_at": "2025-06-19 11:08:58+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        11477,
+                        22955,
+                        34433,
+                        45911,
+                        57389,
+                        64218,
+                        81720,
+                        92879,
+                        103301
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509187360_18129730957441263_7979671629480706350_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=K4wKwsLYzsEQ7kNvwEWPwvb&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODM2Njg4MzA0MjE0NTI5Ng%3D%3D.3-ccb7-5&oh=00_AfN7U2lp66P-P0Q2W7ia6inj0--pKGu4qouc4eUJ5VSBIA&oe=685BEDEC&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2798,
+                        5597,
+                        8396,
+                        11195,
+                        13994,
+                        16848,
+                        486225,
+                        25190,
+                        25190
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509187360_18129730957441263_7979671629480706350_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=K4wKwsLYzsEQ7kNvwEWPwvb&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODM2Njg4MzA0MjE0NTI5Ng%3D%3D.3-ccb7-5&oh=00_AfMD9kEGI9-pg7IUy7SeJ3mX20x9liajYm_LkekofeZfwg&oe=685BEDEC&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509187360_18129730957441263_7979671629480706350_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=K4wKwsLYzsEQ7kNvwEWPwvb&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODM2Njg4MzA0MjE0NTI5Ng%3D%3D.3-ccb7-5&oh=00_AfN7U2lp66P-P0Q2W7ia6inj0--pKGu4qouc4eUJ5VSBIA&oe=685BEDEC&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 44,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "Hallo semuanya👋🏻\nKEMBALI HADIR SEMINAR PSYCHOLOGY CAREER PLANNING: DISCOVERING PSYCHOLOGY IN THE INDUSTRIAL SECTOR‼️🆕\n\nAcara ini diselenggarakan oleh Department Career Business Development (CBD) BEM Fakultas Psikologi Universitas Ahmad Dahlan.\n\nDengan pembicara-pembicara inspiratif dari dunia psikologi dan pengembangan karier 👏\n\nSeminar ini dirancang untuk memberikan pengetahuan terkait  penerapan ilmu psikologi di dunia pekerjaan, terutama dalam bidang industri. Seminar ini menyajikan 2 sesi dengan 2 pemateri hebat yang memiliki latar belakang bidang industri yang berbeda dengan posisi yang berbeda juga. Seminar dengan tema \"Discovering Psychology in The Industrial Sector\" akan memberikan kesempatan kepada peserta untuk mengeksplorasi kariernya dari ragam bidang industri dan posisi sebagai seorang lulusan Psikologi. ✨\n\nAcara ini akan dilaksanakan pada:\n🗓 Minggu, 29 Juni 2025\n🕒 12.30-16.30 WIB\n📍 Amphitarium Kampus 4 Universitas Ahmad Dahlan\n\nAYO SEGERA AMANKAN TIKETNYA SEBELUM KEHABISANN🤩https://bit.ly/SeminarPCP2025",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "4047248316",
+                    "username": "pcp_uad_2025",
+                    "full_name": "Psychology Career Planning",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/504528268_18402913744128317_5403527290688567367_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=JyEmeueXBtkQ7kNvwGqRGU-&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GIx9Eh49CY1AWmFBAEf4nhdxL-1KbvEnAQAB-ccb7-5&oh=00_AfO8fTJIAFeTGNRCnnnb7cZC17kSvJXw4kd-cFem8ztvuQ&oe=685C06AE&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3658328863077120778,
+        "id": "3658328863077120778_13320681262",
+        "code": "DLE_rfjRTsK",
+        "taken_at": "2025-06-19 09:53:26+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        13721,
+                        27442,
+                        41163,
+                        54884,
+                        68605,
+                        76768,
+                        97691,
+                        111030,
+                        123489
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503474472_18129725782441263_8073911216452023832_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=A2EruVyf9E8Q7kNvwE5Nmys&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODMyODg2MzA3NzEyMDc3OA%3D%3D.3-ccb7-5&oh=00_AfP2XryEgbZPctTnVHjjLEOlpcQjNQkapQDi1UCH8YSpeQ&oe=685C0B75&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3015,
+                        6030,
+                        9045,
+                        12060,
+                        15076,
+                        18150,
+                        523803,
+                        27137,
+                        27137
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503474472_18129725782441263_8073911216452023832_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=A2EruVyf9E8Q7kNvwE5Nmys&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODMyODg2MzA3NzEyMDc3OA%3D%3D.3-ccb7-5&oh=00_AfPOXeqzbpBJbc-J0F_2q-bp838QdG82tkJIolpgpFTR8g&oe=685C0B75&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503474472_18129725782441263_8073911216452023832_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=A2EruVyf9E8Q7kNvwE5Nmys&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODMyODg2MzA3NzEyMDc3OA%3D%3D.3-ccb7-5&oh=00_AfP2XryEgbZPctTnVHjjLEOlpcQjNQkapQDi1UCH8YSpeQ&oe=685C0B75&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 91,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "🎬 *[FINAL CALL PENDAFTARAN LOMBA LENSA PUBLIK 2025 UNPAR!]*🎬\n\nKabar baik buat kamu siswa/i SMA/SMK sederajat di seluruh Indonesia bagi yang tertarik menuangkan ide tentang isu publik lewat video kreatif! Nah, masih ada waktu buat daftar dan kirim karyamu! Jadi, jangan sampai ketinggalan ya! 🗣️✨\n\n📝 *Timeline Terbaru:*\n1. *Final Call Pendaftaran:* Senin, 9 Juni – Jumat, 20 Juni 2025\n2. *Pengumpulan Video:* Minggu, 25 Mei – Senin, 30 Juni 2025\n3. *Penjurian:* Selasa, 1 Juli – Sabtu, 12 Juli 2025\n\n💡 Tema: Isu publik di Indonesia\n🎞️ Durasi video: 1–3 menit\n💸 Fee? Cuma 30K aja!\n🔗 https://bit.ly/PendaftaranLensaPublik2025\n\n🎁 *Hadiah:*\n1. Uang tunai.\n2. Beasiswa (Semester 1) Program Studi Administrasi Publik UNPAR.\n3. Sertifikat.\n4. Merchandise eksklusif dari UNPAR.\n\n📲 Ayo daftar sekarang lewat QR code di poster atau kunjungi IG kami @lensapublikunpar\n\n📞 CP: 082126553500 (Karin)\n\n#APUNPAR \n#ADMINISTRASIPUBLIK \n#ISUPUBLIK \n#LENSAPUBLIK2025 \n#UNPAR",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "11608824089",
+                    "username": "eventmahasiswaid",
+                    "full_name": "event mahasiswa",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/57198880_435631863863710_1419366135890968576_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=zRO2pyE0XJEQ7kNvwHgbuou&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCDJaAOemX9yNIwBAAAAAAD7mbITbkULAAAB-ccb7-5&oh=00_AfPO81HOJMrR8FFlyr4Dif5zvsPNi8DTKhOhh334EwULoA&oe=685C1308&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "67254339623",
+                    "username": "lensapublikunpar",
+                    "full_name": "Lensa Publik Unpar",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/448201976_7665239776877662_8868806607512504176_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=MWy7wJsoMsMQ7kNvwGENkEB&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GPgEtxpe3AS2fjsbAHCHa96eVBR7bkULAAAB-ccb7-5&oh=00_AfMl53qRqt0GBPDZhjbE66LxfAPApozmHZ0JHIKhR21_aQ&oe=685BFC0C&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3658297722550967793,
+        "id": "3658297722550967793_13320681262",
+        "code": "DLE4mVrRV3x",
+        "taken_at": "2025-06-19 08:51:34+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        12467,
+                        24935,
+                        37402,
+                        49870,
+                        62337,
+                        69755,
+                        88767,
+                        100888,
+                        112208
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503547328_18129721816441263_8420722519182294263_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=tO6mqZvfVP0Q7kNvwHVQw0O&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODI5NzcyMjU1MDk2Nzc5Mw%3D%3D.3-ccb7-5&oh=00_AfNODbK-KWZd49RkUf3IfwBUDT7T2fI4YCV-mMrOVv3HCA&oe=685C0D7A&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2897,
+                        5794,
+                        8691,
+                        11588,
+                        14485,
+                        17440,
+                        503290,
+                        26074,
+                        26074
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503547328_18129721816441263_8420722519182294263_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=tO6mqZvfVP0Q7kNvwHVQw0O&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODI5NzcyMjU1MDk2Nzc5Mw%3D%3D.3-ccb7-5&oh=00_AfMSiL7jY30DbGoTsLmyrnfI46-rfJyeQEFIEqlZdCR02Q&oe=685C0D7A&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503547328_18129721816441263_8420722519182294263_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=tO6mqZvfVP0Q7kNvwHVQw0O&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODI5NzcyMjU1MDk2Nzc5Mw%3D%3D.3-ccb7-5&oh=00_AfNODbK-KWZd49RkUf3IfwBUDT7T2fI4YCV-mMrOVv3HCA&oe=685C0D7A&_nc_sid=b41fef",
+        "location": {
+            "pk": 85017576,
+            "name": "Bekasi",
+            "phone": "",
+            "website": "",
+            "category": "",
+            "hours": {},
+            "address": "",
+            "city": "",
+            "zip": null,
+            "lng": 106.9833,
+            "lat": -6.2646,
+            "external_id": 112413425436794,
+            "external_id_source": "facebook_places"
+        },
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 53,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "CALLING ALL YOUNG CHANGEMAKERS\n\nGreetings, Rocketeers!🚀\nAre you ready to fuel your brainpower and shoot for the stars? Join the Youth Competition: Mini Business Case Challenge, where strategy meets innovation, and ideas come alive!\n\n📅 Registration Period:\nBatch 1: 8–16 June 2025 | Fee: Rp. 60.000\nBatch 2: 17–25 June 2025 | Fee: Rp. 75.000\n\n🖇 Secure your spot through our registration link: bit.ly/RegistYC20MX\n\n📖 Don’t forget to check out the competition details in our guidebook: bit.ly/BlueprintYC20MX\n\n📩 For futher information, feel free to reach out our contact person:\nAdministration\nFakhri: +62 895-0508-8496\nID Line: faruqiyyy\nCase Competition\nAurel: +62 813-8492-4535 \nID Line: aurelldm\n\nThe 20th Management e[X]posed\n#ToTheMax @mx_febui",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "1981288001",
+                    "username": "mx_febui",
+                    "full_name": "The 20th M[X] FEB UI",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/501021742_18491751181064002_5641393152020851856_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=G3o9QwKXbGEQ7kNvwE6a6Vx&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GC783B1CF2xUJrJBAJAshrAuQUpObvEnAQAB-ccb7-5&oh=00_AfMeBG2EGKynK7uNVP3wgssTh3k3JZmUS4RN_70i5errIw&oe=685C1B76&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3658153860070832522,
+        "id": "3658153860070832522_10686548088",
+        "code": "DLEX43TPvmK",
+        "taken_at": "2025-06-19 04:05:44+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        15843,
+                        31687,
+                        47530,
+                        63374,
+                        79217,
+                        88644,
+                        112803,
+                        128207,
+                        142592
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509266442_18166187647356089_364684603285455062_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XsCKhrsHrjkQ7kNvwE5I0wS&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODE1Mzg2MDA3MDgzMjUyMg%3D%3D.3-ccb7-5&oh=00_AfN9sCHvgcbpW_5qve2Fhecu_b5gWyZFoOsocltlN27TVw&oe=685C0AB8&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3201,
+                        6403,
+                        9605,
+                        12806,
+                        16008,
+                        19273,
+                        556187,
+                        28815,
+                        28815
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509266442_18166187647356089_364684603285455062_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XsCKhrsHrjkQ7kNvwE5I0wS&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODE1Mzg2MDA3MDgzMjUyMg%3D%3D.3-ccb7-5&oh=00_AfOvFOmz2rD6QRXCqOy8FGgYy_M0JPW_mWSyluWXqfD-Gg&oe=685C0AB8&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509266442_18166187647356089_364684603285455062_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XsCKhrsHrjkQ7kNvwE5I0wS&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODE1Mzg2MDA3MDgzMjUyMg%3D%3D.3-ccb7-5&oh=00_AfN9sCHvgcbpW_5qve2Fhecu_b5gWyZFoOsocltlN27TVw&oe=685C0AB8&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "10686548088",
+            "username": "lombamahasiswa.id",
+            "full_name": "Lomba Mahasiswa",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/51635746_2247885195490052_6498637804950519808_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=CP7JjWGq9PUQ7kNvwFq2JUD&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCLmEwMEs5KOcPwHAAAAAACnzC9abkULAAAB-ccb7-5&oh=00_AfMcowzgxMWDG6Ltey1Mxd01RRiiYO9E5v2fgh79TZHQiQ&oe=685C02DB&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 72,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "🎉DAFTAR SEKARANG!🎉\nSHARING SESSION “YUK KENALI PELUANG INVESTASI HIJAU DAN PEKERJAAN RAMAH LINGKUNGAN DI INDONESIA!”\n\nTerbuka untuk seluruh pelajar SMA/K, Mahasiswa dan Umum\n\n🗓️: Jumat, 27 Juni 2025\n⏱️: Pukul 13.00 WIB s.d. selesai\nPukul 14.00 WITA s.d. selesai\nPukul 15.00 WIT s.d. selesai\n💻: Zoom Meeting melalui link: https://bit.ly/SharingSessionHijau\n💸HTM : FREE \n\n🍀Menghadirkan moderator dan 3 narasumber yang akan memberikan insight menarik terkait keberlanjutan (sustainability)\n\n🎁Dapatkan hadiah masing-masing Rp500 ribu untuk 3 partisipan terbaik🥳\n\n📋Link Pendaftaran: https://bit.ly/RegistSharingSessionHijau\n\n📞Contact Person\n08122367689\n\nInformasi lebih lanjut juga dapat diakses melalui akun Instagram: @youthforearth_id🍃",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "13320681262",
+                    "username": "infolombaevent.id",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "75047479187",
+                    "username": "youthforearth_id",
+                    "full_name": "",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/507919643_17845968528503188_2856294577471393898_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=r9ttYlSzibsQ7kNvwGIX_K5&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GBs9Rh6UcdBW0GY-AGqQDvDImKMnbvEnAQAB-ccb7-5&oh=00_AfOjOgV2fUdbKtsWFhix6Hk6JOEMkWDmNlJzCCdqEpg9SQ&oe=685C1D9A&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3658129071398544115,
+        "id": "3658129071398544115_10686548088",
+        "code": "DLESQJDPWLz",
+        "taken_at": "2025-06-19 03:16:29+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        23524,
+                        47049,
+                        70574,
+                        94098,
+                        117623,
+                        131619,
+                        167491,
+                        190361,
+                        211722
+                    ],
+                    "height": 1440,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503570118_18166184746356089_806189896772364970_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=7Hkfr014yjUQ7kNvwEL1GCi&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODEyOTA3MTM5ODU0NDExNQ%3D%3D.3-ccb7-5&oh=00_AfMcgf_Zpm2t6zUzeVjLridvveU82ep8Yf1DQUtcRcLPQw&oe=685BE807&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3893,
+                        7787,
+                        11681,
+                        15574,
+                        19468,
+                        23438,
+                        676400,
+                        35043,
+                        35043
+                    ],
+                    "height": 480,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503570118_18166184746356089_806189896772364970_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=7Hkfr014yjUQ7kNvwEL1GCi&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODEyOTA3MTM5ODU0NDExNQ%3D%3D.3-ccb7-5&oh=00_AfOvHzkL5H1QJhdGtCdXnuqsYYtmuVCMuAT3vaSFoV_0oQ&oe=685BE807&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/503570118_18166184746356089_806189896772364970_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=7Hkfr014yjUQ7kNvwEL1GCi&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1ODEyOTA3MTM5ODU0NDExNQ%3D%3D.3-ccb7-5&oh=00_AfMcgf_Zpm2t6zUzeVjLridvveU82ep8Yf1DQUtcRcLPQw&oe=685BE807&_nc_sid=b41fef",
+        "location": {
+            "pk": 85017576,
+            "name": "Bekasi",
+            "phone": "",
+            "website": "",
+            "category": "",
+            "hours": {},
+            "address": "",
+            "city": "",
+            "zip": null,
+            "lng": 106.9833,
+            "lat": -6.2646,
+            "external_id": 112413425436794,
+            "external_id_source": "facebook_places"
+        },
+        "user": {
+            "pk": "10686548088",
+            "username": "lombamahasiswa.id",
+            "full_name": "Lomba Mahasiswa",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/51635746_2247885195490052_6498637804950519808_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=CP7JjWGq9PUQ7kNvwFq2JUD&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCLmEwMEs5KOcPwHAAAAAACnzC9abkULAAAB-ccb7-5&oh=00_AfMcowzgxMWDG6Ltey1Mxd01RRiiYO9E5v2fgh79TZHQiQ&oe=685C02DB&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 3,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 232,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "📸✨ COMING SOON!\nIndonesia dalam Lensa: Setiap Sudut Punya Cerita 🇮🇩\n\nDari hijaunya sawah berundak di Bali, megahnya Gunung Bromo, hingga jernihnya laut Raja Ampat—Indonesia bukan hanya indah, tapi penuh makna.\n📷 Setiap jepretan adalah cerita.\nSetiap sudut adalah keajaiban.\nDan kamu... adalah sang pencerita lewat lensa.\n\n🗓️ Coming Soon Lomba Fotografi !\n🎯 Siapkan karya terbaikmu untuk membagikan kisah keindahan alam Nusantara.\n\n📍Follow kami untuk info lengkap: @Lombamahasiswa.id\n💬 Stay tuned\n\n#IndonesiaDalamLensa #SetiapSudutPunyaCerita\n#LombaFotografi #LombaMahasiswa #KeindahanIndonesia\n#ExploreNusantara #LensaNusantara #ComingSoon #Lombamahasiswa",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "11608824089",
+                    "username": "eventmahasiswaid",
+                    "full_name": "event mahasiswa",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/57198880_435631863863710_1419366135890968576_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=zRO2pyE0XJEQ7kNvwHgbuou&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCDJaAOemX9yNIwBAAAAAAD7mbITbkULAAAB-ccb7-5&oh=00_AfPO81HOJMrR8FFlyr4Dif5zvsPNi8DTKhOhh334EwULoA&oe=685C1308&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "13320681262",
+                    "username": "infolombaevent.id",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "52702826773",
+                    "username": "infolombaevent_id",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/278407017_714153109605607_7158288780294332420_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=e0ieM-9ED0QQ7kNvwFWGsa1&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GGknmBDnzGm6hIkCAASgGy24WVdjbkULAAAB-ccb7-5&oh=00_AfPa7TL7TAmGDQiJuARMdF9BSqeoFJb6j-b_hl-E_PAMbw&oe=685C1853&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3657720435048819965,
+        "id": "3657720435048819965_13320681262",
+        "code": "DLC1Vsyxaz9",
+        "taken_at": "2025-06-18 13:44:36+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        14421,
+                        28842,
+                        43263,
+                        57684,
+                        72105,
+                        80685,
+                        102674,
+                        116694,
+                        129789
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508665524_18129653296441263_7263282241233408799_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=urXjuC_U998Q7kNvwHwh6wJ&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NzcyMDQzNTA0ODgxOTk2NQ%3D%3D.3-ccb7-5&oh=00_AfPLC-OCQhOQ74qVeODlpOPm9vcEpwDGtPafa9tj1_kNkw&oe=685C02DB&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3078,
+                        6156,
+                        9235,
+                        12313,
+                        15392,
+                        18531,
+                        534786,
+                        27706,
+                        27706
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508665524_18129653296441263_7263282241233408799_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=urXjuC_U998Q7kNvwHwh6wJ&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NzcyMDQzNTA0ODgxOTk2NQ%3D%3D.3-ccb7-5&oh=00_AfOgSSClSVAgzNe3rMCdI2Iu66LsMRFZtHmtojeYJf_YSA&oe=685C02DB&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508665524_18129653296441263_7263282241233408799_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=urXjuC_U998Q7kNvwHwh6wJ&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NzcyMDQzNTA0ODgxOTk2NQ%3D%3D.3-ccb7-5&oh=00_AfPLC-OCQhOQ74qVeODlpOPm9vcEpwDGtPafa9tj1_kNkw&oe=685C02DB&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 1,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 74,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "[COMPETAXTION 2025: INFOGRAPHIC AND VIDEO CREATIVE TAX COMPETITION] \n\nHallo, TaxBuddy! 👋🤩\n\nKOSTAF FIA UI  adain Lomba Infografis dan Video Kreatif Perpajakan untuk anak SMA/SMK sederajat?!!💥💥 Bersertifikat dan pendaftarannya GRATIS?! 😱😱\n\nDaftarkan dirimu sekarang juga untuk ikut berkreasi tanpa batas bersama Competaxtion 🫵‼️Simak selebihnya pada Booklet kami di bawah ini : \n\n🔗 Link Booklet Informasi:\n📚 bit.ly/BookletCompetaxtionTGTS2025\n\n🔗 Link Pendaftaran:\n📝 bit.ly/RegistrasiCompetaxtionTGTS2025\n\n🗓 Jangka Waktu Pendaftaran:\n11 Juni - 24 Juni 2025\n🗓 Jangka Waktu Pengumpulan:\n11 Juni - 8 Agustus 2025\n🗓 Jangka Waktu Penilaian:\n9 Agustus - 14 Agustus 2025\n🗓 Pengumuman Pemenang:\n23 Agustus 2025 (On TaxTalk) \n\nJangan sampai ketinggalan ya, TaxBuddy! Let's Unleash Your Taxpiration💫\n\nUntuk informasi selanjutnya dapat menghubungi:\n- Dimas Ilham (082122975095)\n- Sean (08121213610)\n\nInstagram: @tgts_ui \n\nTax Goes To School 2025\n#PajakCerdasIndonesiaEmas",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "65131949971",
+                    "username": "tgts_ui",
+                    "full_name": "Tax Goes To School 2025",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/494586678_17902721316173972_3120189104849154459_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=WahGDeLOumYQ7kNvwHsGOiX&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GDbLeh2UOJAgbpo-AJvxk5p1I00rbvEnAQAB-ccb7-5&oh=00_AfPppuqOeDzHfIDJEnttoSbSvrJZAn7eVylZW3sg1LaKVA&oe=685BFB98&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3657717537631935100,
+        "id": "3657717537631935100_13320681262",
+        "code": "DLC0riXRJp8",
+        "taken_at": "2025-06-18 13:38:50+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        17246,
+                        34493,
+                        51739,
+                        68986,
+                        86232,
+                        96494,
+                        122792,
+                        139560,
+                        155219
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509260750_18129652681441263_7370102982008978008_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XmCG73WpJy0Q7kNvwHvQpCj&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NzcxNzUzNzYzMTkzNTEwMA%3D%3D.3-ccb7-5&oh=00_AfM4re7027f-f-mFTuQXoHz0Ig-kw6D0zQFcYS_rOoDF8Q&oe=685BF033&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3317,
+                        6634,
+                        9951,
+                        13268,
+                        16585,
+                        19967,
+                        576221,
+                        29853,
+                        29853
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509260750_18129652681441263_7370102982008978008_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XmCG73WpJy0Q7kNvwHvQpCj&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NzcxNzUzNzYzMTkzNTEwMA%3D%3D.3-ccb7-5&oh=00_AfNX6AQ3B1kwmDnFHj_WZxtsNt5VDO2coYfZiB2SoK12OQ&oe=685BF033&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509260750_18129652681441263_7370102982008978008_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjEwODB4MTM1MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XmCG73WpJy0Q7kNvwHvQpCj&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NzcxNzUzNzYzMTkzNTEwMA%3D%3D.3-ccb7-5&oh=00_AfM4re7027f-f-mFTuQXoHz0Ig-kw6D0zQFcYS_rOoDF8Q&oe=685BF033&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "13320681262",
+            "username": "infolombaevent.id",
+            "full_name": "Info Lomba & Event",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/80834062_2545481879013591_7623645105919885312_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=Jz0iZ5Bj6z0Q7kNvwEUoBGF&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GA5u0QTXSC4vGgsJAAAAAADVoMxpbkULAAAB-ccb7-5&oh=00_AfOJmruNFnl0vTinQYQk8VpodOeZNyRN51gNJFPlUMSNmg&oe=685C1BC0&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 1,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 102,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "Dalam rangka mendorong semangat inovasi dan prestasi generasi muda Indonesia, Paguyuban KSE UNJ 2024/2025 dengan bangga mempersembahkan:\n\n🖥 📔 𝐊𝐒𝐄 𝐎𝐏𝐄𝐍 𝟐𝟎𝟐𝟓 📔🖥\n\nDengan tema:\n\n✨ 𝗕𝗲𝗹𝗮𝗷𝗮𝗿 𝗧𝗮𝗸 𝗕𝗲𝗿𝗯𝗮𝘁𝗮𝘀, 𝗠𝗲𝘄𝘂𝗷𝘂𝗱𝗸𝗮𝗻 𝗚𝗲𝗻𝗲𝗿𝗮𝘀𝗶 𝗕𝗲𝗿𝗸𝘂𝗮𝗹𝗶𝘁𝗮𝘀 ✨\n\nHalo teman-teman Mahasiswa dan SMA di seluruh Indonesia! 👋🏻\n\nKSE OPEN (Olimpiade Pendidikan se-Nusantara) 2025 datang dengan membawa kesempatan emas untuk menunjukkan keahlian dan kreativitas kalian, nih! 🔥\n━━━━━━━━━━━━━━━━\n𝗟𝗼𝗺𝗯𝗮𝗻𝘆𝗮 𝗮𝗱𝗮 𝗮𝗽𝗮 𝗮𝗷𝗮 𝘀𝗶𝗵?\n📃 𝐄𝐒𝐀𝐈\n👤 Tingkat Mahasiswa &  Pelajar SMA/Sederajat\n💸 Biaya pendaftaran:\nGelombang 1: Rp25.000/karya\nGelombang 2: Rp35.000/karya\n\n🖥 𝐈𝐍𝐅𝐎𝐆𝐑𝐀𝐅𝐈𝐒\n👤 Tingkat Mahasiswa & Pelajar SMA/Sederajat\n💸 Biaya pendaftaran:\nGelombang 1: Rp20.000/karya\nGelombang 2: Rp30.000/karya\n ━━━━━━━━━━━━━━━━\n📆 𝐓𝐈𝐌𝐄𝐋𝐈𝐍𝐄\n📄 𝙿𝚎𝚗𝚍𝚊𝚏𝚝𝚊𝚛𝚊𝚗 𝙶𝚎𝚕𝚘𝚖𝚋𝚊𝚗𝚐 𝟷\n𝟭𝟳 - 𝟯𝟬 𝗝𝘂𝗻𝗶 𝟮𝟬𝟮𝟱\n📄 𝙿𝚎𝚗𝚍𝚊𝚏𝚝𝚊𝚛𝚊𝚗 𝙶𝚎𝚕𝚘𝚖𝚋𝚊𝚗𝚐 2\n𝟭 - 𝟳 𝗝𝘂𝗹𝗶 𝟮𝟬𝟮𝟱\n📩 𝙿𝚎𝚗𝚞𝚝𝚞𝚙𝚊𝚗 𝙿𝚎𝚗𝚐𝚞𝚖𝚙𝚞𝚕𝚊𝚗 𝙺𝚊𝚛𝚢𝚊\n𝟳 𝗝𝘂𝗹𝗶 𝟮𝟬𝟮𝟱\n🔉 𝙼𝚊𝚜𝚊 𝙿𝚎𝚗𝚓𝚞𝚛𝚒𝚊𝚗\n𝟳 - 𝟭𝟮 𝗝𝘂𝗹𝗶 𝟮𝟬𝟮𝟱\n🏆 𝙿𝚎𝚗𝚐𝚞𝚖𝚞𝚖𝚊𝚗 𝙿𝚎𝚖𝚎𝚗𝚊𝚗𝚐\n𝟭𝟰  𝗝𝘂𝗹𝗶 𝟮𝟬𝟮𝟱\n\nGak cuma nambah pengalaman, kamu juga bisa dapet:\n💰 Uang pembinaan\n🏅 E-Sertifikat\n\nSo, tunggu apa lagi? Ayo ikut dan jadi bagian dari generasi yang berani berkarya. Tag temenmu & buruan daftar yaaa! 👇\n\n‼ 𝐋𝐢𝐧𝐤 𝐏𝐞𝐧𝐝𝐚𝐟𝐭𝐚𝐫𝐚𝐧:\n🔗 bit.ly/PendaftaranKSEOPEN2025\n‼𝐋𝐢𝐧𝐤 𝐁𝐨𝐨𝐤𝐥𝐞𝐭 𝐏𝐞𝐫𝐥𝐨𝐦𝐛𝐚𝐚𝐧\n🔗 https://bit.ly/BookletKSEOPENUNJ2025\n\nInformasi lebih lanjut dapat menghubungi:\n📲 wa.me/6281807033321 (Arsy)\n📲 wa.me/628881402870 (Oktavia)\n\n#KSEOPEN2025\n#PaguyubanKSEUNJ\n#LombaNasional\n#AnakMudaBerkarya\n#MenciptakanGenerasiBerprestasi\n➖➖➖➖➖➖➖➖➖➖\n📷 IG: rumus_kseunj\n📷 IG: paguyubankseunj\n📧 Email: kseopenunj24@gmail.com\n➖➖➖➖➖➖➖➖➖➖\n© 𝐇𝐏𝐃 𝐊𝐒𝐄 𝐎𝐏𝐄𝐍 𝟐𝟎𝟐𝟓",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "2370946987",
+                    "username": "rumus_kseunj",
+                    "full_name": "RUmah suKSEs (RUMUS) KSE UNJ",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/18160721_1464762226930492_3184644213337751552_a.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=C38JX4j8KagQ7kNvwFxYEg0&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GFEcFQE8czeIMTQFAAAAAAAKITIsYUULAAAB-ccb7-5&oh=00_AfNjUwgrr34-GKdh4cbL1D5aTDhlG0J9JDmGgnQP_e6lYw&oe=685C1295&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            },
+            {
+                "user": {
+                    "pk": "8475368694",
+                    "username": "infolombaeventid",
+                    "full_name": "Info Lomba & Event",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/274915481_1336282606888594_7792036846950391474_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QH4U5t4XQG33Ye-FV4M6wr9epY8C6L9oiSPkYIsFzctu_CNmHtoqLCOjqWtLYiojOI&_nc_ohc=XGN1iFV83dwQ7kNvwGHLu9s&_nc_gid=8BWcbRO2GMHO_0xs_zkvcw&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJngYhCSZhqKV78EALKeO3M64CJsbkULAAAB-ccb7-5&oh=00_AfN0CZFu1yWzvtdtA6Qt9jKQJkKAn8bGI_zVxOtGqJHdWw&oe=685BEAA8&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.5,
+                "y": 0.5
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    }
+]

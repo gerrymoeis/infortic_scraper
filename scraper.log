@@ -1,0 +1,339 @@
+2025-06-21 13:34:33 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: False)
+2025-06-21 13:34:34 - infortic_scraper          - INFO     - Memulai tahap pembersihan data event kedaluwarsa di database...
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Memulai proses untuk sumber: infolomba.id
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Scraper untuk infolomba.id telah diinisialisasi (Debug: False).
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Mengambil data dari https://www.infolomba.id/
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Fetching static page: https://www.infolomba.id/
+2025-06-21 13:34:35 - infortic_scraper          - ERROR    - Failed to fetch static page https://www.infolomba.id/: 403 Client Error: Forbidden for url: https://www.infolomba.id/
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Selesai scrape dari infolomba.id, mendapatkan 0 event mentah.
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Memulai proses untuk sumber: informasilomba.com
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Scraper untuk informasilomba.com telah diinisialisasi (Debug: False).
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Mengambil data dari https://www.informasilomba.com/
+2025-06-21 13:34:35 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/
+2025-06-21 13:34:36 - infortic_scraper          - INFO     - Menemukan 18 potensi event di halaman utama.
+2025-06-21 13:34:36 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Desain Toilet Nasional 2025, Hadiah...
+2025-06-21 13:34:36 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/06/lomba-desain-toilet-2025.html
+2025-06-21 13:34:36 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/06/lomba-desain-toilet-2025.html
+2025-06-21 13:34:37 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Desain Toilet Nasional 2025, Hadiah 70 Juta
+2025-06-21 13:34:37 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menulis Puisi Nasional 2025...
+2025-06-21 13:34:37 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/06/lomba-puisi-2025.html
+2025-06-21 13:34:37 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/06/lomba-puisi-2025.html
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menulis Puisi Nasional 2025
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menulis Novel Nasional 2025, Hadiah...
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/06/lomba-novel-2025.html
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/06/lomba-novel-2025.html
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menulis Novel Nasional 2025, Hadiah 30 Juta
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Film Pendek Nasional 2025, Hadiah 3...
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/06/lomba-film-2025.html
+2025-06-21 13:34:38 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/06/lomba-film-2025.html
+2025-06-21 13:34:39 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Film Pendek Nasional 2025, Hadiah 37 Juta
+2025-06-21 13:34:39 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Desain Batik Nasional 2025...
+2025-06-21 13:34:39 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/06/lomba-desain-batik-2025.html
+2025-06-21 13:34:39 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/06/lomba-desain-batik-2025.html
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Desain Batik Nasional 2025
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menulis Opini Nasional 2025 di Bank...
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-opini-2025.html
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-opini-2025.html
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menulis Opini Nasional 2025 di Bank Indonesia
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Video dan Foto Nasional 2025 di CIM...
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-video-dan-foto-2025.html
+2025-06-21 13:34:40 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-video-dan-foto-2025.html
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Video dan Foto Nasional 2025 di CIMB Niaga
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Nasional Tahunan Rancang Bangun Mes...
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-anak-teknik-2025.html
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-anak-teknik-2025.html
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Nasional Tahunan Rancang Bangun Mesin 2025
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menulis Artikel Blog Nasional 2025...
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-blog-2025.html
+2025-06-21 13:34:41 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-blog-2025.html
+2025-06-21 13:34:42 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menulis Artikel Blog Nasional 2025
+2025-06-21 13:34:42 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menulis dan Baca Puisi Nasional 202...
+2025-06-21 13:34:42 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-puisi-2025.html
+2025-06-21 13:34:42 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-puisi-2025.html
+2025-06-21 13:34:43 - infortic_scraper          - WARNING  - Tidak dapat menemukan teks tanggal yang spesifik.
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menulis dan Baca Puisi Nasional 2025 di Gramedia
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Fotografi dan Video Pendek Nasional...
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-fotografi-video-2025.html
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-fotografi-video-2025.html
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Fotografi dan Video Pendek Nasional 2025
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - Memulai deep scrape untuk: Dibuka !, ASEAN International Conference on Energy...
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/dibuka-asean-international-conference.html
+2025-06-21 13:34:43 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/dibuka-asean-international-conference.html
+2025-06-21 13:34:44 - infortic_scraper          - WARNING  - Tidak dapat menemukan teks tanggal yang spesifik.
+2025-06-21 13:34:44 - infortic_scraper          - INFO     - Berhasil memproses: Dibuka !, ASEAN International Conference on Energy and Environment 2025
+2025-06-21 13:34:44 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Karya Tulis Ilmiah Nasional 2025 di...
+2025-06-21 13:34:44 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-karya-tulis-2025.html
+2025-06-21 13:34:44 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-karya-tulis-2025.html
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Karya Tulis Ilmiah Nasional 2025 di Kementerian Pekerjaan Umum
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Seni dan Desain Nasional 2025 di UN...
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-seni-dan-desain-2025.html
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-seni-dan-desain-2025.html
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Seni dan Desain Nasional 2025 di UNESA
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menulis Essay Nasional 2025 di UMY...
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-menulis-essay-2025.html
+2025-06-21 13:34:45 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-menulis-essay-2025.html
+2025-06-21 13:34:46 - infortic_scraper          - WARNING  - Tidak dapat menemukan teks tanggal yang spesifik.
+2025-06-21 13:34:46 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menulis Essay Nasional 2025 di UMY
+2025-06-21 13:34:46 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Pemilihan Duta Pelajar SMA Nasional 2025 ...
+2025-06-21 13:34:46 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/pemilihan-duta-sma-2025.html
+2025-06-21 13:34:46 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/pemilihan-duta-sma-2025.html
+2025-06-21 13:34:47 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Pemilihan Duta Pelajar SMA Nasional 2025 di Kementrian
+2025-06-21 13:34:47 - infortic_scraper          - INFO     - Memulai deep scrape untuk: Dibuka, Pendaftaran Djarum Beasiswa Plus 2025/2025...
+2025-06-21 13:34:47 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/djarum-beasiswa-plus-2025.html
+2025-06-21 13:34:47 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/djarum-beasiswa-plus-2025.html
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Berhasil memproses: Dibuka, Pendaftaran Djarum Beasiswa Plus 2025/2025
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Memulai deep scrape untuk: [GRATIS] Lomba Menyanyi Online Nasional 2025 Hadia...
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - [DEEP SCRAPE] Memproses https://www.informasilomba.com/2025/05/lomba-menyanyi-2025.html
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Fetching static page: https://www.informasilomba.com/2025/05/lomba-menyanyi-2025.html
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Berhasil memproses: [GRATIS] Lomba Menyanyi Online Nasional 2025 Hadiah 215 Juta
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Selesai scrape dari informasilomba.com, mendapatkan 18 event mentah.
+2025-06-21 13:34:48 - infortic_scraper          - WARNING  - Melewatkan event 'Lomba Seni dan Desain Nasional 2025 di UNESA' karena sudah kedaluwarsa.
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Menambahkan 17 event yang valid dari informasilomba.com untuk disimpan.
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Memulai proses untuk sumber: infolombait.com
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Scraper untuk infolombait.com telah diinisialisasi (Debug: False).
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Starting scrape for infolombait.com
+2025-06-21 13:34:48 - infortic_scraper          - INFO     - Fetching dynamic page: https://www.infolombait.com/
+2025-06-21 13:34:53 - infortic_scraper          - INFO     - Successfully fetched dynamic content from https://www.infolombait.com/.
+2025-06-21 13:34:53 - infortic_scraper          - INFO     - Found 15 article links on the main page using selector '.post h2 a'.
+2025-06-21 13:34:53 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/compare-2025.html
+2025-06-21 13:34:53 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/compare-2025.html
+2025-06-21 13:34:54 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/compare-2025.html. Attempting to parse.
+2025-06-21 13:34:54 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-17 03:04:00+00:00
+2025-06-21 13:34:54 - infortic_scraper          - INFO     - Successfully processed: COMPARE 2025
+2025-06-21 13:34:54 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html
+2025-06-21 13:34:54 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html
+2025-06-21 13:34:55 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html. Attempting to parse.
+2025-06-21 13:34:55 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-13 13:51:00+00:00
+2025-06-21 13:34:55 - infortic_scraper          - INFO     - Successfully processed: UI UX Design NIFC 4.0 2025
+2025-06-21 13:34:55 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/inventuon-2025.html
+2025-06-21 13:34:55 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/inventuon-2025.html
+2025-06-21 13:34:56 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/inventuon-2025.html. Attempting to parse.
+2025-06-21 13:34:56 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-12 05:40:00+00:00
+2025-06-21 13:34:56 - infortic_scraper          - WARNING  - Could not find registration URL for https://www.infolombait.com/2025/06/inventuon-2025.html. Skipping.
+2025-06-21 13:34:56 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html
+2025-06-21 13:34:56 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html
+2025-06-21 13:34:57 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html. Attempting to parse.
+2025-06-21 13:34:57 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-11 02:39:00+00:00
+2025-06-21 13:34:57 - infortic_scraper          - INFO     - Successfully processed: NIFC Web Development Competition 2025
+2025-06-21 13:34:57 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html
+2025-06-21 13:34:57 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html. Attempting to parse.
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-10 10:00:00+00:00
+2025-06-21 13:34:58 - infortic_scraper          - WARNING  - Could not find registration URL for https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html. Skipping.
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/it-fest-2025.html
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/it-fest-2025.html
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/it-fest-2025.html. Attempting to parse.
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-08 08:12:00+00:00
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Successfully processed: IT FEST 2025
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/techfest-2025.html
+2025-06-21 13:34:58 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/techfest-2025.html
+2025-06-21 13:34:59 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/techfest-2025.html. Attempting to parse.
+2025-06-21 13:34:59 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-06 09:03:00+00:00
+2025-06-21 13:34:59 - infortic_scraper          - INFO     - Successfully processed: TECHFEST 2025
+2025-06-21 13:34:59 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/pekan-it-competition-025.html
+2025-06-21 13:34:59 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/pekan-it-competition-025.html
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/pekan-it-competition-025.html. Attempting to parse.
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-05 12:15:00+00:00
+2025-06-21 13:35:00 - infortic_scraper          - WARNING  - Could not find registration URL for https://www.infolombait.com/2025/06/pekan-it-competition-025.html. Skipping.
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/it-compfest-2025.html
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/it-compfest-2025.html
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/it-compfest-2025.html. Attempting to parse.
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-04 01:39:00+00:00
+2025-06-21 13:35:00 - infortic_scraper          - WARNING  - Could not find registration URL for https://www.infolombait.com/2025/06/it-compfest-2025.html. Skipping.
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/siega-cup-2025.html
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/siega-cup-2025.html
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/siega-cup-2025.html. Attempting to parse.
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-01 05:54:00+00:00
+2025-06-21 13:35:00 - infortic_scraper          - WARNING  - Could not find registration URL for https://www.infolombait.com/2025/06/siega-cup-2025.html. Skipping.
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/06/inspace-2025.html
+2025-06-21 13:35:00 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/06/inspace-2025.html
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/06/inspace-2025.html. Attempting to parse.
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-06-01 02:35:00+00:00
+2025-06-21 13:35:01 - infortic_scraper          - WARNING  - Could not find registration URL for https://www.infolombait.com/2025/06/inspace-2025.html. Skipping.
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html. Attempting to parse.
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-05-30 12:51:00+00:00
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Successfully processed: NATIONAL COMPETITION SILOGY EXPO 2025
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html
+2025-06-21 13:35:01 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html
+2025-06-21 13:35:02 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html. Attempting to parse.
+2025-06-21 13:35:02 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-05-22 13:18:00+00:00
+2025-06-21 13:35:02 - infortic_scraper          - INFO     - Successfully processed: Career Insight Computer Science 2025
+2025-06-21 13:35:02 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html
+2025-06-21 13:35:02 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html. Attempting to parse.
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-05-22 06:20:00+00:00
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Successfully processed: WORKSHOP MOTION VERSE 2025
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - [DEEP SCRAPE] Processing https://www.infolombait.com/2025/05/national-informatics-fun-competition.html
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Fetching static page: https://www.infolombait.com/2025/05/national-informatics-fun-competition.html
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Found <abbr> tag for https://www.infolombait.com/2025/05/national-informatics-fun-competition.html. Attempting to parse.
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Successfully parsed date from <abbr>: 2025-05-21 07:36:00+00:00
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Successfully processed: National Informatics Fun Competition 2025
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Successfully scraped 9 detailed events from infolombait.com
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Selesai scrape dari infolombait.com, mendapatkan 9 event mentah.
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Menambahkan 9 event yang valid dari infolombait.com untuk disimpan.
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Memulai proses untuk sumber: google-sheets-himakom
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Scraper untuk google-sheets-himakom telah diinisialisasi (Debug: False).
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Scraper untuk google-sheets-himakom telah diinisialisasi (Debug: False).
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Starting scrape for google-sheets-himakom
+2025-06-21 13:35:03 - infortic_scraper          - INFO     - Fetching data from https://docs.google.com/spreadsheets/u/0/d/1flUcng-naIX-YpjrxmVTUMiGwsuZmFKweazifHS5pNw/htmlview
+2025-06-21 13:35:04 - infortic_scraper          - INFO     - Found 955 rows in the table.
+2025-06-21 13:35:04 - infortic_scraper          - INFO     - Header row found at index 4 for google-sheets-himakom.
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Successfully scraped 8 events from google-sheets-himakom
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Selesai scrape dari google-sheets-himakom, mendapatkan 8 event mentah.
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Menambahkan 8 event yang valid dari google-sheets-himakom untuk disimpan.
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Memulai proses untuk sumber: google-sheets-rnd-info-center
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Scraper untuk google-sheets-rnd-info-center telah diinisialisasi (Debug: False).
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Scraper untuk google-sheets-rnd-info-center telah diinisialisasi (Debug: False).
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Starting scrape for google-sheets-rnd-info-center
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Scraping 'Lomba' sheet...
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Fetching data from https://docs.google.com/spreadsheets/d/1WLZSnPJ28EFXR66ObiCmqpqk1ffDREI_t5DSGrhd35Q/htmlview?gid=803178763
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Found 53 rows in the 'Lomba' table.
+2025-06-21 13:35:05 - infortic_scraper          - WARNING  - Could not find a valid header row for 'Lomba' sheet. Skipping.
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Scraping 'Lainnya' sheet...
+2025-06-21 13:35:05 - infortic_scraper          - INFO     - Fetching data from https://docs.google.com/spreadsheets/d/1WLZSnPJ28EFXR66ObiCmqpqk1ffDREI_t5DSGrhd35Q/htmlview?gid=1523477433
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Found 53 rows in the 'Lainnya' table.
+2025-06-21 13:35:06 - infortic_scraper          - WARNING  - Could not find a valid header row for 'Lainnya' sheet. Skipping.
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Successfully scraped a total of 0 events from google-sheets-rnd-info-center
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Selesai scrape dari google-sheets-rnd-info-center, mendapatkan 0 event mentah.
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Memulai proses untuk sumber: google-sheets-hmit-its
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Scraper untuk google-sheets-hmit-its telah diinisialisasi (Debug: False).
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Scraper untuk google-sheets-hmit-its telah diinisialisasi (Debug: False).
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Starting scrape for google-sheets-hmit-its
+2025-06-21 13:35:06 - infortic_scraper          - INFO     - Fetching data from https://docs.google.com/spreadsheets/d/1qjvZtMiW2qqeIOChAFXLS5vSzZQo53oit60XvYW6mL0/htmlview
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 9 tables in the document. Analyzing each...
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 1 identified as 'sertifikasi'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 0 valid events in table 1 ('sertifikasi').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 2 identified as 'lomba'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 0 valid events in table 2 ('lomba').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 3 identified as 'sertifikasi'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 3 valid events in table 3 ('sertifikasi').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 4 identified as 'lomba'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 0 valid events in table 4 ('lomba').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 5 identified as 'sertifikasi'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 3 valid events in table 5 ('sertifikasi').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 6 identified as 'lomba'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 0 valid events in table 6 ('lomba').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 7 identified as 'sertifikasi'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 3 valid events in table 7 ('sertifikasi').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Header row found at index 5 for google-sheets-hmit-its.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Table 8 identified as 'lomba'. Header found at row 6.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Found 6 valid events in table 8 ('lomba').
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Successfully scraped a total of 15 events from google-sheets-hmit-its
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Selesai scrape dari google-sheets-hmit-its, mendapatkan 15 event mentah.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Menambahkan 15 event yang valid dari google-sheets-hmit-its untuk disimpan.
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Memulai proses untuk sumber: google-sheets-sahakara
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Scraper untuk google-sheets-sahakara telah diinisialisasi (Debug: False).
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Scraper untuk google-sheets-sahakara telah diinisialisasi (Debug: False).
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Starting scrape for google-sheets-sahakara
+2025-06-21 13:35:07 - infortic_scraper          - INFO     - Fetching data from https://docs.google.com/spreadsheets/d/1L3bhyDR-1sPw28IZM9UQFWItbC_OFvFmmEr12kQCtIM/htmlview#gid=1975790205
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Found 31 rows in the table.
+2025-06-21 13:35:08 - infortic_scraper          - WARNING  - Could not find a valid header row for google-sheets-sahakara. Skipping.
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Selesai scrape dari google-sheets-sahakara, mendapatkan 0 event mentah.
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Memulai proses untuk sumber: google-sheets-rkim
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Scraper untuk google-sheets-rkim telah diinisialisasi (Debug: False).
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Scraper untuk google-sheets-rkim telah diinisialisasi (Debug: False).
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Starting scrape for google-sheets-rkim
+2025-06-21 13:35:08 - infortic_scraper          - INFO     - Fetching data from https://docs.google.com/spreadsheets/d/1naFQQtd3Q4AA1OK-LnaQBhex7NvrSpi6YR5ypzx6WwY/htmlview#gid=347093480
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Found 23 rows in the table.
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Header row found at index 0 for google-sheets-rkim.
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Successfully scraped 18 events from google-sheets-rkim
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Selesai scrape dari google-sheets-rkim, mendapatkan 18 event mentah.
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Menambahkan 18 event yang valid dari google-sheets-rkim untuk disimpan.
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Memulai proses untuk sumber: instagram
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Scraper untuk instagram telah diinisialisasi (Debug: False).
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Starting scrape for instagram
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Found session file, loading settings from session.json
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Attempting to log in with saved session...
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Login with session successful.
+2025-06-21 13:35:09 - infortic_scraper          - INFO     - Scraping user: csrelatedcompetitions
+2025-06-21 13:35:18 - infortic_scraper          - INFO     - Successfully fetched user ID for csrelatedcompetitions: 48786095180
+2025-06-21 13:35:21 - infortic_scraper          - INFO     - Found 10 posts for csrelatedcompetitions.
+2025-06-21 13:35:21 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLJI9ZTT1NA/. Skipping.
+2025-06-21 13:35:21 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DK65jaETEuZ/. Skipping.
+2025-06-21 13:35:21 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DKyInJQzl2P/. Skipping.
+2025-06-21 13:35:21 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DK9Pq6QTEV1/. Skipping.
+2025-06-21 13:35:21 - infortic_scraper          - INFO     - Successfully parsed event: 🔥✨ THE ACE 2025 IS HERE! ✨🔥
+2025-06-21 13:35:21 - infortic_scraper          - INFO     - Successfully parsed event: Untuk informasi lebih lanjut, mohon cek https://blog.jetbrains.com/ai/2025/06/context-collection-competition/
+2025-06-21 13:35:21 - infortic_scraper          - INFO     - Successfully parsed event: Web Programming: Rp50.000
+2025-06-21 13:35:22 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DK52PCxzWnQ/. Skipping.
+2025-06-21 13:35:22 - infortic_scraper          - INFO     - Successfully parsed event: Selasar Game Design akan mengadakan Game Jam pertamanya yaitu, “Selasar Game Jam”!
+2025-06-21 13:35:22 - infortic_scraper          - INFO     - Successfully parsed event: 1️⃣ Hackathon UI Incubate: Kompetisi inovasi teknologi untuk Indonesia dengan total pendanaan IDR 3 Miliar!
+2025-06-21 13:35:22 - infortic_scraper          - INFO     - Scraping user: infolombaevent.id
+2025-06-21 13:35:31 - infortic_scraper          - INFO     - Successfully fetched user ID for infolombaevent.id: 13320681262
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Found 10 posts for infolombaevent.id.
+2025-06-21 13:35:34 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLJNCwjSmFx/. Skipping.
+2025-06-21 13:35:34 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHs39jRfWY/. Skipping.
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Successfully parsed event: Registration : 1 June - 15 August 2025
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Successfully parsed event: KEMBALI HADIR SEMINAR PSYCHOLOGY CAREER PLANNING: DISCOVERING PSYCHOLOGY IN THE INDUSTRIAL SECTOR‼️🆕
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Successfully parsed event: 2. Beasiswa (Semester 1) Program Studi Administrasi Publik UNPAR.
+2025-06-21 13:35:34 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLE4mVrRV3x/. Skipping.
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Successfully parsed event: 🗓️: Jumat, 27 Juni 2025
+2025-06-21 13:35:34 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLESQJDPWLz/. Skipping.
+2025-06-21 13:35:34 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLC1Vsyxaz9/. Skipping.
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Successfully parsed event: ✨ 𝗕𝗲𝗹𝗮𝗷𝗮𝗿 𝗧𝗮𝗸 𝗕𝗲𝗿𝗯𝗮𝘁𝗮𝘀, 𝗠𝗲𝘄𝘂𝗷𝘂𝗱𝗸𝗮𝗻 𝗚𝗲𝗻𝗲𝗿𝗮𝘀𝗶 𝗕𝗲𝗿𝗸𝘂𝗮𝗹𝗶𝘁𝗮𝘀 ✨
+2025-06-21 13:35:34 - infortic_scraper          - INFO     - Scraping user: anakmagang.id
+2025-06-21 13:35:43 - infortic_scraper          - INFO     - Successfully fetched user ID for anakmagang.id: 17693366191
+2025-06-21 13:35:46 - infortic_scraper          - INFO     - Found 10 posts for anakmagang.id.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLGnheETEbT/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - INFO     - Successfully parsed event: Bersama PFN, saatnya wujudkan kontribusimu untuk Indonesia melalui karya dan inovasi!
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLJumVBTzOd/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLG8EYpTc9b/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLJMSfYzIET/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHeYfATtli/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLH7l9CT0IM/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLH51Bfzfqp/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHouYxT4h2/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHeZHVTO0a/. Skipping.
+2025-06-21 13:35:46 - infortic_scraper          - INFO     - Scraping user: maganghub
+2025-06-21 13:35:55 - infortic_scraper          - INFO     - Successfully fetched user ID for maganghub: 4620986625
+2025-06-21 13:35:58 - infortic_scraper          - INFO     - Found 10 posts for maganghub.
+2025-06-21 13:35:58 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DIgNqfqTKoQ/. Skipping.
+2025-06-21 13:35:58 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DIfn1PYz29J/. Skipping.
+2025-06-21 13:35:58 - infortic_scraper          - INFO     - Successfully parsed event: 🎯 Available Internship Positions:
+2025-06-21 13:35:58 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DIYmGkaTxpU/. Skipping.
+2025-06-21 13:35:58 - infortic_scraper          - INFO     - Successfully parsed event: Halo Sobat BC! PT Berau Coal kembali membuka Program Praktik Kerja Lapangan (PKL), dengan persyaratan yang tertera di bawah ini.
+2025-06-21 13:35:58 - infortic_scraper          - INFO     - Successfully parsed event: Link Pendaftaran ⬇️
+2025-06-21 13:35:58 - infortic_scraper          - INFO     - Successfully parsed event: ✨ Magang bukan hanya belajar, tapi juga langkah awal membangun kariermu bersama Kimia Farma! ✨
+2025-06-21 13:35:58 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DHdsXt-z7jW/. Skipping.
+2025-06-21 13:35:58 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DHXQZN2TAR6/. Skipping.
+2025-06-21 13:35:58 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DHV-C_OzMBI/. Skipping.
+2025-06-21 13:35:58 - infortic_scraper          - INFO     - Scraping user: beasiswa.co
+2025-06-21 13:36:08 - infortic_scraper          - INFO     - Successfully fetched user ID for beasiswa.co: 5849680293
+2025-06-21 13:36:11 - infortic_scraper          - INFO     - Found 10 posts for beasiswa.co.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLJMOj2yTny/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - INFO     - Successfully parsed event: Beasiswa KIP-Kuliah Menanti Kamu!
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLH51U4SfCq/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLH51FOT_aY/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHvnr3SgPE/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHeaFoSzFZ/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHdPZLSkG8/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLHYu5kzasP/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLG8IHLSj6T/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - No registration URL found for post https://www.instagram.com/p/DLGnbaoStDd/. Skipping.
+2025-06-21 13:36:11 - infortic_scraper          - INFO     - Successfully scraped 16 events from instagram
+2025-06-21 13:36:11 - infortic_scraper          - INFO     - Selesai scrape dari instagram, mendapatkan 16 event mentah.
+2025-06-21 13:36:11 - infortic_scraper          - WARNING  - Tipe acara 'Lainnya' tidak valid untuk '🗓️: Jumat, 27 Juni 2025', melewati.
+2025-06-21 13:36:11 - infortic_scraper          - INFO     - Menambahkan 15 event yang valid dari instagram untuk disimpan.
+2025-06-21 13:36:11 - infortic_scraper          - INFO     - Log scraping telah disimpan di: logs\scrape_log_2025-06-21_13-36-11.json
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - infolomba.id: 0 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - informasilomba.com: 18 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - infolombait.com: 9 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - google-sheets-himakom: 8 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - google-sheets-rnd-info-center: 0 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - google-sheets-hmit-its: 15 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - google-sheets-sahakara: 0 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - google-sheets-rkim: 18 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - instagram: 16 acara
+2025-06-21 13:36:17 - infortic_scraper          - INFO     - --------------------------------

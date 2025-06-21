@@ -1,0 +1,944 @@
+[
+    {
+        "pk": 3659495575642919744,
+        "id": "3659495575642919744_48786095180",
+        "code": "DLJI9ZTT1NA",
+        "taken_at": "2025-06-21 00:31:29+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        15551,
+                        31102,
+                        46654,
+                        62205,
+                        77757,
+                        87009,
+                        110723,
+                        125842,
+                        139963
+                    ],
+                    "height": 1440,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509368885_18044531114631181_1167043280646567671_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=cG9TREyopg4Q7kNvwHeJo0S&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTQ5NTU3NTY0MjkxOTc0NA%3D%3D.3-ccb7-5&oh=00_AfNJ-5ZGG1R5FB1CXHAEKHj9ReWt1gduGkIPr0KRmoXVGA&oe=685BEFF5&_nc_sid=b41fef",
+                    "width": 1152
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3073,
+                        6147,
+                        9220,
+                        12294,
+                        15367,
+                        18501,
+                        533933,
+                        27662,
+                        27662
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509368885_18044531114631181_1167043280646567671_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=cG9TREyopg4Q7kNvwHeJo0S&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTQ5NTU3NTY0MjkxOTc0NA%3D%3D.3-ccb7-5&oh=00_AfMwAYO_i3l6xwQY-WXs45vdzlEqQlG4zsM3C4bMp4iltA&oe=685BEFF5&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/509368885_18044531114631181_1167043280646567671_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=cG9TREyopg4Q7kNvwHeJo0S&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1OTQ5NTU3NTY0MjkxOTc0NA%3D%3D.3-ccb7-5&oh=00_AfNJ-5ZGG1R5FB1CXHAEKHj9ReWt1gduGkIPr0KRmoXVGA&oe=685BEFF5&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 64,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "[𝗣𝗘𝗞𝗔𝗡 𝗜𝗧 𝗖𝗢𝗠𝗣𝗘𝗧𝗜𝗧𝗜𝗢𝗡]\n\nSaatnya kamu tunjukkan skill, kreativitas, dan logika pemrogramanmu lewat karya terbaik di ajang Pekan IT dengan tema besar “Empower The Future With Your Inovative Vision\" ! 💡💻\n\n𝗕𝗜𝗔𝗬𝗔 𝗣𝗘𝗡𝗗𝗔𝗙𝗧𝗔𝗥𝗔𝗡: 50K\n\n🧩 𝗖𝗮𝗯𝗮𝗻𝗴 𝗟𝗼𝗺𝗯𝗮:\n\nSoftware Development\n\nUI/UX Design\n\nCompetitive Programming\n\n🏆 𝗛𝗮𝗱𝗶𝗮𝗵:\n\nJuara 1: Uang Pembinaan + E-Certificate + Merchandise\n\nJuara 2: Uang Pembinaan + E-Certificate + Merchandise\n\nJuara 3: Uang Pembinaan + E-Certificate + Merchandise\n\n📅 𝗧𝗶𝗺𝗲𝗹𝗶𝗻𝗲:\n\nPendaftaran & Pengumpulan Karya: 1 Juni - 30 Juni 2025\n\nPenilaian Karya: 1 Juli - 5 Juli 2025\n\nPengumuman Finalis: 6 Juli 2025\n\nTechnical Meeting: 9 Juli 2025\n\nPelaksana Lomba: 12 Juli 2025\n\nPengumuman: 11 Agustus 2025\n\nPendaftaran: linktr.ee/pekan.it\n\nPanduan Lomba: s.id/GuidebookPekanIT2025 \n\nContact Person: \n\n082199575791 (Inong)\n\n088219956650 (Dede)\n\n@pekanit_unsika\n\n💬 Jangan lewatkan kesempatan ini! Ayo buktikan potensi IT-mu dan jadilah bagian dari solusi digital masa depan Indonesia! 🚀\n\n#PekanIT2025\n\n#HIMTIKA2025\n\n#kabinetSinergis\n\n#BersamaKitaJaya",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "17951175411",
+                    "username": "pekanit_unsika",
+                    "full_name": "Pekan IT Unsika 2025",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/451100311_1927149821071008_186593337762396842_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=100&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=8nWLhPvgYMcQ7kNvwEmyrKO&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJc_4xqgjoOIu9gGAKo6yO6m6ZYCbkULAAAB-ccb7-5&oh=00_AfO12VLJVif3OIBiw7kFVKa_VEIRv00JdaElm9Emz_eLWg&oe=685BF565&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.15393518,
+                "y": 0.9620369999999999
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655487169386793881,
+        "id": "3655487169386793881_48786095180",
+        "code": "DK65jaETEuZ",
+        "taken_at": "2025-06-15 11:47:30+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        17866,
+                        35732,
+                        53598,
+                        71464,
+                        89330,
+                        99960,
+                        127203,
+                        144573,
+                        160795
+                    ],
+                    "height": 1440,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/507986087_18043928552631181_3376414743931674307_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=73AdrUti50UQ7kNvwEozF23&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTQ4NzE2OTM4Njc5Mzg4MQ%3D%3D.3-ccb7-5&oh=00_AfP9Jvg9M6f2yg9pho7NG5eB50EghU0gbnZKUVJN8cqfQg&oe=685BF9E3&_nc_sid=b41fef",
+                    "width": 1152
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3256,
+                        6513,
+                        9770,
+                        13026,
+                        16283,
+                        19604,
+                        565742,
+                        29310,
+                        29310
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/507986087_18043928552631181_3376414743931674307_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=73AdrUti50UQ7kNvwEozF23&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTQ4NzE2OTM4Njc5Mzg4MQ%3D%3D.3-ccb7-5&oh=00_AfNUnfny7c11pNBFREP7qfEKZfGVbGPQ60HqHa24vgg4_g&oe=685BF9E3&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/507986087_18043928552631181_3376414743931674307_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=73AdrUti50UQ7kNvwEozF23&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTQ4NzE2OTM4Njc5Mzg4MQ%3D%3D.3-ccb7-5&oh=00_AfP9Jvg9M6f2yg9pho7NG5eB50EghU0gbnZKUVJN8cqfQg&oe=685BF9E3&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 80,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "‼️📢 [𝐈𝐌𝐏𝐀𝐂𝐓 𝟓.𝟎 𝑹𝑬𝑮𝑰𝑺𝑻𝑹𝑨𝑻𝑰𝑶𝑵 𝑬𝑿𝑻𝑬𝑵𝑫𝑬𝑫] 📢‼️\n\nHOLA, CHALLENGERS! 🔥\n\nPendaftaran 𝙄𝙈𝙋𝘼𝘾𝙏 𝟱.𝟬 resmi 𝗗𝗜𝗣𝗘𝗥𝗣𝗔𝗡𝗝𝗔𝗡𝗚! 🤩🎉\n\n𝘐𝘔𝘗𝘈𝘊𝘛 5.0 (𝘐𝘯𝘧𝘰𝘳𝘮𝘢𝘵𝘪𝘤𝘴, 𝘔𝘢𝘵𝘩𝘦𝘮𝘢𝘵𝘪𝘤𝘴, 𝘢𝘯𝘥 𝘗𝘩𝘺𝘴𝘪𝘤𝘴 𝘈𝘯𝘯𝘶𝘢𝘭 𝘊𝘰𝘮𝘱𝘦𝘵𝘪𝘵𝘪𝘰𝘯) adalah kompetisi nasional dari 𝗦𝗧𝗘𝗜-𝗞 𝗜𝗧𝗕, terbuka untuk 𝘀𝗶𝘀𝘄𝗮 𝗦𝗠𝗔/𝘀𝗲𝗱𝗲𝗿𝗮𝗷𝗮𝘁 𝘀𝗲-𝗜𝗻𝗱𝗼𝗻𝗲𝘀𝗶𝗮.\n\n𝑻𝑰𝑴𝑬𝑳𝑰𝑵𝑬 𝐏𝐄𝐋𝐀𝐊𝐒𝐀𝐍𝐀𝐀𝐍:\n\n🗓️ 𝗣𝗲𝗻𝗱𝗮𝗳𝘁𝗮𝗿𝗮𝗻: 24 Mei – 12 Juni 2025 (𝗗𝗜𝗣𝗘𝗥𝗣𝗔𝗡𝗝𝗔𝗡𝗚 hingga 𝟭𝟴 𝗝𝘂𝗻𝗶 𝟮𝟬𝟮𝟱❗️)\n\n⏳ 𝗣𝗲𝗻𝘆𝗶𝘀𝗶𝗵𝗮𝗻 (𝙕𝙤𝙤𝙢 𝙈𝙚𝙚𝙩𝙞𝙣𝙜): 29 Juni 2025\n\n⚔️ 𝗙𝗶𝗻𝗮𝗹 (𝗜𝗧𝗕 𝗚𝗮𝗻𝗲𝘀𝗵𝗮, 𝗕𝗮𝗻𝗱𝘂𝗻𝗴): 19–20 Juli 2025\n\n🏆 𝘼𝙬𝙖𝙧𝙙𝙞𝙣𝙜 𝙉𝙞𝙜𝙝𝙩: 20 Juli 2025\n\n𝑩𝑬𝑵𝑬𝑭𝑰𝑻𝑺:\n\n📝 Sertifikat skala nasional\n\n🧑🏻‍💻 Pengalaman kompetisi\n\n🏨 𝘏𝘰𝘵𝘦𝘭, 𝘵𝘳𝘢𝘯𝘴𝘱𝘰𝘳𝘵, dan 𝘮𝘦𝘳𝘤𝘩𝘢𝘯𝘥𝘪𝘴𝘦 untuk finalis\n\n👥 𝘕𝘦𝘵𝘸𝘰𝘳𝘬𝘪𝘯𝘨 ke mahasiswa STEI-K dan siswa berprestasi se-Indonesia\n\n💰 𝙋𝙍𝙄𝙕𝙀𝙋𝙊𝙊𝙇 𝙐𝙋 𝙏𝙊 𝟭𝟱.𝟬𝟬𝟬.𝟬𝟬𝟬 𝙍𝙐𝙋𝙄𝘼𝙃! 🎁 \n\n🔗 𝙎𝙚𝙘𝙪𝙧𝙚 𝙮𝙤𝙪𝙧 𝙨𝙚𝙖𝙩 𝙖𝙩 impact-itb.com\n\n📍 𝙊𝙧𝙜𝙖𝙣𝙞𝙯𝙚𝙙 𝙗𝙮 𝙎𝙏𝙀𝙄-𝙆 𝙄𝙏𝘽 '𝟮𝟰\n\n#𝙲𝚘𝚍𝚎𝚈𝚘𝚞𝚛𝙹𝚘𝚞𝚛𝚗𝚎𝚢 #𝙴𝚡𝚎𝚌𝚞𝚝𝚎𝚈𝚘𝚞𝚛𝙸𝙼𝙿𝙰𝙲𝚃",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "28847449240",
+                    "username": "impact_itb",
+                    "full_name": "IMPACT 5.0",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/490451878_682345020824056_5376058969728314638_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=NpJU-3ALehYQ7kNvwHhyTjE&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GKazOx34mZTUlmwCAA5tNT4mmZtKbkULAAAB-ccb7-5&oh=00_AfO84parzEtj7JfPWhAWfZ1m3e4-d98oV6mJoP8PGlEZgw&oe=685BF87D&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.1099537,
+                "y": 0.9638888999999999
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3653020122128211343,
+        "id": "3653020122128211343_48786095180",
+        "code": "DKyInJQzl2P",
+        "taken_at": "2025-06-12 02:05:55+00:00",
+        "media_type": 8,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        13756,
+                        27512,
+                        41268,
+                        55024,
+                        68781,
+                        76966,
+                        97942,
+                        111316,
+                        123806
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505729915_18043534037631181_4039420642104263025_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=eGT8gn4iWmsQ7kNvwGbdFDI&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1MzAyMDExMjY1NzQzODE0NA%3D%3D.3-ccb7-5&oh=00_AfMP66Ak5T4qX4zfDGUTJTFNFFLjoChpZNR0DijKWH1fNA&oe=685C0C59&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2967,
+                        5934,
+                        8902,
+                        11869,
+                        14836,
+                        17862,
+                        515484,
+                        26706,
+                        26706
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505729915_18043534037631181_4039420642104263025_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=eGT8gn4iWmsQ7kNvwGbdFDI&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1MzAyMDExMjY1NzQzODE0NA%3D%3D.3-ccb7-5&oh=00_AfOJkQHVnNjjizN9xRC67NEwFe3unHMYf7oQsgzCsmsrfQ&oe=685C0C59&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "carousel_container",
+        "thumbnail_url": null,
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 164,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "🔥 KOMPETISI GRATIS KHUSUS ANAK SMK 🔥\n\n📢 Pendaftaran Jagoan Hosting Infra Competition (JHIC) 2025 udah dibuka nih!\n\nTunjukkan skill tim kamu, pecahkan tantangan IT, dan rebut total hadiah hingga 30 juta rupiah + sertifikat resmi dari Kementerian Komunikasi dan Digital Republik Indonesia!\n\n💥 GRATIS!\n\n💥 Buat kamu siswa/i aktif SMK se-Indonesia!\n\n🛡 Yuk, bawa nama sekolah kamu ke level yang lebih tinggi!\n\n📌 Syarat lengkap & cara pendaftaran: s.id/JHIC-CS \n\n#JHIC2025 #JagoanSMK #PahlawanDigital #LombaIT #SMKBisa #SMKHebat",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "3130171036",
+                    "username": "jagoanhosting",
+                    "full_name": "Jagoan Hosting Indonesia",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/431456985_931452668679028_9016472003199448940_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=yXwyYOfWBSAQ7kNvwHAPOVn&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GNmCtxl0E3G5Jk8DAGw39f2D8SB9bkULAAAB-ccb7-5&oh=00_AfNzU1B8M_8OJz3DTOVHOTXXldBgiTehKLH5ACUWeQI9aA&oe=685C11A4&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.15856482,
+                "y": 0.89537036
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [
+            {
+                "pk": "3653020112657438144",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505729915_18043534037631181_4039420642104263025_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=eGT8gn4iWmsQ7kNvwGbdFDI&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1MzAyMDExMjY1NzQzODE0NA%3D%3D.3-ccb7-5&oh=00_AfMP66Ak5T4qX4zfDGUTJTFNFFLjoChpZNR0DijKWH1fNA&oe=685C0C59&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3653020112657500629",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505122280_18043534046631181_8635134540343297839_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=8qgeOxNd1FoQ7kNvwF4RASp&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1MzAyMDExMjY1NzUwMDYyOQ%3D%3D.3-ccb7-5&oh=00_AfP7o0SwsfTlq0M8tq9WwiyiBHtuuuWJtkHaV3tal9qlvw&oe=685C0212&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3653020112657524803",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505130832_18043534055631181_5856855991810539766_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=gBSV_f_r8jIQ7kNvwHZgXBB&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1MzAyMDExMjY1NzUyNDgwMw%3D%3D.3-ccb7-5&oh=00_AfPUYWejcL3ObIzYeQ-p3xAF5OEKBEe8Yeig_snfZ3c-og&oe=685BEAD6&_nc_sid=b41fef",
+                "media_type": 1
+            }
+        ],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3656147391960860021,
+        "id": "3656147391960860021_48786095180",
+        "code": "DK9Pq6QTEV1",
+        "taken_at": "2025-06-16 09:39:14+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        11851,
+                        23702,
+                        35553,
+                        47404,
+                        59255,
+                        66306,
+                        84376,
+                        95898,
+                        106659
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508383653_18044030951631181_7750982767059368415_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=N9CU_q5dw4EQ7kNvwH5ptwL&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NjE0NzM5MTk2MDg2MDAyMQ%3D%3D.3-ccb7-5&oh=00_AfPfSyyYRFpDoOfj41__a4tTdoKjSkip0HkPtO7aWKYmrw&oe=685C075F&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2788,
+                        5576,
+                        8365,
+                        11153,
+                        13942,
+                        16785,
+                        484410,
+                        25096,
+                        25096
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508383653_18044030951631181_7750982767059368415_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=N9CU_q5dw4EQ7kNvwH5ptwL&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NjE0NzM5MTk2MDg2MDAyMQ%3D%3D.3-ccb7-5&oh=00_AfMvQz1BhgLBjY15fV3B0CT-TFpaB-f2HevcxDqAdnuYYg&oe=685C075F&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508383653_18044030951631181_7750982767059368415_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=N9CU_q5dw4EQ7kNvwH5ptwL&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NjE0NzM5MTk2MDg2MDAyMQ%3D%3D.3-ccb7-5&oh=00_AfPfSyyYRFpDoOfj41__a4tTdoKjSkip0HkPtO7aWKYmrw&oe=685C075F&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 181,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "🎉 FITCOM 3.0 RESMI DIBUKA!\n\nKompetisi IT bergengsi tingkat nasional dari Fakultas Teknologi & Informatika Universitas Dinamika (Stikom Surabaya) siap jadi ajang unjuk kemampuan buat kamu yang duduk di bangku SMA/SMK/MA sederajat! 💻🚀\n\nTahun ini, FITCOM 3.0 hadir dengan 3 cabang lomba utama:\n\n1️⃣ Cyber Security (Individu)\n2️⃣ Web Programming (Tim)\n3️⃣ Internet of Things (Tim)\n\n🧠 Lomba akan diselenggarakan secara ONLINE (penyisihan) dan OFFLINE (Final) di Universitas Dinamika Surabaya.\n\n📆 TIMELINE LOMBA\n📝 23 Juni – 1 Sept 2025: Pendaftaran\n📄 16 Sept 2025: Pengumpulan Proposal\n🎥 17 Okt 2025: Pengumpulan Video\n🧑‍💻 20 Okt 2025: Technical Meeting\n🏆 23 Okt 2025: Babak Final (Offline)\n\n💰 TOTAL HADIAH\n🏅 Uang Tunai: Rp13.500.000\n🎓 Beasiswa Pendidikan senilai ratusan juta rupiah\n🏆 Trophy Bergilir dari Pemerintah\n📜 Sertifikat / Piagam Penghargaan\n\nBiaya pendaftaran? CUMA Rp50.000 aja per lomba! 😱\nDaftar sekarang via 👉 heylink.me/fitcom2025\n\n📲 Informasi lebih lanjut? Hubungi langsung:\n📞 Pak Rampa: 085731803889\n📞 Pak Edwin: 083856356371\n\n🔥 Yuk, tunjukkan potensi dan bakat IT-mu di ajang FITCOM 3.0!\n📢 Share postingan ini ke teman-teman dan sekolah kalian!\n📲 Follow @fitcom.undika biar gak ketinggalan info penting, tips, dan update terkini seputar FITCOM 3.0!\n\n#InfoLomba #LombaIT #KompetisiIT #EventIT #LombaNasional #lombaCoding # #UniversitasDinamika #lombaSMANasional #ITCompetition #LombaPelajar #Lomba #Kompetisi #lombaSMA #event #UniversitasDinamika #StikomSurabaya",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "62138457471",
+                    "username": "fitcom.undika",
+                    "full_name": "Lomba IT Nasional | Kompetisi IT | Event IT",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/506078858_17927696880065472_7186175513952381552_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=100&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=SRITpFS8Z9kQ7kNvwFBU9sj&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GIomKh7AWy00JbE-AHDqvVKObLpjbvEnAQAB-ccb7-5&oh=00_AfPS2Tf-IkI2iLow4DVg5WsDgL3zgiXWsmae-2Zpk-seuQ&oe=685BED1F&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.11689815,
+                "y": 0.9490740999999999
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655912872888605619,
+        "id": "3655912872888605619_48786095180",
+        "code": "DK8aWNWTZuz",
+        "taken_at": "2025-06-16 01:53:17+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        16165,
+                        32331,
+                        48496,
+                        64662,
+                        80827,
+                        90446,
+                        115096,
+                        130812,
+                        145490
+                    ],
+                    "height": 1440,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508311929_18043996637631181_5017542696707116198_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=I07g2sWJpLUQ7kNvwFzn1vC&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTkxMjg3Mjg4ODYwNTYxOQ%3D%3D.3-ccb7-5&oh=00_AfMOn0spFiXzfwcfnc8E7p604MR50NSvy7397Eh-u83cIg&oe=685C052B&_nc_sid=b41fef",
+                    "width": 1152
+                },
+                {
+                    "estimated_scans_sizes": [
+                        3123,
+                        6247,
+                        9370,
+                        12494,
+                        15617,
+                        18803,
+                        542629,
+                        28112,
+                        28112
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508311929_18043996637631181_5017542696707116198_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=I07g2sWJpLUQ7kNvwFzn1vC&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTkxMjg3Mjg4ODYwNTYxOQ%3D%3D.3-ccb7-5&oh=00_AfPPh5IhcfEpCkmZ47l-Y3jgBYvKHMknffZB1KK_6Yda8Q&oe=685C052B&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508311929_18043996637631181_5017542696707116198_n.webp?efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjExNTJ4MTQ0MC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=I07g2sWJpLUQ7kNvwFzn1vC&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTkxMjg3Mjg4ODYwNTYxOQ%3D%3D.3-ccb7-5&oh=00_AfMOn0spFiXzfwcfnc8E7p604MR50NSvy7397Eh-u83cIg&oe=685C052B&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 75,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "[ 🔥✨ THE ACE 2025 IS HERE! ✨🔥 ]\n\nThe ACE dari Teknik Komputer Universitas Diponegoro kembali hadir! Kali ini, kami membawa semangat baru dan kesempatan tak terbatas untukmu. Ajang ini ditujukan khusus bagi kamu yang memiliki jiwa inovatif, pola pikir kritis, dan siap untuk menciptakan solusi masa depan. 🌍💡\n\nDengan prizepool hingga jutaan rupiah🔥\n\nDari robotik, cybersecurity, hingga UI/UX — semua tantangan menantimu di sini! Berbagai kompetisi inovatif telah kami siapkan:\n\n1. Capture The Flag (CTF)\n•\tTema: Cyber Sentinel 2025: Break the Code, Secure the Future\n•\tPendaftaran: 10 Juni - 10 Juli 2025\n•\tBiaya: Rp75.000\n•\tCP: \nLady Triana Surbakti (0822-1549-2024)\nAzzam Syaiful Islam (0813-3143-7810)\n\n2. Lomba UI/UX\n•\tTema: Impactful Digital Innovation: Designing Valuable and Sustainable Solutions\n•\tPendaftaran: 10 Juni - 10 Juli 2025\n•\tBiaya: Rp70.000\n•\tCP: \nAurellio Ma'rifat (0818-0805-8008)\nYasmin Dini Akmila (0822-4620-8311)\n\n3. Line Follower Robot\n•\tTema: Algorithmic Edge: Precision in Motion, Unrivaled Victory.\n•\tPendaftaran: 10 Juni - 25 Agustus 2025\n•\tBiaya: Rp150.000\n•\tCP: \nGibson Lasoni Gea (0813-8106-5979)\nCielo Reksana Jaya (0882-1486-2030)\n\n🎁 Hadiah menarik sudah menanti para pemenang! Setiap kompetisi menawarkan reward yang bisa jadi penyemangat, dan tentunya seluruh peserta akan mendapatkan sertifikat eksklusif! Jangan lewatkan kesempatan emas ini! Tunjukkan ide-ide brilianmu dan wujudkan masa depan yang lebih inovatif lewat karya terbaikmu 💪\n\n🔗 Pendaftaran & Info Lengkap: https://theaceundip.id\n\n📢 Agar kamu tidak ketinggalan informasi terbaru, yuk ikuti akun Instagram kami! @theace.2025\n\n#EternalCodesTheHarmonyofInnovationandDreadinTomorrowsShadows \n#TheACE2025\n#TeknikKomputerUndip \n#BersinarBersamaACE\n #stepupwiththeace",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "47966881121",
+                    "username": "theace.2025",
+                    "full_name": "The ACE 2025",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/502103149_18053026220593122_7482353452830283065_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=SW6wEICmMMwQ7kNvwGdU_vQ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GG187R3iz-_2ISNAADnV3XfSqNZnbvEnAQAB-ccb7-5&oh=00_AfMdH6mIpH-BbmhFhVJVH3CffclT7BmHXgLGDn1lt4dlUw&oe=685C0826&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.14930555,
+                "y": 0.9879629600000001
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655887864065781642,
+        "id": "3655887864065781642_48786095180",
+        "code": "DK8UqSETW-K",
+        "taken_at": "2025-06-16 01:03:36+00:00",
+        "media_type": 8,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        10925,
+                        21850,
+                        32775,
+                        43700,
+                        54626,
+                        61126,
+                        77786,
+                        88407,
+                        98327
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508606440_18043993121631181_1962047740628545138_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=FgjaObceAEIQ7kNvwEqx16-&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4Nzg0MjgwMDcyNjgyMg%3D%3D.3-ccb7-5&oh=00_AfO9Pk1_Ru79RokS2oY6QMQbrcL-o_kpSbOvRJKYA8-RQA&oe=685BFF50&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2695,
+                        5390,
+                        8086,
+                        10781,
+                        13477,
+                        16225,
+                        468255,
+                        24259,
+                        24259
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508606440_18043993121631181_1962047740628545138_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=FgjaObceAEIQ7kNvwEqx16-&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4Nzg0MjgwMDcyNjgyMg%3D%3D.3-ccb7-5&oh=00_AfOvV3Zq29cYkuE01fdIPJ65XkYns2UyKGLA_HHoX-vtJQ&oe=685BFF50&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "carousel_container",
+        "thumbnail_url": null,
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 54,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "Admin notes:\nUntuk informasi lebih lanjut, mohon cek https://blog.jetbrains.com/ai/2025/06/context-collection-competition/",
+        "accessibility_caption": null,
+        "usertags": [],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [
+            {
+                "pk": "3655887842800726822",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508606440_18043993121631181_1962047740628545138_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=FgjaObceAEIQ7kNvwEqx16-&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4Nzg0MjgwMDcyNjgyMg%3D%3D.3-ccb7-5&oh=00_AfO9Pk1_Ru79RokS2oY6QMQbrcL-o_kpSbOvRJKYA8-RQA&oe=685BFF50&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655887842657995668",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508456418_18043993094631181_4594288262427526459_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=P6t9ZMDgvucQ7kNvwHcDpF2&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4Nzg0MjY1Nzk5NTY2OA%3D%3D.3-ccb7-5&oh=00_AfM4itn2wSP5fifsVrkfRPDG4DDg3NQF1SBa8UGLJ-wZGQ&oe=685C06D4&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655887842943210353",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508561275_18043993118631181_5029929226083095426_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=LFrnBqVUlmMQ7kNvwHyQuJn&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4Nzg0Mjk0MzIxMDM1Mw%3D%3D.3-ccb7-5&oh=00_AfOIpaevC704ENAzSqjXHaj9u5KGdY6fNV891iXP1EyW0g&oe=685C1DE2&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655887842800808326",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/508402668_18043993103631181_1148695038533241202_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=pGm8LHnatb0Q7kNvwEqjowf&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4Nzg0MjgwMDgwODMyNg%3D%3D.3-ccb7-5&oh=00_AfN4vWxk1TIjAUYg0xnFs4-5lElpehrZUoqKDOQYaoZnxg&oe=685BEA09&_nc_sid=b41fef",
+                "media_type": 1
+            }
+        ],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655881188143240633,
+        "id": "3655881188143240633_48786095180",
+        "code": "DK8TJIoT5W5",
+        "taken_at": "2025-06-16 00:50:20+00:00",
+        "media_type": 1,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        12635,
+                        25270,
+                        37906,
+                        50541,
+                        63177,
+                        70695,
+                        89962,
+                        102247,
+                        113719
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505787651_18043992323631181_3156534876704766586_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=HsAx1gw3OIAQ7kNvwFJ6OlA&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4MTE4ODE0MzI0MDYzMw%3D%3D.3-ccb7-5&oh=00_AfP2lES35eDPSkiX8r_T7otTGXqCYDbYF-X8QhQxFy96Fw&oe=685BFA3E&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2864,
+                        5728,
+                        8592,
+                        11456,
+                        14320,
+                        17240,
+                        497535,
+                        25776,
+                        25776
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505787651_18043992323631181_3156534876704766586_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=HsAx1gw3OIAQ7kNvwFJ6OlA&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4MTE4ODE0MzI0MDYzMw%3D%3D.3-ccb7-5&oh=00_AfNrz0dVS0rmck9FAnmauiryEfG2YoW9Lwxk3t2ufpWiCA&oe=685BFA3E&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "feed",
+        "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505787651_18043992323631181_3156534876704766586_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQuaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=HsAx1gw3OIAQ7kNvwFJ6OlA&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTg4MTE4ODE0MzI0MDYzMw%3D%3D.3-ccb7-5&oh=00_AfP2lES35eDPSkiX8r_T7otTGXqCYDbYF-X8QhQxFy96Fw&oe=685BFA3E&_nc_sid=b41fef",
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 121,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "💻 Web Programming & UI/UX Competition 2025\n\nInformatics Event 2025 mempersembahkan kompetisi Web Programming & UI/UX terbuka untuk pelajar dan mahasiswa umum.\n\nSaatnya tunjukkan kemampuan coding & desainmu!🔥\n\n📍 Online Competition\n🗓️ Pelaksanaan: 25 Mei – 29 Juni 2025\n💰 Total Hadiah: Rp2.400.000\n📌 Pendaftaran hingga 22 Juni 2025\n🔗 Link Pendaftaran :\nhttps://hmtifunissula.com/event\n\nHTM (Harga Tiket Masuk):\nWeb Programming: Rp50.000\nUI/UX: Rp50.000\n\nInfo & ketentuan selengkapnya pada poster.\n\n📞 CP:\nAgnan Toro – 0856-2431-3465\nFazya – 0895-3771-14793\n\n#WebProgramming2025\n#UIUXCompetition\n#HMTIFUnissula\n#InformaticsBeyondLimits\n#InformaticsEvent",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "74222563986",
+                    "username": "infinitera1.0",
+                    "full_name": "INFINITERA 1.0",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/500733729_17847881409475987_7953121473684418581_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=Oo_VWRgKRyQQ7kNvwHtCdXa&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GCGX2B2TtWe3jWg-ABWwfcbXKV9ubvEnAQAB-ccb7-5&oh=00_AfMR8c6WweUjelX4KUfKuF03F5_9QyukQx4Ge1nrSn_rzg&oe=685C13A1&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.14467593,
+                "y": 0.92407405
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655191100874648016,
+        "id": "3655191100874648016_48786095180",
+        "code": "DK52PCxzWnQ",
+        "taken_at": "2025-06-15 01:59:16+00:00",
+        "media_type": 8,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        7767,
+                        15534,
+                        23301,
+                        31068,
+                        38836,
+                        43457,
+                        55301,
+                        62852,
+                        69905
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505423829_18043878398631181_5605300068519714042_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=Bo5qcldSun4Q7kNvwFM2D--&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE5MTA5MjEwMDI1ODU2Mg%3D%3D.3-ccb7-5&oh=00_AfPZihn759SQqvhsSyoI-aXTV9ClgOwfydxzd6iPGqAUSA&oe=685C0B06&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2338,
+                        4676,
+                        7014,
+                        9352,
+                        11690,
+                        14074,
+                        406153,
+                        21042,
+                        21042
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505423829_18043878398631181_5605300068519714042_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=Bo5qcldSun4Q7kNvwFM2D--&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE5MTA5MjEwMDI1ODU2Mg%3D%3D.3-ccb7-5&oh=00_AfMW5DdKrgZo0-GjeJqiCyF7rFcLuiGPpP6rRg2lUNyL-g&oe=685C0B06&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "carousel_container",
+        "thumbnail_url": null,
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 1,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 129,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "Pendaftaran Lisk Builders Challenge Round 2 SUDAH DIBUKA!\n\nPanggilan buat semua developer dan builder blockchain – waktunya bikin project kamu di Lisk dan bersaing dengan talenta terbaik se-Asia Tenggara!\n\nSelama periode hackathon, kamu juga bakal dapet workshop & mentorship dari @pelitabangsa.co.id dan @devweb3jogja\n\n🗓️ Periode submission: 10 Juni – 3 Agustus 2025\n🔗 Submit via Devfolio: link di bio atau scan QR!\n💰 Total hadiah: USD 5,000\n🎯 Tema Hackathon\n1. Consumer Apps: Web3 for Everyone!\n2. Localized DeFi: DeFi, but local and loved!\n\nJuri akan pilih 10 finalis terbaik untuk Demo Day (hybrid) di Bali! 💻🏝️\n\nJangan lupa kita bakal bahas tuntas LBC Round 2 ini di AMA Kickoff Event bareng Lisk, @blockdev.id , dan DevWeb3Jogja:\n\n🗓️ 11 Juni 2025\n🕗 20.00 WIB\n📍 X Twitter Space IDBUIDL\n🔗 Link di bio\n\nSet reminder kamu dan join ya! 💡\n——\nSubmission is NOW OPEN for Lisk Builders Challenge Round 2 SEA!\n\nCalling all blockchain builders across Southeast Asia – build your project on Lisk and compete with the region’s best!\n\nWorkshops and mentorship will be available throughout the hackathon –  supported by our friends at @pelitabangsa.co.id and @devweb3jogja \n\n🗓️ Submission period: June 10 – August 3, 2025\n🔗 Submit via Devfolio (link in bio or scan QR)\n💰 Total prize: USD 5,000\n🎯 Hackathon themes:\n1. Consumer Apps: Web3 for Everyone!\n2. Localized DeFi: DeFi, but local and loved!\n\n10 finalists will be selected and pitch at the final Demo Day in Bali (hybrid)! 💻🏝️\n\nDont forget, we’re hosting an AMA Kickoff with Lisk, @blockdev.id , and DevWeb3Jogja to cover all the details.\n\n🗓️ June 11, 2025\n🕗 8 PM GMT+7 (Jakarta Time)\n📍 X Twitter Space IDBUIDL\n🔗 Link in bio\n\nSet your reminder! 💡\n\n#LiskBuildersChallenge2 #Hackathon #blockchaindeveloper #komunitasdeveloper #developerindonesia",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "56204130073",
+                    "username": "blockdev.id",
+                    "full_name": "Blockchain Developer Community 🇮🇩",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/348442344_232820479447492_967811657874163101_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=w01gGLN415oQ7kNvwFH9mrP&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GOjOxBTEUfm9v9MAAJ1FEj2TW24NbkULAAAB-ccb7-5&oh=00_AfMqq6o5GPHEzPt0BhH508EhJ2FW9V2xmNgBpp41VbtcmA&oe=685C144E&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.13888889999999998,
+                "y": 0.9546296
+            },
+            {
+                "user": {
+                    "pk": "72732731615",
+                    "username": "liskindonesia",
+                    "full_name": "Lisk Indonesia",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/479129573_1551422132222907_7326435114497288409_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=SJHKMGFP8o8Q7kNvwGlQZB3&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GOXvjhy7exadAoMFANkoj2XruaxlbkULAAAB-ccb7-5&oh=00_AfOWm-05kuezUh5eCwaDdR6SecZHRD5jrtd7zlWDhGutHQ&oe=685C0F25&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.09375000000000001,
+                "y": 0.80833334
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [
+            {
+                "pk": "3655191092100258562",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505423829_18043878398631181_5605300068519714042_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=Bo5qcldSun4Q7kNvwFM2D--&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE5MTA5MjEwMDI1ODU2Mg%3D%3D.3-ccb7-5&oh=00_AfPZihn759SQqvhsSyoI-aXTV9ClgOwfydxzd6iPGqAUSA&oe=685C0B06&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655191091965961018",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/506332808_18043878413631181_6311206763276814997_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=z-LOINgLI1YQ7kNvwE3RtFx&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE5MTA5MTk2NTk2MTAxOA%3D%3D.3-ccb7-5&oh=00_AfMDrmrwbMsfksm1BP-GnT1tczqZ_PcgbUXm50jtplmOEw&oe=685C1895&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655191091974327498",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/506372905_18043878416631181_2699691656826003609_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=kS4cnKAb_WcQ7kNvwGn-H1d&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE5MTA5MTk3NDMyNzQ5OA%3D%3D.3-ccb7-5&oh=00_AfOtoSQK5oqr7FUZZHxT3yG_nxge3z0KKcfoyEC1xcs3_A&oe=685C035A&_nc_sid=b41fef",
+                "media_type": 1
+            }
+        ],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655189026917155986,
+        "id": "3655189026917155986_48786095180",
+        "code": "DK51w3QTYSS",
+        "taken_at": "2025-06-15 01:55:08+00:00",
+        "media_type": 8,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        10504,
+                        21008,
+                        31513,
+                        42017,
+                        52521,
+                        58771,
+                        74789,
+                        85001,
+                        94539
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505460969_18043877822631181_1273707552429513673_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=JjngrKWmjxAQ7kNvwFU43RG&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxMzkzMTUzOTM2NQ%3D%3D.3-ccb7-5&oh=00_AfOX9pvTVXpmlR_SCG0fZ52lr4jnySMwVo5rtMXLDhb83w&oe=685C0C4A&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2651,
+                        5303,
+                        7955,
+                        10606,
+                        13258,
+                        15962,
+                        460645,
+                        23865,
+                        23865
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505460969_18043877822631181_1273707552429513673_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=JjngrKWmjxAQ7kNvwFU43RG&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxMzkzMTUzOTM2NQ%3D%3D.3-ccb7-5&oh=00_AfN8HGB0lcxHDUVnR8deBF0Lo5ItuJqGrCTEQZz5UalFIA&oe=685C0C4A&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "carousel_container",
+        "thumbnail_url": null,
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 52,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "Selasar Game Design akan mengadakan Game Jam pertamanya yaitu, “Selasar Game Jam”!\n\nAda yang beda nih antara game jam ini dengan yang lain, karena game jam inimemprioritaskan eksplorasi dan inovasi mekanik permainan yang menarik.\n\nDi Game Jam ini, kalian diperbolehkan membuat Board Game atau Video Game.\n\nUntuk ketentuan, tema, dan info lebih lanjut, kalian bisa lihat-lihat di slide post ya!\n\nAda juga banyak hadiah menarik buat pemenangnya loh.\n\nJadi, tunggu apa lagi? Ayo cepat daftar jadi peserta Selasar Game Jam di: https://bit.ly/FormRegistrasiSGJ2025\n\n#selasargamedesign #selasargamejam #gamejam #gamejam2025",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "59467687742",
+                    "username": "selasargamedesign",
+                    "full_name": "Selasar Game Design",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/350748797_787621569536398_7979994452595057028_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=YO3NQa4l_cIQ7kNvwHJk2V0&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GH0A6BSOod5vVswCAIQhhMCsor5ubkULAAAB-ccb7-5&oh=00_AfMWs9ubRjfVRiAfnfmmxpxQyZ-p1QfZ6spbfZmVyNXOXQ&oe=685C003F&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.14583333,
+                "y": 0.88611114
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [
+            {
+                "pk": "3655189013931539365",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505460969_18043877822631181_1273707552429513673_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=JjngrKWmjxAQ7kNvwFU43RG&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxMzkzMTUzOTM2NQ%3D%3D.3-ccb7-5&oh=00_AfOX9pvTVXpmlR_SCG0fZ52lr4jnySMwVo5rtMXLDhb83w&oe=685C0C4A&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655189013931564231",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505483946_18043877837631181_6721873700389068707_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=O3y0JJLvnCcQ7kNvwHgarjW&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxMzkzMTU2NDIzMQ%3D%3D.3-ccb7-5&oh=00_AfMgEkpwpqMWxO0myl-QZXUDyJVJf9F7IRhOHNh7lbKvwg&oe=685C137E&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655189014216794842",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/506045750_18043877840631181_4537316598844072735_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=-XHUUNuI_RgQ7kNvwHoODTt&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxNDIxNjc5NDg0Mg%3D%3D.3-ccb7-5&oh=00_AfMlk6tYkAbEKPBwJcMFsvegste1_hs0wfFm29xoBVGj1A&oe=685C047F&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655189013931598983",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505449959_18043877849631181_4697072103816025443_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=z7EZ4Mu85zgQ7kNvwF-wSMe&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxMzkzMTU5ODk4Mw%3D%3D.3-ccb7-5&oh=00_AfMaq_HyjUXG-PfAeOJpKqAk62ECFHjNgUyUhRsjXWGlig&oe=685C0902&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655189014216861626",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505433163_18043877858631181_7586852542139869438_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=fmbboGyrEp4Q7kNvwFuQlbk&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4OTAxNDIxNjg2MTYyNg%3D%3D.3-ccb7-5&oh=00_AfPvrFD7mKsqfSh9U-2KYT9h3pZ2U9TnF2p-bZN1VZrcEg&oe=685C1F11&_nc_sid=b41fef",
+                "media_type": 1
+            }
+        ],
+        "clips_metadata": {}
+    },
+    {
+        "pk": 3655188258126504428,
+        "id": "3655188258126504428_48786095180",
+        "code": "DK51lrQzyHs",
+        "taken_at": "2025-06-15 01:53:37+00:00",
+        "media_type": 8,
+        "image_versions2": {
+            "candidates": [
+                {
+                    "estimated_scans_sizes": [
+                        11999,
+                        23998,
+                        35997,
+                        47996,
+                        59995,
+                        67134,
+                        85431,
+                        97097,
+                        107992
+                    ],
+                    "height": 1350,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505727916_18043877630631181_8408637289327580857_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=bOOXUID2INwQ7kNvwFUmEX5&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4ODI0ODA3Njk4MDQ3MA%3D%3D.3-ccb7-5&oh=00_AfO6eAXv8H0UqzkJOxvI-EsBqyDI84gKPh8X5jfphjLsbw&oe=685BFA7E&_nc_sid=b41fef",
+                    "width": 1080
+                },
+                {
+                    "estimated_scans_sizes": [
+                        2802,
+                        5605,
+                        8408,
+                        11211,
+                        14014,
+                        16872,
+                        486926,
+                        25226,
+                        25226
+                    ],
+                    "height": 450,
+                    "url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505727916_18043877630631181_8408637289327580857_n.webp?stp=dst-webp_p360x360&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=bOOXUID2INwQ7kNvwFUmEX5&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4ODI0ODA3Njk4MDQ3MA%3D%3D.3-ccb7-5&oh=00_AfPKRTfrYfC02E3L3EvouVAt-zCZmPQ1SaJgxlKFNNGdww&oe=685BFA7E&_nc_sid=b41fef",
+                    "width": 360
+                }
+            ]
+        },
+        "product_type": "carousel_container",
+        "thumbnail_url": null,
+        "location": null,
+        "user": {
+            "pk": "48786095180",
+            "username": "csrelatedcompetitions",
+            "full_name": "CompSci-Related Competitions",
+            "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/359510934_262157656443127_6443531701040908317_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=zyBLrwAF1acQ7kNvwE6t0SZ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GJazbRX3yPxVbu4AAB0Ig1vxBWxZbkULAAAB-ccb7-5&oh=00_AfNw9BQPN8YXhUDXrtySleO47XJG_7knUP05h_mc6BSTiQ&oe=685BF4B1&_nc_sid=b41fef",
+            "profile_pic_url_hd": null,
+            "is_private": false
+        },
+        "comment_count": 0,
+        "comments_disabled": false,
+        "commenting_disabled_for_viewer": false,
+        "like_count": 134,
+        "play_count": 0,
+        "has_liked": false,
+        "caption_text": "📢 Call for young entrepreneurs! 📢\n\nUI Incubate dengan bangga mempersembahkan:\n1️⃣ Hackathon UI Incubate: Kompetisi inovasi teknologi untuk Indonesia dengan total pendanaan IDR 3 Miliar!\n2️⃣ Program Inkubasi Startup UI Incubate: Dapatkan pendanaan hingga IDR 4.7 Miliar dan berbagai skema inkubasi untuk startup-mu!\n\nInilah waktunya buat kamu para mahasiswa UI, non-UI, fresh graduate/alumni, hingga publik untuk mewujudkan ide-ide brilian di berbagai bidang prioritas seperti Teknologi Kesehatan, Pangan Fungsional, Herbal, dan Obat-obatan, Teknik, serta Sosial Humaniora. Jangan lewatkan kesempatan untuk mendapatkan pendanaan, mentoring, dan jaringan yang luas untuk mengembangkan inovasimu!\n\n‼️ DEADLINE PENDAFTARAN: 18 JUNI 2025 ‼️\nSegera daftarkan dirimu dan timmu! Informasi lebih lanjut dan pendaftaran dapat diakses melalui:\n🔗 Panduan: innovation.ui.ac.id\n🔗 Pendaftaran Hackathon: https://bit.ly/UIIncubate2025\n🔗 Pendaftaran Program Inkubasi: https://bit.ly/programinkubasiiincubate\n\nYuk, jadi bagian dari perubahan dan ciptakan inovasi berdampak bersama UI Incubate!\n\n#UIIncubate #HackathonUI #InkubasiStartup #InovasiIndonesia #StartupIndonesia #Funding #Teknologi #UniversitasIndonesia #Deadline18Juni #direktoratinovasidanrisetberdampaktinggi #ui_unggul_impactful_untuk_indonesia",
+        "accessibility_caption": null,
+        "usertags": [
+            {
+                "user": {
+                    "pk": "3196459102",
+                    "username": "innovation.ui",
+                    "full_name": "DIRBT UI",
+                    "profile_pic_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-19/472022083_2003632343383453_5158901565205275986_n.jpg?stp=dst-jpg_e0_s150x150_tt6&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=xOI9-NngVAYQ7kNvwHg5n5E&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=GEN8IhydfRYCSx4HAFJlRPmjGZhHbkULAAAB-ccb7-5&oh=00_AfNO0hoTsc2rL1TMIzI003oATeunECKRzRUhAMurYRWq-w&oe=685BF2FA&_nc_sid=b41fef",
+                    "profile_pic_url_hd": null,
+                    "is_private": false
+                },
+                "x": 0.14699075,
+                "y": 0.94722223
+            }
+        ],
+        "sponsor_tags": [],
+        "video_url": null,
+        "view_count": 0,
+        "video_duration": 0.0,
+        "title": "",
+        "resources": [
+            {
+                "pk": "3655188248076980470",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505727916_18043877630631181_8408637289327580857_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=bOOXUID2INwQ7kNvwFUmEX5&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4ODI0ODA3Njk4MDQ3MA%3D%3D.3-ccb7-5&oh=00_AfO6eAXv8H0UqzkJOxvI-EsBqyDI84gKPh8X5jfphjLsbw&oe=685BFA7E&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655188248018242651",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/505802477_18043877639631181_4021831792791654898_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=udbOqaFP5K0Q7kNvwEjb6FQ&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4ODI0ODAxODI0MjY1MQ%3D%3D.3-ccb7-5&oh=00_AfNDWvcgN2wcK4mQv9tE3loLKQMsPiCv34llYrkxymuh9g&oe=685BF6C7&_nc_sid=b41fef",
+                "media_type": 1
+            },
+            {
+                "pk": "3655188247741299021",
+                "video_url": null,
+                "thumbnail_url": "https://instagram.fsub21-1.fna.fbcdn.net/v/t51.2885-15/506345170_18043877648631181_9161685290098672110_n.webp?stp=dst-webp_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjE0NDB4MTgwMC5zZHIuZjc1NzYxLmRlZmF1bHRfaW1hZ2UifQ&_nc_ht=instagram.fsub21-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QHaUWL2yAkLsN4QLUuuoGqpptStjhVHv_JpvCWp71i-aIkeFfmt3VCSVgW1HMUF_F8&_nc_ohc=3mxb_pEiwAIQ7kNvwGSKwX4&_nc_gid=31q8k3a6neUbjUz7ojppXQ&edm=ABmJApABAAAA&ccb=7-5&ig_cache_key=MzY1NTE4ODI0Nzc0MTI5OTAyMQ%3D%3D.3-ccb7-5&oh=00_AfMM7cdBSSzQIdmLNPI_Cg18oENeGnpfv4-XXhZRN6362w&oe=685BF387&_nc_sid=b41fef",
+                "media_type": 1
+            }
+        ],
+        "clips_metadata": {}
+    }
+]

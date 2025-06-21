@@ -115,6 +115,21 @@ def get_event_type_id_by_name(supabase_client: Client, type_name: str) -> str | 
         logger.error(f"Terjadi error tidak terduga saat mengambil event_type_id: {e}", exc_info=True)
         return None
 
+def get_all_event_types(client: Client) -> dict | None:
+    """Mengambil semua tipe acara dan mengembalikannya sebagai kamus nama:id."""
+    try:
+        response = client.table('event_types').select('id, name').execute()
+        if response.data:
+            # Konversi nama tipe menjadi huruf kecil untuk pencocokan yang tidak peka huruf besar-kecil
+            return {item['name'].lower(): item['id'] for item in response.data}
+        return {}
+    except PostgrestAPIError as e:
+        logger.error(f"DATABASE ERROR: Gagal mengambil tipe acara. Pesan: {e.message}")
+        return None
+    except Exception as e:
+        logger.error(f"Terjadi error tidak terduga saat mengambil tipe acara: {e}", exc_info=True)
+        return None
+
 def save_events(supabase_client: Client, events_data: list):
     """Menyimpan daftar event ke Supabase dengan memanggil RPC upsert_event_with_categories."""
     if not events_data:

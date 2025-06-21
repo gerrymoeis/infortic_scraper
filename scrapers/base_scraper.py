@@ -1,14 +1,16 @@
 import logging
+from core.shared_logger import logger
 
 class BaseScraper:
     """Kelas dasar untuk semua scraper, menyediakan antarmuka dan fungsionalitas umum."""
 
-    def __init__(self, supabase_client, source_name):
+    def __init__(self, supabase_client, source_name, debug=False):
         """Menginisialisasi scraper dengan koneksi Supabase dan nama sumber."""
         self.supabase = supabase_client
         self.source_name = source_name
-        self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.info(f"Scraper untuk {self.source_name} telah diinisialisasi.")
+        self.logger = logger
+        self.debug = debug
+        self.logger.info(f"Scraper untuk {self.source_name} telah diinisialisasi (Debug: {self.debug}).")
 
     def scrape(self):
         """

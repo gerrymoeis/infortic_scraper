@@ -1,31 +1,18 @@
-import requests
-import logging
-from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import re
-from .base_scraper import BaseScraper
+from .base_web_scraper import BaseWebScraper
 
-class InfolombaScraper(BaseScraper):
-    def __init__(self, supabase_client, source_name='infolomba.id'):
-        super().__init__(supabase_client, source_name)
+class InfolombaScraper(BaseWebScraper):
+    def __init__(self, supabase_client, source_name='infolomba.id', debug=False):
+        super().__init__(supabase_client, source_name, debug=debug)
         self.base_url = "https://www.infolomba.id/"
 
     def scrape(self):
         """Scraper untuk mengambil data dari infolomba.id dan mengembalikannya sebagai list."""
         self.logger.info(f"Mengambil data dari {self.base_url}")
         
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
-        }
-        
-        try:
-            response = requests.get(self.base_url, headers=headers, timeout=10)
-            response.raise_for_status()
-        except requests.RequestException as e:
-            self.logger.error(f"Gagal mengambil halaman: {e}")
+        soup = self._fetch_static_page(self.base_url)
+        if not soup:
             return []
-
-        soup = BeautifulSoup(response.content, 'html.parser')
         
         event_list_container = soup.find('div', id='eventsContainer')
         if not event_list_container:
@@ -63,7 +50,7 @@ class InfolombaScraper(BaseScraper):
                 full_event_data = {
                     'date_raw_text': date_raw_text,
                     'price_info': price_info,
-                    'url': detail_url, # Menyimpan URL unik dari halaman detail
+                    'source_url': detail_url, # Menyimpan URL unik dari halaman detail
                     **detail_data
                 }
                 scraped_events.append(full_event_data)
@@ -75,13 +62,11 @@ class InfolombaScraper(BaseScraper):
 
     def _deep_scrape(self, detail_url):
         """Scrapes a single event detail page for more information."""
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        }
+        soup = self._fetch_static_page(detail_url)
+        if not soup:
+            return None
+
         try:
-            response = requests.get(detail_url, headers=headers, timeout=15)
-            response.raise_for_status()
-            soup = BeautifulSoup(response.content, 'html.parser')
 
             detail_container = soup.select_one('div.event-details-container')
             if not detail_container:
@@ -103,23 +88,6 @@ class InfolombaScraper(BaseScraper):
             registration_link_element = detail_container.select_one('a.btn.btn-primary[target="_blank"]')
             registration_link = registration_link_element['href'] if registration_link_element else None
 
-            # Logika fallback yang lebih cerdas untuk menemukan link pendaftaran
-            if not registration_link and description_element:
-                all_links = description_element.find_all('a', href=re.compile(r'^(http|https)'))
-                found_link = False
-                # Prioritaskan link dengan kata kunci pendaftaran
-                for link in all_links:
-                    link_text = link.get_text(strip=True).lower()
-                    if any(keyword in link_text for keyword in ['daftar', 'registrasi', 'pendaftaran', 'register', 'form']):
-                        registration_link = link['href']
-                        self.logger.info(f"Menemukan link pendaftaran via keyword: {registration_link}")
-                        found_link = True
-                        break
-                # Jika tidak ada keyword yang cocok, ambil link pertama sebagai fallback terakhir
-                if not found_link and all_links:
-                    registration_link = all_links[0]['href']
-                    self.logger.info(f"Menggunakan link pertama dari deskripsi sebagai fallback: {registration_link}")
-
             return {
                 'title': title,
                 'description': description,
@@ -128,11 +96,6 @@ class InfolombaScraper(BaseScraper):
                 'registration_url': registration_link,
             }
 
-        except requests.RequestException as e:
-            self.logger.error(f"Gagal mengambil detail dari {detail_url}", exc_info=True)
-            return None
         except Exception as e:
-            self.logger.error(f"Gagal mem-parsing halaman detail {detail_url}: {e}")
-            import traceback
-            traceback.print_exc()
+            self.logger.error(f"Gagal mem-parsing halaman detail {detail_url}: {e}", exc_info=True)
             return None

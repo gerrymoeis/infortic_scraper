@@ -50,152 +50,142 @@ def parse_price(price_text: str) -> dict[str, int | None]:
 def parse_dates(raw_date_text: str) -> dict[str, datetime | None]:
     """
     Menganalisis teks tanggal mentah untuk mengekstrak 'deadline', 'event_date_start',
-    dan 'event_date_end' dengan analisis kontekstual. Semua datetime yang dikembalikan adalah timezone-aware (UTC).
+    dan 'event_date_end'. Logika ini memprioritaskan tanggal terjauh yang ditemukan sebagai deadline.
+    Semua datetime yang dikembalikan adalah timezone-aware (UTC).
     """
     if not raw_date_text or not isinstance(raw_date_text, str):
         return {'deadline': None, 'event_date_start': None, 'event_date_end': None}
 
-    # Definisikan kata kunci untuk setiap peran tanggal
-    deadline_keywords = ['deadline', 'pendaftaran', 'batas akhir', 'ditutup', 'terakhir']
-    event_keywords = ['pelaksanaan', 'acara', 'berlangsung', 'tanggal acara', 'digelar pada', 'dimulai']
-
-    # Inisialisasi hasil
-    dates = {'deadline': None, 'event_date_start': None, 'event_date_end': None}
-    
-    # Normalisasi teks
-    text_lower = raw_date_text.lower()
-
-    # Pisahkan teks menjadi kalimat atau klausa untuk analisis terisolasi
-    clauses = re.split(r'[.,;\n]', text_lower)
-    
-    # 1. Pencarian Berdasarkan Konteks
-    for clause in clauses:
-        if not clause.strip():
-            continue
-
-        found_in_clause = search_dates(clause, languages=['id'], settings={'PREFER_DATES_FROM': 'future'})
-        if not found_in_clause:
-            continue
-        
-        # Ambil semua tanggal yang ditemukan dalam klausa dan buat timezone-aware (UTC)
-        clause_datetimes = [dt.replace(tzinfo=timezone.utc) for _, dt in found_in_clause]
-
-        is_deadline_clause = any(keyword in clause for keyword in deadline_keywords)
-        is_event_clause = any(keyword in clause for keyword in event_keywords)
-
-        if is_deadline_clause:
-            if not dates['deadline']:
-                dates['deadline'] = max(clause_datetimes) # Ambil tanggal terakhir jika ada rentang
-        
-        elif is_event_clause:
-            if not dates['event_date_start']:
-                dates['event_date_start'] = min(clause_datetimes)
-            if len(clause_datetimes) > 1 and not dates['event_date_end']:
-                dates['event_date_end'] = max(clause_datetimes)
-
-    # 2. Logika Fallback jika pencarian kontekstual tidak lengkap
-    all_found_dates = sorted(list(set([dt.replace(tzinfo=timezone.utc) for _, dt in search_dates(text_lower, languages=['id'], settings={'PREFER_DATES_FROM': 'future'}) or []])))
-
-    if not all_found_dates:
+    text_to_parse = raw_date_text.strip()
+    if text_to_parse == '-':
+        logger.debug("Parsing date string '-' as no deadline.")
         return {'deadline': None, 'event_date_start': None, 'event_date_end': None}
 
-    # Jika hanya satu tanggal ditemukan, asumsikan itu adalah deadline
-    if len(all_found_dates) == 1:
-        if not dates['deadline'] and not dates['event_date_start']:
-            dates['deadline'] = all_found_dates[0]
+    text_lower = text_to_parse.lower()
+    month_map = {
+        'jan': 'january', 'feb': 'february', 'mar': 'march', 'apr': 'april',
+        'mei': 'may', 'jun': 'june', 'jul': 'july', 'ags': 'august',
+        'sep': 'september', 'okt': 'october', 'nov': 'november', 'des': 'december'
+    }
+    for indo, eng in month_map.items():
+        # Gunakan fungsi pengganti untuk memastikan kecocokan kata utuh dan case-insensitive
+        text_lower = re.sub(r'\b' + indo + r'\b', eng, text_lower, flags=re.IGNORECASE)
 
-    # Jika dua tanggal ditemukan
-    elif len(all_found_dates) == 2:
-        if not dates['deadline']:
-            dates['deadline'] = all_found_dates[0]
-        if not dates['event_date_start']:
-            dates['event_date_start'] = all_found_dates[1]
-
-    # Jika lebih dari dua tanggal ditemukan
-    elif len(all_found_dates) > 2:
-        if not dates['deadline']:
-            dates['deadline'] = all_found_dates[0] # Asumsi tanggal pertama adalah deadline
-        if not dates['event_date_start']:
-            dates['event_date_start'] = all_found_dates[1] # Asumsi tanggal kedua adalah awal acara
-        if not dates['event_date_end']:
-            dates['event_date_end'] = all_found_dates[-1] # Asumsi tanggal terakhir adalah akhir acara
-
-    # 3. Validasi dan Penyesuaian Akhir
-    # Pastikan deadline tidak lebih lambat dari tanggal mulai acara
-    if dates['deadline'] and dates['event_date_start'] and dates['deadline'] > dates['event_date_start']:
-        logger.warning(f"Logika Peringatan: Deadline terdeteksi ({dates['deadline']}) lebih lambat dari tanggal mulai acara ({dates['event_date_start']}). Nilai akan ditukar.")
-        dates['deadline'], dates['event_date_start'] = dates['event_date_start'], dates['deadline']
-
-    # Pastikan event_date_end tidak lebih awal dari event_date_start
-    if dates['event_date_start'] and dates['event_date_end'] and dates['event_date_end'] < dates['event_date_start']:
-        dates['event_date_end'] = None
+    # Pengaturan untuk dateparser
+    # REQUIRE_PARTS memastikan kita tidak mengambil tanggal parsial seperti 'juni' saja
+    settings = {'PREFER_DATES_FROM': 'future', 'REQUIRE_PARTS': ['day', 'month']}
     
-    # Jika event_date_end tidak ada tapi start ada, set end sama dengan start
-    if dates['event_date_start'] and not dates['event_date_end']:
-        dates['event_date_end'] = dates['event_date_start']
+    found_dates = search_dates(text_lower, languages=['id'], settings=settings)
 
-    # Pastikan deadline adalah tanggal yang paling akhir jika tidak masuk akal
-    if dates['deadline'] and dates['event_date_start'] and dates['deadline'] < dates['event_date_start']:
-        # Tukar jika deadline lebih awal dari acara (tidak umum, tapi bisa terjadi)
-        logger.warning(f"Deadline {dates['deadline']} lebih awal dari tanggal mulai acara {dates['event_date_start']}. Menukar nilai.")
-        dates['deadline'], dates['event_date_start'] = dates['event_date_start'], dates['deadline']
+    if not found_dates:
+        logger.warning(f"Dateparser tidak menemukan tanggal valid di: '{raw_date_text}'")
+        return {'deadline': None, 'event_date_start': None, 'event_date_end': None}
 
-    return dates
+    # Konversi semua tanggal yang ditemukan ke UTC
+    datetimes = [dt.replace(tzinfo=timezone.utc) for _, dt in found_dates]
+
+    # Logika dasar:
+    # - Deadline adalah tanggal terjauh.
+    # - Jika ada lebih dari satu tanggal, tanggal paling awal adalah awal acara, terjauh adalah akhir acara.
+    
+    deadline = max(datetimes)
+    event_date_start = min(datetimes) if len(datetimes) > 1 else None
+    event_date_end = max(datetimes) if len(datetimes) > 1 else None
+    
+    # Jika hanya ada satu tanggal, itu bisa jadi deadline dan juga tanggal acara.
+    if len(datetimes) == 1:
+        event_date_start = datetimes[0]
+        event_date_end = datetimes[0]
+
+    logger.debug(
+        f"Parsed '{raw_date_text}' -> "
+        f"Deadline: {deadline}, Start: {event_date_start}, End: {event_date_end}"
+    )
+
+    return {
+        'deadline': deadline,
+        'event_date_start': event_date_start,
+        'event_date_end': event_date_end
+    }
 
 def clean_title(title: str) -> str:
-    """Removes common prefixes like [GRATIS] from the title."""
+    """Removes common prefixes and normalizes parts of the title."""
     if not title:
         return ''
-    # Hapus kurung siku dan isinya (misal: [GRATIS], [ONLINE])
-    cleaned_title = re.sub(r'\[.*?\]\s*', '', title).strip()
-    return cleaned_title
+    
+    # Remove common conversational/announcement prefixes
+    # e.g., "Dibuka, Pendaftaran Lomba..." -> "Lomba..."
+    cleaned_title = re.sub(r'^(dibuka,?\s*)?(pendaftaran,?\s*)', '', title, flags=re.IGNORECASE)
+    
+    # Remove bracketed prefixes like [GRATIS], [LOMBA], etc.
+    cleaned_title = re.sub(r'^\[.*?\]\s*', '', cleaned_title, flags=re.IGNORECASE)
+
+    # Normalize year ranges like 2025/2025 to 2025
+    cleaned_title = re.sub(r'(\d{4})/\1', r'\1', cleaned_title)
+    
+    return cleaned_title.strip()
 
 def enhance_registration_info(event: dict) -> dict:
     """
     Enhances event data by extracting fallback registration URLs and organizers
-    from the description text. It prioritizes Instagram handles.
+    from the description text. It prioritizes Instagram handles and registration keywords.
     """
     description = event.get('description', '')
-    if not description or not isinstance(description, str):
+    if not description:
         return event
 
-    # Proceed if registration_url is missing, empty, or just a copy of the source URL
-    is_low_quality_fallback = event.get('registration_url') == event.get('url')
-    if not event.get('registration_url') or is_low_quality_fallback:
-        # 1. Prioritize Instagram handles
-        # Regex to find handles like @username, avoiding email addresses
-        ig_handle_match = re.search(r'(?<!\w)@([\w.]+)', description)
-        if ig_handle_match:
-            handle = ig_handle_match.group(1).strip('.') # Remove trailing dots
-            event['registration_url'] = f"https://www.instagram.com/{handle}/"
-            logger.info(f"Fallback: Found Instagram handle '@{handle}' and set it as registration_url for '{event.get('title')}'.")
+    # Fallback for registration_url if it's missing
+    if not event.get('registration_url'):
+        all_links = re.findall(r'https?://[\S]+', description)
+        found_link = False
+        # Prioritize links with registration keywords
+        for link in all_links:
+            # Simple check if keywords are in the text surrounding the link
+            # A more robust solution might use BeautifulSoup if the description is HTML
+            link_context_search = re.search(f"(daftar|registrasi|pendaftaran|register|form|bit\.ly|s\.id).{{0,50}}{re.escape(link)}", description, re.IGNORECASE)
+            if link_context_search:
+                event['registration_url'] = link.strip('.,')
+                logger.info(f"Fallback: Found registration link via keyword: {event['registration_url']}")
+                found_link = True
+                break
+        
+        # If no keyword link, use the first non-social-media link as a fallback
+        if not found_link and all_links:
+            for link in all_links:
+                if not any(social in link for social in ['instagram.com', 'facebook.com', 'twitter.com']):
+                    event['registration_url'] = link.strip('.,')
+                    logger.info(f"Fallback: Using first non-social link from description: {event['registration_url']}")
+                    break
 
-    # Enhance organizer info separately
+    # Fallback for organizer if it's missing
     if not event.get('organizer') or event.get('organizer') == 'N/A':
+        # Try to find an Instagram handle mention
         ig_handle_match = re.search(r'(?<!\w)@([\w.]+)', description)
         if ig_handle_match:
             handle = ig_handle_match.group(1).strip('.')
             organizer_name = handle.replace('.', ' ').replace('_', ' ').title()
             event['organizer'] = organizer_name
             logger.info(f"Fallback: Found Instagram handle '@{handle}' and set '{organizer_name}' as organizer for '{event.get('title')}'.")
+
             
     return event
 
 
-CATEGORY_KEYWORDS = {
-    'web-development': ['web', 'website', 'frontend', 'backend', 'fullstack', 'react', 'vue', 'angular', 'laravel', 'php', 'node.js', 'django', 'flask'],
-    'mobile-development': ['mobile', 'android', 'ios', 'flutter', 'react native', 'swift', 'kotlin'],
-    'ui-ux-design': ['ui/ux', 'ui-ux', 'user interface', 'user experience', 'figma', 'sketch', 'adobe xd', 'wireframe', 'prototyping'],
-    'desain-grafis': ['desain grafis', 'graphic design', 'photoshop', 'illustrator', 'coreldraw', 'poster', 'logo', 'branding'],
-    'data-science': ['data science', 'data scientist', 'machine learning', 'analis data', 'pandas', 'numpy', 'scikit-learn'],
-    'artificial-intelligence': ['artificial intelligence', 'ai', 'kecerdasan buatan', 'deep learning', 'tensorflow', 'pytorch'],
-    'competitive-programming': ['competitive programming', 'cp', 'pemrograman kompetitif', 'icpc', 'gemastik', 'osn', 'problem solving'],
-    'cyber-security': ['cyber security', 'keamanan siber', 'hacking', 'ethical hacking', 'penetration testing', 'ctf', 'capture the flag'],
-    'game-development': ['game dev', 'game development', 'pengembangan game', 'unity', 'unreal engine'],
+CLASSIFICATION_KEYWORDS = {
+    'ui-ux-design': ['ui/ux', 'ui-ux', 'user experience', 'user interface', 'figma', 'design system'],
+    'web-development': ['webinar', 'workshop', 'seminar', 'talkshow', 'pelatihan', 'bootcamp', 'web development', 'frontend', 'backend', 'fullstack'],
+    'mobile-development': ['mobile development', 'android', 'ios', 'flutter', 'react native'],
+    'software-development': ['software development', 'software engineering', 'pemrograman', 'coding'],
+    'data-science': ['data science', 'machine learning', 'deep learning', 'ai', 'artificial intelligence', 'analisis data', 'data analytics', 'analitika data'],
+    'cyber-security': ['cyber security', 'keamanan siber', 'ctf', 'capture the flag', 'ethical hacker', 'hacking'],
+    'game-development': ['game development', 'pengembangan game', 'unity', 'unreal engine'],
+    'cloud-computing': ['cloud', 'cloud computing', 'aws', 'azure', 'gcp'],
+    'internet-of-things': ['iot', 'internet of things'],
     'business-it-case': ['business case', 'studi kasus', 'business plan', 'ide bisnis', 'inovasi bisnis'],
     'esai-ilmiah': ['esai', 'essay', 'esai ilmiah'],
     'karya-tulis-ilmiah': ['karya tulis ilmiah', 'kti', 'lkti', 'paper', 'jurnal'],
-    'desain-poster': ['desain poster', 'poster digital', 'lomba poster']
+    'desain-poster': ['desain poster', 'poster digital', 'digital poster', 'lomba poster'],
+    'beasiswa': ['beasiswa', 'scholarship', 'djarum']
 }
 
 def classify_event(event: dict, categories: list[dict]) -> list[str]:
@@ -210,7 +200,7 @@ def classify_event(event: dict, categories: list[dict]) -> list[str]:
 
     for category in categories:
         slug = category.get('slug')
-        keywords = CATEGORY_KEYWORDS.get(slug, [])
+        keywords = CLASSIFICATION_KEYWORDS.get(slug, [])
         for keyword in keywords:
             if re.search(r'\b' + re.escape(keyword) + r'\b', text_to_analyze):
                 category_ids.add(category['id'])
@@ -220,6 +210,87 @@ def classify_event(event: dict, categories: list[dict]) -> list[str]:
         logger.warning(f"Tidak ada kategori yang dapat ditetapkan untuk acara: '{event.get('title')}'")
 
     return list(category_ids)
+
+def score_line_as_title(line: str) -> int:
+    """Scores a line based on its likelihood of being an event title."""
+    score = 0
+    line_lower = line.lower()
+
+    # Heavily penalize generic headlines
+    shouty_patterns = [
+        'we are hiring', 'open registration', 'we are open for internship', 'kesempatan emas',
+        'daftar sekarang', 'link di bio', 'swipe left', 'dibuka pendaftaran', 'pendaftaran dibuka',
+        'final call', 'deadline pendaftaran', 'open internship alert', 'internship opportunities',
+        'dicari:', 'dibuka program', 'calling for', 'join us'
+    ]
+    if any(pattern in line_lower for pattern in shouty_patterns):
+        score -= 100
+
+    # Penalize lines that are just noise
+    if line.startswith(('http', 'www', '#', '@', 'wa.me')):
+        score -= 50
+    if len(line.split()) < 3: # Too short to be a meaningful title
+        score -= 20
+    if len(line) > 150: # Too long
+        score -= 20
+
+    # Reward lines that look like titles
+    if 15 < len(line) < 120:
+        score += 30
+
+    # Title Case is a very strong positive signal
+    if line.istitle() and len(line.split()) > 2:
+        score += 50
+
+    # Presence of keywords is a good sign
+    title_keywords = ['lomba', 'kompetisi', 'sayembara', 'beasiswa', 'scholarship', 'internship', 'magang', 'webinar', 'seminar', 'workshop', 'pelatihan', 'bootcamp', 'program']
+    if any(keyword in line_lower for keyword in title_keywords):
+        score += 40
+
+    # Reward lines containing a proper name/organization (usually capitalized)
+    if any(word.isupper() and len(word) > 3 for word in line.split()):
+        score += 20
+
+    return score
+
+def extract_title_from_caption(caption: str) -> str:
+    """
+    Extracts the best possible title from a caption by scoring each line.
+    """
+    if not caption:
+        return ""
+
+    lines = [line.strip() for line in caption.split('\n') if line.strip()]
+    if not lines:
+        return ""
+
+    # First, check for an explicit title in brackets, as it's a very strong signal
+    for line in lines:
+        match = re.search(r'\[(.*?)\]', line)
+        if match:
+            potential_title = match.group(1).strip()
+            if 15 < len(potential_title) < 120 and score_line_as_title(potential_title) > 0:
+                return potential_title
+
+    # If no bracketed title, score all lines and find the best one
+    scored_lines = []
+    for line in lines:
+        score = score_line_as_title(line)
+        # Only consider lines with a positive score as potential titles
+        if score > 0:
+            scored_lines.append((score, line))
+
+    if not scored_lines:
+        return ""
+
+    # Sort by score in descending order and return the line with the highest score
+    scored_lines.sort(key=lambda x: x[0], reverse=True)
+    
+    best_title = scored_lines[0][1]
+    
+    # Final cleaning of the best title
+    return clean_title(best_title)
+
 
 def clean_event_data(event: dict, categories: list[dict]) -> dict:
     """Main function to clean and normalize a single event dictionary."""
@@ -237,6 +308,9 @@ def clean_event_data(event: dict, categories: list[dict]) -> dict:
 
     # Enhance contact and registration info from description
     event = enhance_registration_info(event)
+
+    # Ensure the 'url' field is set from the (potentially enhanced) registration_url
+    event['url'] = event.get('registration_url')
 
     # Classify event into categories
     event['category_ids'] = classify_event(event, categories)

@@ -1,24 +1,13 @@
-import logging
-import os
+from core.logging_config import get_logger
 
 class BaseScraper:
     """A base class for all scrapers, providing a common interface and functionality."""
 
-    def __init__(self, source_id, source_name, debug=False, log_dir="logs"):
-        """Initializes the scraper with a source ID and name."""
-        self.source_id = source_id
-        self.source_name = source_name
+    def __init__(self, debug=False):
+        """Initializes the base scraper."""
         self.debug = debug
-        self.log_dir = log_dir
-        self.logger = logging.getLogger(f"scrapers.{self.source_name}")
-
-        if not os.path.exists(self.log_dir):
-            os.makedirs(self.log_dir)
-
-        if self.debug:
-            self.logger.setLevel(logging.INFO)
-        else:
-            self.logger.setLevel(logging.WARNING)
+        # Get a logger specific to the concrete scraper's module name
+        self.logger = get_logger(self.__class__.__module__)
 
     def scrape(self):
         """

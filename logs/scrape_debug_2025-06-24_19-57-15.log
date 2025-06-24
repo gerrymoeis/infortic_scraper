@@ -1,0 +1,110 @@
+2025-06-24 19:57:15,984 - root                      - INFO     - Debug log will be saved to logs\scrape_debug_2025-06-24_19-57-15.log
+2025-06-24 19:57:17,387 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: True)
+2025-06-24 19:57:17,778 - infortic_scraper          - INFO     - Memulai tahap pembersihan data kompetisi kedaluwarsa di database...
+2025-06-24 19:57:17,778 - core.database             - INFO     - Menghapus kompetisi yang sudah kedaluwarsa dari database...
+2025-06-24 19:57:18,667 - httpx                     - INFO     - HTTP Request: DELETE https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/competitions?deadline=lt.2025-06-24T19%3A57%3A18.072511 "HTTP/2 200 OK"
+2025-06-24 19:57:18,669 - core.database             - INFO     - Tidak ada kompetisi kedaluwarsa yang perlu dihapus.
+2025-06-24 19:57:18,670 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-24 19:57:18,670 - core.database             - INFO     - Mengambil daftar kategori dari Supabase...
+2025-06-24 19:57:18,765 - httpx                     - INFO     - HTTP Request: GET https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/categories?select=id%2Cname%2Cslug "HTTP/2 200 OK"
+2025-06-24 19:57:18,766 - core.database             - INFO     - Berhasil mengambil 16 kategori.
+2025-06-24 19:57:18,766 - infortic_scraper          - INFO     - Memulai proses untuk sumber: instagram.com
+2025-06-24 19:57:18,766 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: instagram.com
+2025-06-24 19:57:18,849 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-24 19:57:18,851 - core.database             - INFO     - Berhasil mendapatkan source_id: 6fbad0b8-c4c4-425e-bace-28f3d8e52a04
+2025-06-24 19:57:18,851 - scrapers.instagram.com    - INFO     - Scraper for instagram.com initialized (Debug: True).
+2025-06-24 19:57:18,851 - scrapers.instagram.com    - INFO     - Starting Instagram scrape with Playwright.
+2025-06-24 19:57:20,451 - scrapers.instagram.com    - INFO     - Navigating to csrelatedcompetitions's profile.
+2025-06-24 19:57:21,373 - scrapers.instagram.com    - INFO     - Waiting for profile header to load...
+2025-06-24 19:57:22,471 - scrapers.instagram.com    - INFO     - Profile header loaded.
+2025-06-24 19:57:22,471 - scrapers.instagram.com    - INFO     - Scrolling down to trigger post loading...
+2025-06-24 19:57:22,477 - scrapers.instagram.com    - INFO     - Scroll attempt 1/3, waiting for content...
+2025-06-24 19:57:25,505 - scrapers.instagram.com    - INFO     - Scroll attempt 2/3, waiting for content...
+2025-06-24 19:57:28,566 - scrapers.instagram.com    - INFO     - Scroll attempt 3/3, waiting for content...
+2025-06-24 19:57:31,711 - scrapers.instagram.com    - INFO     - Post grid found with BeautifulSoup. Found 36 initial posts. Proceeding with scrape.
+2025-06-24 19:57:31,711 - scrapers.instagram.com    - INFO     - Scrolling to load all posts and collecting URLs with BeautifulSoup...
+2025-06-24 19:57:31,837 - scrapers.instagram.com    - INFO     - Found 36 new post URLs. Total unique URLs: 36
+2025-06-24 19:57:34,955 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 48
+2025-06-24 19:57:38,081 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 60
+2025-06-24 19:57:41,202 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 72
+2025-06-24 19:57:44,342 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 84
+2025-06-24 19:57:47,461 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 96
+2025-06-24 19:57:50,593 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 108
+2025-06-24 19:57:53,736 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 120
+2025-06-24 19:57:56,881 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 132
+2025-06-24 19:57:59,998 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 144
+2025-06-24 19:58:03,113 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 156
+2025-06-24 19:58:06,229 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 168
+2025-06-24 19:58:09,348 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 180
+2025-06-24 19:58:12,469 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 192
+2025-06-24 19:58:15,591 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 204
+2025-06-24 19:58:18,703 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 216
+2025-06-24 19:58:21,815 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 228
+2025-06-24 19:58:24,945 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 240
+2025-06-24 19:58:28,070 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 252
+2025-06-24 19:58:31,212 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 264
+2025-06-24 19:58:34,326 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 276
+2025-06-24 19:58:37,478 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 288
+2025-06-24 19:58:40,600 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 300
+2025-06-24 19:58:43,718 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 312
+2025-06-24 19:58:46,856 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 324
+2025-06-24 19:58:50,003 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 336
+2025-06-24 19:58:53,126 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 348
+2025-06-24 19:58:56,248 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 360
+2025-06-24 19:58:59,359 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 372
+2025-06-24 19:59:02,473 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 384
+2025-06-24 19:59:05,593 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 396
+2025-06-24 19:59:08,703 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 408
+2025-06-24 19:59:11,823 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 420
+2025-06-24 19:59:14,946 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 432
+2025-06-24 19:59:18,069 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 444
+2025-06-24 19:59:21,183 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 456
+2025-06-24 19:59:24,300 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 468
+2025-06-24 19:59:27,425 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 480
+2025-06-24 19:59:30,549 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 492
+2025-06-24 19:59:33,663 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 504
+2025-06-24 19:59:36,797 - scrapers.instagram.com    - INFO     - Found 11 new post URLs. Total unique URLs: 515
+2025-06-24 19:59:39,912 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 527
+2025-06-24 19:59:43,029 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 539
+2025-06-24 19:59:46,172 - scrapers.instagram.com    - INFO     - Found 11 new post URLs. Total unique URLs: 550
+2025-06-24 19:59:49,285 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 562
+2025-06-24 19:59:52,397 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 574
+2025-06-24 19:59:55,513 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 586
+2025-06-24 19:59:58,721 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 598
+2025-06-24 20:00:01,857 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 610
+2025-06-24 20:00:04,966 - scrapers.instagram.com    - INFO     - Found 12 new post URLs. Total unique URLs: 622
+2025-06-24 20:00:07,970 - scrapers.instagram.com    - WARNING  - Reached max scroll attempts.
+2025-06-24 20:00:07,971 - scrapers.instagram.com    - INFO     - Finished scrolling. Collected 622 unique post URLs.
+2025-06-24 20:00:07,972 - scrapers.instagram.com    - INFO     - Saved collected URLs to logs\instagram_urls_csrelatedcompetitions.txt
+2025-06-24 20:00:07,972 - scrapers.instagram.com    - INFO     - Scraping post: https://www.instagram.com/csrelatedcompetitions/p/C-2In76T4YH/
+2025-06-24 20:00:09,833 - scrapers.instagram.com    - INFO     - Article element loaded.
+2025-06-24 20:00:10,061 - scrapers.instagram.com    - INFO     - Found caption for https://www.instagram.com/csrelatedcompetitions/p/C-2In76T4YH/
+2025-06-24 20:00:10,063 - scrapers.instagram.com    - INFO     - Scraping post: https://www.instagram.com/csrelatedcompetitions/p/C-4Kj9NzrkA/
+2025-06-24 20:00:11,979 - scrapers.instagram.com    - INFO     - Article element loaded.
+2025-06-24 20:00:12,005 - scrapers.instagram.com    - INFO     - Found caption for https://www.instagram.com/csrelatedcompetitions/p/C-4Kj9NzrkA/
+2025-06-24 20:00:12,006 - scrapers.instagram.com    - INFO     - Scraping post: https://www.instagram.com/csrelatedcompetitions/p/C-67F0Szjuq/
+2025-06-24 20:00:13,577 - scrapers.instagram.com    - INFO     - Article element loaded.
+2025-06-24 20:00:13,918 - scrapers.instagram.com    - INFO     - Found caption for https://www.instagram.com/csrelatedcompetitions/p/C-67F0Szjuq/
+2025-06-24 20:00:13,919 - scrapers.instagram.com    - INFO     - Scraping post: https://www.instagram.com/csrelatedcompetitions/p/C-DNUbbT6M3/
+2025-06-24 20:00:15,597 - scrapers.instagram.com    - INFO     - Article element loaded.
+2025-06-24 20:00:15,714 - scrapers.instagram.com    - INFO     - Found caption for https://www.instagram.com/csrelatedcompetitions/p/C-DNUbbT6M3/
+2025-06-24 20:00:15,715 - scrapers.instagram.com    - INFO     - Scraping post: https://www.instagram.com/csrelatedcompetitions/p/C-DO-yvz1Zl/
+2025-06-24 20:00:17,469 - scrapers.instagram.com    - INFO     - Article element loaded.
+2025-06-24 20:00:17,728 - scrapers.instagram.com    - INFO     - Found caption for https://www.instagram.com/csrelatedcompetitions/p/C-DO-yvz1Zl/
+2025-06-24 20:00:17,728 - scrapers.instagram.com    - INFO     - Scraping finished.
+2025-06-24 20:00:18,198 - infortic_scraper          - INFO     - Selesai scrape dari instagram.com, mendapatkan 5 kompetisi mentah.
+2025-06-24 20:00:18,200 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'Let's build the future together! 💡' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-24 20:00:18,202 - core.data_cleaner         - INFO     - Fallback: Using first non-social link from description: https://mage-its.id/competition/ui-ux
+2025-06-24 20:00:18,202 - core.data_cleaner         - INFO     - Fallback: Found Instagram handle '@mage_its' and set 'Mage Its' as organizer for '👾A NEW CHALLENGE AWAITS👾'.
+2025-06-24 20:00:18,203 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition '👾A NEW CHALLENGE AWAITS👾' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-24 20:00:18,204 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'IIT Competition 2024 menghadirkan berbagai lomba seru:' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-24 20:00:18,204 - core.data_cleaner         - INFO     - Fallback: Found Instagram handle '@cpsc_ipb' and set 'Cpsc Ipb' as organizer for 'CPSC 2024 PRE-REGISTRATION IS NOW OPEN‼️'.
+2025-06-24 20:00:18,205 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'CPSC 2024 PRE-REGISTRATION IS NOW OPEN‼️' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-24 20:00:18,206 - core.data_cleaner         - INFO     - Fallback: Using first non-social link from description: https://tlx.toki.id/contests/troc-37
+2025-06-24 20:00:18,206 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Silakan kunjungi https://tlx.toki.id/contests/troc-37 untuk informasi lebih lanjut'
+2025-06-24 20:00:18,206 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'Silakan kunjungi https://tlx.toki.id/contests/troc-37 untuk informasi lebih lanjut' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-24 20:00:18,206 - infortic_scraper          - WARNING  - Tidak ada kompetisi baru yang berhasil di-scrape dan divalidasi dari semua sumber.
+2025-06-24 20:00:18,206 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-24 20:00:18,206 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-24 20:00:18,206 - infortic_scraper          - INFO     - instagram.com: 5 acara
+2025-06-24 20:00:18,206 - infortic_scraper          - INFO     - --------------------------------

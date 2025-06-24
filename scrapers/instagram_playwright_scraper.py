@@ -1,18 +1,18 @@
 import os
 import time
 from playwright.sync_api import sync_playwright
+from bs4 import BeautifulSoup
+import dateparser
 from scrapers.base_scraper import BaseScraper
+from core.data_cleaner import extract_title_from_caption
 
 class InstagramPlaywrightScraper(BaseScraper):
-    def __init__(self, source_id, source_name="instagram.com", debug=False, log_dir="logs"):
-        super().__init__(source_id, source_name, debug, log_dir)
-
-        username = os.getenv("INSTAGRAM_USERNAME")
-        password = os.getenv("INSTAGRAM_PASSWORD")
-
-        self.username = "csrelatedcompetitions"
+    def __init__(self, target_account, debug=False):
+        super().__init__(debug=debug)
+        self.target_account = target_account
         self.auth_file = 'auth/instagram_auth_state.json'
-        self.logger.info(f"Scraper for {self.source_name} initialized (Debug: {self.debug}).")
+        self.log_dir = 'logs'  # Define log_dir for debug artifacts
+        self.logger.info(f"InstagramPlaywrightScraper initialized for '{self.target_account}' (Debug: {self.debug}).")
 
     def scrape(self):
         self.logger.info("Starting Instagram scrape with Playwright.")
@@ -30,7 +30,7 @@ class InstagramPlaywrightScraper(BaseScraper):
             )
             page = context.new_page()
 
-            target_account = self.username
+            target_account = self.target_account
             self.logger.info(f"Navigating to {target_account}'s profile.")
             page.goto(f"https://www.instagram.com/{target_account}/")
 
@@ -39,92 +39,144 @@ class InstagramPlaywrightScraper(BaseScraper):
                 page.wait_for_selector("header h2", timeout=15000)
                 self.logger.info("Profile header loaded.")
 
-                # Give the page a moment and try a gentle scroll to trigger lazy-loading
-                self.logger.info("Performing a gentle scroll to encourage post grid to load...")
-                time.sleep(2) # Brief pause
-                page.mouse.wheel(0, 500) # Scroll down slightly
-                time.sleep(2) # Wait for content to potentially load
+                # Scroll a few times to load initial posts
+                self.logger.info("Scrolling down to trigger post loading...")
+                for i in range(3):
+                    page.mouse.wheel(0, 1500)
+                    self.logger.info(f"Scroll attempt {i+1}/3, waiting for content...")
+                    time.sleep(3)
 
-                # New strategy: Check for the post grid directly with a longer timeout.
-                self.logger.info("Checking for post grid to determine if account is public...")
-                page.wait_for_selector("a[href^='/p/']", timeout=20000) # Use a more generic selector for any post link
-                self.logger.info("Post grid found. Account is public, proceeding with scrape.")
+                # Use BeautifulSoup to find posts
+                html_content = page.content()
+                soup = BeautifulSoup(html_content, 'html.parser')
+                
+                post_selector = f'a[href^="/{target_account}/p/"]'
+                post_links = soup.select(post_selector)
+
+                if not post_links:
+                    raise Exception("No post links found with BeautifulSoup. Account might be private or the UI has changed.")
+                
+                self.logger.info(f"Post grid found with BeautifulSoup. Found {len(post_links)} initial posts. Proceeding with scrape.")
 
             except Exception as e:
-                # This exception will likely be a TimeoutError if the post grid isn't found.
-                self.logger.warning(f"Could not find post grid for '{target_account}'. The account is likely private or restricted. Error: {e}")
+                self.logger.warning(f"Could not find post grid for '{target_account}'. Error: {e}")
                 # Save screenshot and HTML for debugging
                 screenshot_path = os.path.join(self.log_dir, f"instagram_profile_failed_{target_account}.png")
                 html_path = os.path.join(self.log_dir, f"instagram_profile_failed_{target_account}.html")
-                main_html_path = os.path.join(self.log_dir, f"instagram_profile_failed_{target_account}_main.html")
-
                 page.screenshot(path=screenshot_path)
-                
                 with open(html_path, "w", encoding="utf-8") as f:
                     f.write(page.content())
-                
-                # Try to get the HTML of the main element for more focused debugging
-                try:
-                    main_element = page.locator("main")
-                    if main_element.count() > 0:
-                        main_html = main_element.inner_html()
-                        with open(main_html_path, "w", encoding="utf-8") as f:
-                            f.write(main_html)
-                        self.logger.info(f"Saved main element HTML to {main_html_path}")
-                    else:
-                        self.logger.warning("Could not find main element on the page.")
-                except Exception as e:
-                    self.logger.error(f"Could not get main element HTML: {e}")
-
-                self.logger.info(f"Saved screenshot to {screenshot_path}")
-                self.logger.info(f"Saved HTML to {html_path}")
+                self.logger.info(f"Saved screenshot to {screenshot_path} and HTML to {html_path}")
                 browser.close()
                 return []
 
-            self.logger.info("Scrolling to load all posts and collecting URLs...")
+            self.logger.info("Scrolling to load all posts and collecting URLs with BeautifulSoup...")
             post_urls = set()
             scroll_attempts = 0
-            max_scroll_attempts = 50  # Avoid infinite loops
+            max_scroll_attempts = 10
 
             while scroll_attempts < max_scroll_attempts:
-                # Extract links visible on the page
-                new_links = page.query_selector_all("a[href^='/p/']")
+                html_content = page.content()
+                soup = BeautifulSoup(html_content, 'html.parser')
+                
+                new_links = soup.select(post_selector)
                 
                 current_urls = set()
                 for link in new_links:
-                    href = link.get_attribute('href')
+                    href = link.get('href')
                     if href:
                         current_urls.add(f"https://www.instagram.com{href}")
 
-                if not post_urls.issuperset(current_urls):
-                    new_count = len(current_urls - post_urls)
-                    self.logger.info(f"Found {new_count} new post URLs. Total unique URLs: {len(post_urls.union(current_urls))}")
+                newly_found_urls = current_urls - post_urls
+                if newly_found_urls:
+                    self.logger.info(f"Found {len(newly_found_urls)} new post URLs. Total unique URLs: {len(post_urls.union(current_urls))}")
                     post_urls.update(current_urls)
                 else:
                     self.logger.info("No new posts found on this scroll. Assuming end of page.")
                     break
 
-                # Scroll down
                 page.evaluate('window.scrollTo(0, document.body.scrollHeight)')
                 self.logger.debug(f"Scrolling down... Attempt {scroll_attempts + 1}/{max_scroll_attempts}")
-                time.sleep(3)  # Wait for new posts to load
+                time.sleep(3)
                 
                 scroll_attempts += 1
                 if scroll_attempts >= max_scroll_attempts:
                     self.logger.warning("Reached max scroll attempts.")
 
             self.logger.info(f"Finished scrolling. Collected {len(post_urls)} unique post URLs.")
-            
-            # For now, just log the URLs for debugging
+
             if self.debug:
                 urls_log_path = os.path.join(self.log_dir, f"instagram_urls_{target_account}.txt")
                 with open(urls_log_path, "w", encoding="utf-8") as f:
                     for url in sorted(list(post_urls)):
                         f.write(f"{url}\n")
                 self.logger.info(f"Saved collected URLs to {urls_log_path}")
-            
+
+            competitions = []
+            urls_to_process = sorted(list(post_urls), reverse=True)[:5] if self.debug else sorted(list(post_urls), reverse=True)[:30]
+
+            for url in urls_to_process:
+                self.logger.info(f"Scraping post: {url}")
+                try:
+                    page.goto(url, wait_until='load', timeout=30000)
+                    
+                    article_selector = "article"
+                    page.wait_for_selector(article_selector, timeout=15000)
+                    self.logger.info("Article element loaded.")
+                    
+                    caption_selector = "article h1"
+                    page.wait_for_selector(caption_selector, timeout=10000)
+                    caption_element = page.locator(caption_selector)
+                    
+                    caption_text = ""
+                    if caption_element.count() > 0:
+                        caption_text = caption_element.first.inner_text()
+                        self.logger.info(f"Found caption for {url}")
+                    else:
+                        self.logger.warning(f"Caption element not found for {url}")
+
+                    # Use the advanced title extractor from the data cleaner
+                    extracted_title = extract_title_from_caption(caption_text)
+
+                    # Extract poster URL
+                    poster_url = ""
+                    poster_selector = "article img[srcset]"
+                    poster_element = page.locator(poster_selector).first
+                    if poster_element.count() > 0:
+                        poster_url = poster_element.get_attribute('src')
+                        self.logger.info(f"Found poster for {url}")
+                    else:
+                        self.logger.warning(f"Poster element not found for {url}")
+
+                    # Extract post timestamp as a fallback
+                    post_timestamp = None
+                    time_selector = "article time"
+                    time_element = page.locator(time_selector).first
+                    if time_element.count() > 0:
+                        datetime_str = time_element.get_attribute('datetime')
+                        if datetime_str:
+                            post_timestamp = dateparser.parse(datetime_str)
+                            self.logger.info(f"Found post timestamp for {url}: {post_timestamp}")
+                    else:
+                        self.logger.warning(f"Timestamp element not found for {url}")
+
+                    competition_data = {
+                        'title': extracted_title,
+                        'url': url,
+                        'description': caption_text,
+                        'poster_url': poster_url,
+                        'date_text': caption_text,  # Provide caption for deadline parsing
+                        'event_date_start': post_timestamp,  # Provide the post date as a fallback
+                    }
+                    competitions.append(competition_data)
+
+                except Exception as e:
+                    self.logger.error(f"Failed to scrape post {url}: {e}")
+                    screenshot_path = os.path.join(self.log_dir, f"instagram_post_failed_{url.split('/')[-2]}.png")
+                    page.screenshot(path=screenshot_path)
+                    self.logger.info(f"Saved screenshot for failed post to {screenshot_path}")
+
             self.logger.info("Scraping finished.")
             browser.close()
-
-            # In the next phase, we will process these URLs. For now, return an empty list.
-            return []
+            
+            return competitions

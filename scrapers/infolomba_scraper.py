@@ -6,13 +6,13 @@ from bs4 import BeautifulSoup
 from .base_web_scraper import BaseWebScraper
 
 class InfolombaScraper(BaseWebScraper):
-    def __init__(self, supabase_client, source_name='infolomba.id', debug=False):
-        super().__init__(supabase_client, source_name, debug=debug)
+    def __init__(self, debug=False):
+        super().__init__(debug=debug)
         self.base_url = "https://www.infolomba.id/"
 
     def scrape(self):
         """Scraper untuk mengambil data dari infolomba.id dan mengembalikannya sebagai list."""
-        self.logger.info(f"Memulai scrape untuk {self.source_name} menggunakan Playwright.")
+        self.logger.info(f"Memulai scrape untuk {self.__class__.__name__} menggunakan Playwright.")
         
         page = self.get_page(self.base_url)
         if not page:
@@ -48,7 +48,7 @@ class InfolombaScraper(BaseWebScraper):
             page.close()
 
         if not html_content:
-            self.logger.error(f"Gagal mendapatkan konten HTML untuk {self.source_name}.")
+            self.logger.error(f"Gagal mendapatkan konten HTML.")
             return []
 
         soup = BeautifulSoup(html_content, 'html.parser')

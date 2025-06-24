@@ -320,18 +320,31 @@ def clean_competition_data(competition: dict, categories: list[dict]) -> dict:
     # Enhance contact and registration info first, as it might affect other fields
     enhanced_competition = enhance_registration_info(competition)
 
-    # Prioritize existing deadline, otherwise parse from raw text
-    date_data = {}
-    if 'deadline' in enhanced_competition and isinstance(enhanced_competition['deadline'], datetime):
-        # If a valid deadline already exists, preserve it and related fields
-        date_data['deadline'] = enhanced_competition.get('deadline')
-        date_data['event_date_start'] = enhanced_competition.get('event_date_start')
-        date_data['event_date_end'] = enhanced_competition.get('event_date_end')
-        logger.debug(f"Preserving existing deadline for '{enhanced_competition.get('title')}': {date_data['deadline']}")
-    else:
-        # Fallback to parsing from raw text if no valid deadline is present
-        logger.debug(f"No existing deadline for '{enhanced_competition.get('title')}', parsing from date_text.")
-        date_data = parse_dates(enhanced_competition.get('date_text', ''))
+    # --- Date Parsing Logic ---
+    # Start with any dates provided by the scraper (e.g., post timestamp as event_date_start).
+    final_dates = {
+        'deadline': enhanced_competition.get('deadline'),
+        'event_date_start': enhanced_competition.get('event_date_start'),
+        'event_date_end': enhanced_competition.get('event_date_end'),
+    }
+
+    # Try to parse more specific dates from the text.
+    parsed_dates = parse_dates(enhanced_competition.get('date_text', ''))
+
+    # Merge the results, giving precedence to dates found in the text.
+    # Only update if the parsed date is not None, preserving the fallback otherwise.
+    if parsed_dates.get('deadline'):
+        final_dates['deadline'] = parsed_dates['deadline']
+    if parsed_dates.get('event_date_start'):
+        final_dates['event_date_start'] = parsed_dates['event_date_start']
+    if parsed_dates.get('event_date_end'):
+        final_dates['event_date_end'] = parsed_dates['event_date_end']
+
+    # Database requires a deadline. If no deadline was parsed, but we have a start date (from post timestamp),
+    # use the start date as the deadline to satisfy the NOT NULL constraint.
+    if not final_dates.get('deadline') and final_dates.get('event_date_start'):
+        logger.info(f"No explicit deadline found for '{enhanced_competition.get('title', '')}'. Using event_date_start as fallback deadline.")
+        final_dates['deadline'] = final_dates['event_date_start']
 
     # Classify the competition to get category IDs
     category_ids = classify_event(enhanced_competition, categories)
@@ -348,7 +361,7 @@ def clean_competition_data(competition: dict, categories: list[dict]) -> dict:
         'participant': enhanced_competition.get('participant'),
         'location': enhanced_competition.get('location'),
         'date_text': enhanced_competition.get('date_text'),
-        **date_data,  # Adds deadline, event_date_start, event_date_end
+        **final_dates,  # Adds deadline, event_date_start, event_date_end
         'category_ids': category_ids
     }
     

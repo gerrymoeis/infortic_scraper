@@ -23,7 +23,7 @@ class RkimScraper(BaseGoogleSheetScraper):
         header_map, start_row_index = self.find_header(
             rows,
             name_keywords=['nama', 'lomba'],
-            required_keywords=['deadline', 'link', 'biaya']
+            required_keywords=['link']
         )
 
         if not header_map:

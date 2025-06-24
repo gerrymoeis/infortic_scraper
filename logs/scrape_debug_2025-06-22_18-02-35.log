@@ -1,0 +1,64 @@
+2025-06-22 18:02:35,399 - root                      - INFO     - Debug log will be saved to logs\scrape_debug_2025-06-22_18-02-35.log
+2025-06-22 18:02:38,258 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: True)
+2025-06-22 18:02:38,847 - infortic_scraper          - INFO     - Memulai tahap pembersihan data kompetisi kedaluwarsa di database...
+2025-06-22 18:02:38,847 - core.database             - INFO     - Menghapus kompetisi yang sudah kedaluwarsa dari database...
+2025-06-22 18:02:39,680 - httpx                     - INFO     - HTTP Request: DELETE https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/competitions?deadline=lt.2025-06-22T18%3A02%3A39.204994 "HTTP/2 200 OK"
+2025-06-22 18:02:39,685 - core.database             - INFO     - Tidak ada kompetisi kedaluwarsa yang perlu dihapus.
+2025-06-22 18:02:39,685 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-22 18:02:39,685 - core.database             - INFO     - Mengambil daftar kategori dari Supabase...
+2025-06-22 18:02:39,744 - httpx                     - INFO     - HTTP Request: GET https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/categories?select=id%2Cname%2Cslug "HTTP/2 200 OK"
+2025-06-22 18:02:39,744 - core.database             - INFO     - Berhasil mengambil 16 kategori.
+2025-06-22 18:02:39,744 - infortic_scraper          - INFO     - Memulai proses untuk sumber: infolombait.com
+2025-06-22 18:02:39,745 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: infolombait.com
+2025-06-22 18:02:39,822 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-22 18:02:39,827 - core.database             - INFO     - Berhasil mendapatkan source_id: fcb87daf-9ae1-476a-897e-a7c2ade1a7fc
+2025-06-22 18:02:39,828 - scrapers.infolombait.com  - INFO     - Scraper for infolombait.com initialized (Debug: False).
+2025-06-22 18:02:39,828 - scrapers.infolombait.com  - INFO     - Starting Playwright browser...
+2025-06-22 18:02:41,451 - scrapers.infolombait.com  - INFO     - Starting scrape for infolombait.com. Local cache: False
+2025-06-22 18:02:41,452 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/
+2025-06-22 18:03:03,821 - scrapers.infolombait.com  - ERROR    - Playwright error fetching https://www.infolombait.com/: Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.infolombait.com/
+Call log:
+  - navigating to "https://www.infolombait.com/", waiting until "domcontentloaded"
+Traceback (most recent call last):
+  File "D:\Gerry\Programmer\Best Terbaik(2025)\Project\Infortic\infortic-scraper\scrapers\infolombait_scraper.py", line 41, in get_page_content
+    page.goto(url, wait_until='domcontentloaded', timeout=60000)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Gallan\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\sync_api\_generated.py", line 9024, in goto
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.goto(
+        ^^^^^^^^^^^^^^^^^^^^
+            url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Users\Gallan\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "C:\Users\Gallan\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 552, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Gallan\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 145, in goto
+    await self._channel.send("goto", locals_to_params(locals()))
+  File "C:\Users\Gallan\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 61, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "C:\Users\Gallan\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 528, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.infolombait.com/
+Call log:
+  - navigating to "https://www.infolombait.com/", waiting until "domcontentloaded"
+
+2025-06-22 18:03:03,887 - scrapers.infolombait.com  - ERROR    - Failed to get main page content. Aborting scrape.
+2025-06-22 18:03:03,888 - scrapers.infolombait.com  - INFO     - Closing Playwright browser...
+2025-06-22 18:03:04,011 - infortic_scraper          - INFO     - Selesai scrape dari infolombait.com, mendapatkan 0 kompetisi mentah.
+2025-06-22 18:03:04,012 - infortic_scraper          - WARNING  - Tidak ada kompetisi baru yang berhasil di-scrape dan divalidasi dari semua sumber.
+2025-06-22 18:03:04,012 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-22 18:03:04,012 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-22 18:03:04,012 - infortic_scraper          - INFO     - infolombait.com: 0 acara
+2025-06-22 18:03:04,012 - infortic_scraper          - INFO     - --------------------------------

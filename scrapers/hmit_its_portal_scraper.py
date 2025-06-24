@@ -16,7 +16,7 @@ class HmitItsPortalScraper(BaseGoogleSheetScraper):
         self.table_configs = {
             'lomba': {
                 'name_keywords': ['lomba'],
-                'required_keywords': ['nama', 'penyelenggara', 'tanggal'],
+                'required_keywords': ['informasi'],
                 'column_mapping': {
                     'title': 'nama lomba',
                     'organizer': 'penyelenggara',
@@ -30,7 +30,7 @@ class HmitItsPortalScraper(BaseGoogleSheetScraper):
             },
             'sertifikasi': {
                 'name_keywords': ['sertifikasi'],
-                'required_keywords': ['nama', 'penyelenggara', 'tanggal'],
+                'required_keywords': ['informasi'],
                 'column_mapping': {
                     'title': 'nama sertifikasi',
                     'organizer': 'penyelenggara',

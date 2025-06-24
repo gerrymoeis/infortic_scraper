@@ -62,15 +62,20 @@ class BaseGoogleSheetScraper(BaseScraper):
         for i, row in enumerate(rows):
             cells = row.find_all(['td', 'th'])
             cell_texts = [cell.get_text().lower().strip() for cell in cells]
-            
-            has_name = any(kw in ' '.join(cell_texts) for kw in name_keywords)
-            has_required = all(any(req_kw in text for text in cell_texts) for req_kw in required_keywords)
+
+            self.logger.debug(f"Checking row {i} for header. Texts: {cell_texts}")
+
+            full_row_text = ' '.join(cell_texts)
+            has_name = any(kw in full_row_text for kw in name_keywords)
+            has_required = all(req_kw in full_row_text for req_kw in required_keywords)
 
             if len(cell_texts) > 3 and has_name and has_required:
                 self.logger.info(f"Header row found at index {i} for {self.source_name}.")
+                self.logger.info(f"Header texts: {cell_texts}")
                 header_map = {text: idx for idx, text in enumerate(cell_texts) if text}
                 return header_map, i + 1
         
+        self.logger.error(f"Header row not found for {self.source_name}. Searched {len(rows)} rows.")
         return {}, -1
 
     def map_columns(self, header_map: dict, column_definitions: dict) -> dict:
@@ -107,17 +112,31 @@ class BaseGoogleSheetScraper(BaseScraper):
             # Extract text from each required cell using the map
             for key, index in col_map.items():
                 if index < len(cells):
-                    if key == 'registration_url':
+                    if key in ['registration_url', 'poster_url']:
                         link_cell = cells[index].find('a')
-                        data[key] = self._get_real_url(link_cell['href']) if link_cell else None
+                        # Ensure we get a real URL, not a mailto: or something else
+                        if link_cell and link_cell.has_attr('href') and link_cell['href'].startswith('http'):
+                            data[key] = self._get_real_url(link_cell['href'])
+                        else:
+                            data[key] = None
                     else:
                         data[key] = cells[index].get_text(strip=True)
                 else:
                     data[key] = None
 
-            # Basic validation
+            # --- Validation for Required Fields ---
             if not data.get('title') or not data.get('registration_url'):
+                # This is existing logic, keep it. It's fundamental.
                 return None
+            
+            if not data.get('poster_url'):
+                self.logger.warning(f"Skipping row for '{self.source_name}' due to missing poster_url. Title: {data.get('title')}")
+                return None
+
+            if not data.get('deadline'):
+                self.logger.warning(f"Skipping row for '{self.source_name}' due to missing deadline text. Title: {data.get('title')}")
+                return None
+            # --- End Validation ---
             
             return data
         except (IndexError, AttributeError, KeyError) as e:

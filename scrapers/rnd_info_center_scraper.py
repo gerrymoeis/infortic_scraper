@@ -34,7 +34,7 @@ class RndInfoCenterScraper(BaseGoogleSheetScraper):
         header_map, start_row_index = self.find_header(
             rows,
             name_keywords=['nama lomba', 'nama kegiatan'],
-            required_keywords=['status', 'penyelenggara', 'deadline']
+            required_keywords=['link']
         )
 
         if not header_map:
@@ -93,7 +93,7 @@ class RndInfoCenterScraper(BaseGoogleSheetScraper):
         header_map, start_row_index = self.find_header(
             rows,
             name_keywords=['nama kegiatan'],
-            required_keywords=['status', 'penyelenggara', 'deadline']
+            required_keywords=['link']
         )
 
         if not header_map:

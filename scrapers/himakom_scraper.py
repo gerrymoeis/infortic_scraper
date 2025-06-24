@@ -20,7 +20,7 @@ class HimakomScraper(BaseGoogleSheetScraper):
         rows = table.find('tbody').find_all('tr')
         self.logger.info(f"Found {len(rows)} rows in the table.")
 
-        header_map, start_row_index = self.find_header(rows, name_keywords=['competition', 'nama'], required_keywords=['status', 'link'])
+        header_map, start_row_index = self.find_header(rows, name_keywords=['competition', 'nama'], required_keywords=['link'])
 
         if not header_map:
             self.logger.warning(f"Could not find a valid header row for {self.source_name}. Skipping.")

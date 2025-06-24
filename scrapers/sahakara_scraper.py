@@ -23,7 +23,7 @@ class SahakaraScraper(BaseGoogleSheetScraper):
         header_map, start_row_index = self.find_header(
             rows,
             name_keywords=['nama', 'lomba', 'kompetisi', 'event'],
-            required_keywords=['deadline', 'link', 'web']
+            required_keywords=['link']
         )
 
         if not header_map:

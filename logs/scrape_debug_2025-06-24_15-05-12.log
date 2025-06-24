@@ -1,0 +1,28 @@
+2025-06-24 15:05:12,301 - root                      - INFO     - Debug log will be saved to logs\scrape_debug_2025-06-24_15-05-12.log
+2025-06-24 15:05:13,972 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: True)
+2025-06-24 15:05:14,597 - infortic_scraper          - INFO     - Memulai tahap pembersihan data kompetisi kedaluwarsa di database...
+2025-06-24 15:05:14,597 - core.database             - INFO     - Menghapus kompetisi yang sudah kedaluwarsa dari database...
+2025-06-24 15:05:15,683 - httpx                     - INFO     - HTTP Request: DELETE https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/competitions?deadline=lt.2025-06-24T15%3A05%3A14.924542 "HTTP/2 200 OK"
+2025-06-24 15:05:15,688 - core.database             - INFO     - Tidak ada kompetisi kedaluwarsa yang perlu dihapus.
+2025-06-24 15:05:15,688 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-24 15:05:15,688 - core.database             - INFO     - Mengambil daftar kategori dari Supabase...
+2025-06-24 15:05:15,779 - httpx                     - INFO     - HTTP Request: GET https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/categories?select=id%2Cname%2Cslug "HTTP/2 200 OK"
+2025-06-24 15:05:15,781 - core.database             - INFO     - Berhasil mengambil 16 kategori.
+2025-06-24 15:05:15,781 - infortic_scraper          - INFO     - Memulai proses untuk sumber: instagram.com
+2025-06-24 15:05:15,781 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: instagram.com
+2025-06-24 15:05:15,862 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-24 15:05:15,864 - core.database             - INFO     - Berhasil mendapatkan source_id: 6fbad0b8-c4c4-425e-bace-28f3d8e52a04
+2025-06-24 15:05:15,865 - infortic_scraper          - ERROR    - Caught an exception while running scraper: instagram.com
+2025-06-24 15:05:15,865 - infortic_scraper          - ERROR    - Exception details for instagram.com:
+Traceback (most recent call last):
+  File "D:\Gerry\Programmer\Best Terbaik(2025)\Project\Infortic\infortic-scraper\scraper.py", line 88, in main
+    scraper_instance = scraper_class()
+  File "D:\Gerry\Programmer\Best Terbaik(2025)\Project\Infortic\infortic-scraper\scrapers\instagram_playwright_scraper.py", line 8, in __init__
+    super().__init__("instagram_playwright")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseScraper.__init__() missing 1 required positional argument: 'source_name'
+2025-06-24 15:05:15,866 - infortic_scraper          - WARNING  - Tidak ada kompetisi baru yang berhasil di-scrape dan divalidasi dari semua sumber.
+2025-06-24 15:05:15,866 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-24 15:05:15,867 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-24 15:05:15,867 - infortic_scraper          - INFO     - instagram.com: Gagal (Exception) acara
+2025-06-24 15:05:15,867 - infortic_scraper          - INFO     - --------------------------------

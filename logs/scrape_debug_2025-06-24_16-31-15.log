@@ -1,0 +1,30 @@
+2025-06-24 16:31:15,122 - root                      - INFO     - Debug log will be saved to logs\scrape_debug_2025-06-24_16-31-15.log
+2025-06-24 16:31:16,639 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: True)
+2025-06-24 16:31:17,027 - infortic_scraper          - INFO     - Memulai tahap pembersihan data kompetisi kedaluwarsa di database...
+2025-06-24 16:31:17,027 - core.database             - INFO     - Menghapus kompetisi yang sudah kedaluwarsa dari database...
+2025-06-24 16:31:17,802 - httpx                     - INFO     - HTTP Request: DELETE https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/competitions?deadline=lt.2025-06-24T16%3A31%3A17.331974 "HTTP/2 200 OK"
+2025-06-24 16:31:17,806 - core.database             - INFO     - Tidak ada kompetisi kedaluwarsa yang perlu dihapus.
+2025-06-24 16:31:17,806 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-24 16:31:17,806 - core.database             - INFO     - Mengambil daftar kategori dari Supabase...
+2025-06-24 16:31:17,869 - httpx                     - INFO     - HTTP Request: GET https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/categories?select=id%2Cname%2Cslug "HTTP/2 200 OK"
+2025-06-24 16:31:17,869 - core.database             - INFO     - Berhasil mengambil 16 kategori.
+2025-06-24 16:31:17,869 - infortic_scraper          - INFO     - Memulai proses untuk sumber: instagram.com
+2025-06-24 16:31:17,870 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: instagram.com
+2025-06-24 16:31:17,940 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-24 16:31:17,942 - core.database             - INFO     - Berhasil mendapatkan source_id: 6fbad0b8-c4c4-425e-bace-28f3d8e52a04
+2025-06-24 16:31:17,942 - scrapers.instagram.com    - INFO     - Scraper for instagram.com initialized (Debug: True).
+2025-06-24 16:31:17,942 - scrapers.instagram.com    - INFO     - Starting Instagram scrape with Playwright.
+2025-06-24 16:31:19,584 - scrapers.instagram.com    - INFO     - Logging in to Instagram...
+2025-06-24 16:31:24,081 - scrapers.instagram.com    - INFO     - Waiting for main page to load after login...
+2025-06-24 16:31:54,102 - scrapers.instagram.com    - ERROR    - Login failed or post-login pop-ups could not be handled: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[aria-label='Home']") to be visible
+    - waiting for" https://www.instagram.com/" navigation to finish...
+    - navigated to "https://www.instagram.com/challenge/?next=https%3A%2F%2Fwww.instagram.com%2F%3F__coig_challenged%3D1#reactivated"
+
+2025-06-24 16:31:54,599 - infortic_scraper          - INFO     - Selesai scrape dari instagram.com, mendapatkan 0 kompetisi mentah.
+2025-06-24 16:31:54,599 - infortic_scraper          - WARNING  - Tidak ada kompetisi baru yang berhasil di-scrape dan divalidasi dari semua sumber.
+2025-06-24 16:31:54,599 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-24 16:31:54,599 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-24 16:31:54,599 - infortic_scraper          - INFO     - instagram.com: 0 acara
+2025-06-24 16:31:54,600 - infortic_scraper          - INFO     - --------------------------------

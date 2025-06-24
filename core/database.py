@@ -72,28 +72,28 @@ def get_all_categories(supabase_client: Client) -> list[dict] | None:
         logger.error(f"Terjadi error tidak terduga saat mengambil kategori: {e}", exc_info=True)
         return None
 
-def delete_expired_events(supabase_client: Client) -> int:
-    """Menghapus event yang sudah kedaluwarsa dengan memanggil RPC delete_expired_events."""
+def delete_expired_competitions(supabase_client: Client) -> int:
+    """Menghapus kompetisi yang sudah kedaluwarsa langsung dari tabel."""
     try:
-        logger.info("Memanggil RPC untuk menghapus event yang sudah kedaluwarsa...")
-        response = supabase_client.rpc('delete_expired_events', {}).execute()
+        logger.info("Menghapus kompetisi yang sudah kedaluwarsa dari database...")
+        response = supabase_client.table('competitions').delete().lt('deadline', datetime.now().isoformat()).execute()
 
         if response.data is not None:
-            deleted_count = response.data
+            deleted_count = len(response.data)
             if deleted_count > 0:
-                logger.info(f"Berhasil menghapus {deleted_count} event yang sudah kedaluwarsa.")
+                logger.info(f"Berhasil menghapus {deleted_count} kompetisi yang sudah kedaluwarsa.")
             else:
-                logger.info("Tidak ada event kedaluwarsa yang perlu dihapus.")
+                logger.info("Tidak ada kompetisi kedaluwarsa yang perlu dihapus.")
             return deleted_count
         else:
-            logger.error(f"Gagal memanggil RPC delete_expired_events: {response.error}")
+            logger.error(f"Gagal menghapus kompetisi kedaluwarsa. Respons: {response}")
             return 0
             
     except PostgrestAPIError as e:
-        logger.error(f"DATABASE ERROR saat memanggil RPC delete_expired_events: {e.message}")
+        logger.error(f"DATABASE ERROR saat menghapus kompetisi kedaluwarsa: {e.message}")
         return 0
     except Exception as e:
-        logger.error(f"Terjadi error tidak terduga saat menghapus event kedaluwarsa: {e}", exc_info=True)
+        logger.error(f"Terjadi error tidak terduga saat menghapus kompetisi kedaluwarsa: {e}", exc_info=True)
         return 0
 
 def get_event_type_id_by_name(supabase_client: Client, type_name: str) -> str | None:
@@ -130,42 +130,36 @@ def get_all_event_types(client: Client) -> dict | None:
         logger.error(f"Terjadi error tidak terduga saat mengambil tipe acara: {e}", exc_info=True)
         return None
 
-def save_events(supabase_client: Client, events_data: list):
+def save_competitions(supabase_client: Client, competitions_data: list):
     """Menyimpan daftar event ke Supabase dengan memanggil RPC upsert_event_with_categories."""
-    if not events_data:
-        logger.info("Tidak ada data event untuk disimpan.")
+    if not competitions_data:
+        logger.info("Tidak ada data kompetisi untuk disimpan.")
         return
 
     success_count = 0
     fail_count = 0
-    logger.info(f"Mencoba menyimpan/memperbarui {len(events_data)} event ke Supabase melalui RPC...")
+    logger.info(f"Mencoba menyimpan/memperbarui {len(competitions_data)} kompetisi ke Supabase melalui RPC...")
 
-    for event in events_data:
-        # Pisahkan category_ids dan event_type_id dari data utama event
-        category_ids = event.pop('category_ids', [])
-        event_type_id = event.pop('event_type_id', None)
+    for competition in competitions_data:
+        # Pisahkan category_ids dari data utama kompetisi
+        category_ids = competition.pop('category_ids', [])
 
-        if not event_type_id:
-            logger.warning(f"Event '{event.get('title', 'N/A')}' tidak memiliki event_type_id. Melewatkan...")
-            fail_count += 1
-            continue
-        
         # Konversi datetime ke string ISO 8601
-        for key, value in event.items():
+        for key, value in competition.items():
             if isinstance(value, datetime):
-                event[key] = value.isoformat()
-        
-        # Hapus field yang tidak relevan untuk tabel 'events'
-        event.pop('source_name', None)
-        event.pop('price', None)
+                competition[key] = value.isoformat()
 
+        # Hapus field yang tidak relevan untuk payload RPC
+        competition.pop('source_name', None)
+        competition.pop('event_type_id', None) # No longer needed
+
+        # Payload sudah bersih karena data cleaner, kita bisa langsung kirim
         try:
             response = supabase_client.rpc(
-                'upsert_event_with_categories',
+                'upsert_competition_with_categories',
                 {
-                    'p_event_data': event, 
-                    'p_category_ids': category_ids,
-                    'p_event_type_id': event_type_id
+                    'p_competition_data': competition, 
+                    'p_category_ids': category_ids
                 }
             ).execute()
 
@@ -174,13 +168,13 @@ def save_events(supabase_client: Client, events_data: list):
             else:
                 # Cek error dari Postgrest
                 if hasattr(response, 'error') and response.error:
-                    logger.error(f"Gagal menyimpan event '{event.get('title', 'N/A')}': {response.error.message}")
+                    logger.error(f"Gagal menyimpan kompetisi '{competition.get('title', 'N/A')}': {response.error.message}")
                 else:
-                    logger.error(f"Gagal menyimpan event '{event.get('title', 'N/A')}' tanpa pesan error spesifik.")
+                    logger.error(f"Gagal menyimpan kompetisi '{competition.get('title', 'N/A')}' tanpa pesan error spesifik.")
                 fail_count += 1
 
         except PostgrestAPIError as e:
-            logger.error(f"DATABASE ERROR saat RPC call untuk event '{event.get('title', 'N/A')}': {e.message}")
+            logger.error(f"DATABASE ERROR saat RPC call untuk kompetisi '{competition.get('title', 'N/A')}': {e.message}")
             fail_count += 1
         except Exception as e:
             logger.error(f"Terjadi error tidak terduga saat RPC call: {e}", exc_info=True)

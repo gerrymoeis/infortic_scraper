@@ -75,53 +75,76 @@ class InstagramScraper(BaseScraper):
 
         source_username = post_data.get('user', {}).get('username', '')
         post_code = post_data.get('code', '')
+        source_url = f"https://www.instagram.com/p/{post_code}/" if post_code else ''
+
+        # --- Poster URL Extraction (Enforced NOT NULL) ---
+        poster_url = post_data.get('thumbnail_url')
+        if not poster_url:
+            # Fallback for carousels (media_type=8)
+            if post_data.get('media_type') == 8:
+                resources = post_data.get('resources', [])
+                if resources:
+                    poster_url = resources[0].get('thumbnail_url')
+            # Fallback for single images if thumbnail_url is still missing
+            if not poster_url:
+                candidates = post_data.get('image_versions2', {}).get('candidates', [])
+                if candidates:
+                    poster_url = candidates[0].get('url')
+        
+        if not poster_url:
+            self.logger.warning(f"No poster_url found for post {source_url}. Skipping.")
+            return None
+        # --- End Poster URL Extraction ---
 
         # Basic Information
         title = extract_title_from_caption(caption)
         description = caption.strip()
-        image_url = post_data.get('image_versions2', {}).get('candidates', [{}])[0].get('url', '')
-        source_url = f"https://www.instagram.com/p/{post_code}/" if post_code else ''
         event_type = self.ACCOUNT_EVENT_TYPE_MAPPING.get(source_username, 'Lainnya')
 
         # Find Registration URL - prioritize links with registration keywords or common shorteners
-        # This regex looks for common registration keywords followed by a URL.
         reg_link_pattern = r'(?:pendaftaran|registrasi|daftar|form|bit\.ly|s\.id|t\.ly)[^\n]*?(https?://[\S]+)'
         url_match = re.search(reg_link_pattern, caption, re.IGNORECASE)
         
         if url_match:
             registration_url = url_match.group(1).strip('.,')
         else:
-            # Fallback to the first URL if no registration keyword is found
             url_match = re.search(r'https?://[\S]+', caption)
             registration_url = url_match.group(0).strip('.,') if url_match else ''
 
         # Date Parsing
         deadline_date, start_date, end_date = parse_dates(caption)
 
-        # Ensure we have a title, a registration URL, and a potential date
+        # --- Validation for Required Fields ---
         if not registration_url:
             self.logger.warning(f"No registration URL found for post {source_url}. Skipping.")
             return None
 
-        if not title or not (deadline_date or start_date or end_date):
+        if not title:
             if self.debug:
-                self.logger.debug(f"Skipping post from {source_username} due to missing title or dates. Title: '{title}'")
+                self.logger.debug(f"Skipping post from {source_username} due to missing title.")
             return None
+
+        if not deadline_date:
+            if self.debug:
+                self.logger.debug(f"Skipping post from {source_username} due to missing deadline.")
+            return None
+        # --- End Validation ---
 
         return {
             'title': title,
             'description': description,
-            'registration_deadline': deadline_date,
-            'event_start': start_date,
-            'event_end': end_date,
+            'deadline': deadline_date,
+            'event_date_start': start_date,
+            'event_date_end': end_date,
             'event_type': event_type,
-            'image_url': image_url,
+            'poster_url': poster_url,
             'source_url': source_url,
             'registration_url': registration_url,
             'organizer': source_username,
             'categories': [], # Will be populated by the main runner
             'is_online': 'online' in caption.lower() or 'daring' in caption.lower(),
-            'price': 0, # Default price
+            'price_min': 0, # Default price
+            'price_max': 0, # Default price
         }
 
     def scrape(self):

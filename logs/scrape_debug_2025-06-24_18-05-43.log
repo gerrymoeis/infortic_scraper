@@ -1,0 +1,24 @@
+2025-06-24 18:05:43,952 - root                      - INFO     - Debug log will be saved to logs\scrape_debug_2025-06-24_18-05-43.log
+2025-06-24 18:05:45,345 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: True)
+2025-06-24 18:05:45,751 - infortic_scraper          - INFO     - Memulai tahap pembersihan data kompetisi kedaluwarsa di database...
+2025-06-24 18:05:45,752 - core.database             - INFO     - Menghapus kompetisi yang sudah kedaluwarsa dari database...
+2025-06-24 18:05:46,547 - httpx                     - INFO     - HTTP Request: DELETE https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/competitions?deadline=lt.2025-06-24T18%3A05%3A46.028344 "HTTP/2 200 OK"
+2025-06-24 18:05:46,552 - core.database             - INFO     - Tidak ada kompetisi kedaluwarsa yang perlu dihapus.
+2025-06-24 18:05:46,553 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-24 18:05:46,553 - core.database             - INFO     - Mengambil daftar kategori dari Supabase...
+2025-06-24 18:05:46,611 - httpx                     - INFO     - HTTP Request: GET https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/categories?select=id%2Cname%2Cslug "HTTP/2 200 OK"
+2025-06-24 18:05:46,611 - core.database             - INFO     - Berhasil mengambil 16 kategori.
+2025-06-24 18:05:46,611 - infortic_scraper          - INFO     - Memulai proses untuk sumber: instagram.com
+2025-06-24 18:05:46,611 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: instagram.com
+2025-06-24 18:05:46,671 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-24 18:05:46,673 - core.database             - INFO     - Berhasil mendapatkan source_id: 6fbad0b8-c4c4-425e-bace-28f3d8e52a04
+2025-06-24 18:05:46,673 - scrapers.instagram.com    - INFO     - Scraper for instagram.com initialized (Debug: True).
+2025-06-24 18:05:46,673 - scrapers.instagram.com    - INFO     - Starting Instagram scrape with Playwright.
+2025-06-24 18:05:46,673 - scrapers.instagram.com    - ERROR    - Authentication file not found at 'auth/instagram_auth_state.json'.
+2025-06-24 18:05:46,673 - scrapers.instagram.com    - ERROR    - Please run 'python setup_instagram_session.py' to log in and create the auth file.
+2025-06-24 18:05:46,673 - infortic_scraper          - INFO     - Selesai scrape dari instagram.com, mendapatkan 0 kompetisi mentah.
+2025-06-24 18:05:46,673 - infortic_scraper          - WARNING  - Tidak ada kompetisi baru yang berhasil di-scrape dan divalidasi dari semua sumber.
+2025-06-24 18:05:46,673 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-24 18:05:46,674 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-24 18:05:46,674 - infortic_scraper          - INFO     - instagram.com: 0 acara
+2025-06-24 18:05:46,674 - infortic_scraper          - INFO     - --------------------------------

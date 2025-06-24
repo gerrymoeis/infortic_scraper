@@ -3,6 +3,7 @@
 import re
 import logging
 from datetime import datetime, timezone
+import dateparser
 from dateparser.search import search_dates
 
 logger = logging.getLogger(__name__)
@@ -68,40 +69,62 @@ def parse_dates(raw_date_text: str) -> dict[str, datetime | None]:
         'sep': 'september', 'okt': 'october', 'nov': 'november', 'des': 'december'
     }
     for indo, eng in month_map.items():
-        # Gunakan fungsi pengganti untuk memastikan kecocokan kata utuh dan case-insensitive
         text_lower = re.sub(r'\b' + indo + r'\b', eng, text_lower, flags=re.IGNORECASE)
 
-    # Pengaturan untuk dateparser
-    # REQUIRE_PARTS memastikan kita tidak mengambil tanggal parsial seperti 'juni' saja
-    settings = {'PREFER_DATES_FROM': 'future', 'REQUIRE_PARTS': ['day', 'month']}
-    
-    found_dates = search_dates(text_lower, languages=['id'], settings=settings)
+    datetimes = []
+    # --- Final, Robust Direct Parsing Logic for Ranges ---
+    if ' - ' in text_lower:
+        try:
+            parts = text_lower.split(' - ')
+            if len(parts) == 2:
+                start_str, end_str = parts[0].strip(), parts[1].strip()
+                logger.debug(f"Attempting direct parse on start='{start_str}', end='{end_str}'")
 
-    if not found_dates:
+                end_date = dateparser.parse(end_str, settings={'PREFER_DATES_FROM': 'future'})
+                if end_date:
+                    # Handle start date: it could be just a day, or day-month
+                    if start_str.isdigit(): # Case: "1 - 10 January 2025"
+                        start_date = end_date.replace(day=int(start_str))
+                    else: # Case: "10 Jan - 20 Feb 2025" or "December - January 2025"
+                        # Add year if missing from start_str
+                        if not re.search(r'\b\d{4}\b', start_str):
+                            start_str_with_year = f"{start_str} {end_date.year}"
+                        else:
+                            start_str_with_year = start_str
+                        start_date = dateparser.parse(start_str_with_year, settings={'PREFER_DATES_FROM': 'future'})
+                    
+                    if start_date:
+                        # Crucial check for year crossover (e.g., Dec 2024 - Jan 2025)
+                        if start_date > end_date:
+                            start_date = start_date.replace(year=start_date.year - 1)
+                        datetimes = sorted([start_date, end_date])
+                        logger.debug(f"Successfully parsed range: {datetimes}")
+        except Exception as e:
+            logger.debug(f"Direct date range parsing failed for '{text_lower}': {e}. Falling back.")
+
+    # --- Fallback to search_dates if direct parsing fails or isn't applicable ---
+    if not datetimes:
+        settings = {'PREFER_DATES_FROM': 'future', 'REQUIRE_PARTS': ['day', 'month']}
+        found_dates = search_dates(text_lower, languages=['id'], settings=settings)
+        if found_dates:
+            datetimes = sorted([dt for _, dt in found_dates])
+
+    if not datetimes:
         logger.warning(f"Dateparser tidak menemukan tanggal valid di: '{raw_date_text}'")
         return {'deadline': None, 'event_date_start': None, 'event_date_end': None}
 
-    # Konversi semua tanggal yang ditemukan ke UTC
-    datetimes = [dt.replace(tzinfo=timezone.utc) for _, dt in found_dates]
+    # Make datetimes timezone-aware
+    aware_datetimes = [dt.replace(tzinfo=timezone.utc) for dt in datetimes]
 
-    # Logika dasar:
-    # - Deadline adalah tanggal terjauh.
-    # - Jika ada lebih dari satu tanggal, tanggal paling awal adalah awal acara, terjauh adalah akhir acara.
-    
-    deadline = max(datetimes)
-    event_date_start = min(datetimes) if len(datetimes) > 1 else None
-    event_date_end = max(datetimes) if len(datetimes) > 1 else None
-    
-    # Jika hanya ada satu tanggal, itu bisa jadi deadline dan juga tanggal acara.
-    if len(datetimes) == 1:
-        event_date_start = datetimes[0]
-        event_date_end = datetimes[0]
+    deadline = aware_datetimes[-1]
+    event_date_start = aware_datetimes[0]
+    event_date_end = aware_datetimes[-1]
 
     logger.debug(
         f"Parsed '{raw_date_text}' -> "
         f"Deadline: {deadline}, Start: {event_date_start}, End: {event_date_end}"
     )
-
+    
     return {
         'deadline': deadline,
         'event_date_start': event_date_start,
@@ -172,19 +195,18 @@ def enhance_registration_info(event: dict) -> dict:
 
 
 CLASSIFICATION_KEYWORDS = {
-    'ui-ux-design': ['ui/ux', 'ui-ux', 'user experience', 'user interface', 'figma', 'design system'],
-    'web-development': ['webinar', 'workshop', 'seminar', 'talkshow', 'pelatihan', 'bootcamp', 'web development', 'frontend', 'backend', 'fullstack'],
-    'mobile-development': ['mobile development', 'android', 'ios', 'flutter', 'react native'],
-    'software-development': ['software development', 'software engineering', 'pemrograman', 'coding'],
-    'data-science': ['data science', 'machine learning', 'deep learning', 'ai', 'artificial intelligence', 'analisis data', 'data analytics', 'analitika data'],
-    'cyber-security': ['cyber security', 'keamanan siber', 'ctf', 'capture the flag', 'ethical hacker', 'hacking'],
-    'game-development': ['game development', 'pengembangan game', 'unity', 'unreal engine'],
-    'cloud-computing': ['cloud', 'cloud computing', 'aws', 'azure', 'gcp'],
-    'internet-of-things': ['iot', 'internet of things'],
-    'business-it-case': ['business case', 'studi kasus', 'business plan', 'ide bisnis', 'inovasi bisnis'],
-    'esai-ilmiah': ['esai', 'essay', 'esai ilmiah'],
-    'karya-tulis-ilmiah': ['karya tulis ilmiah', 'kti', 'lkti', 'paper', 'jurnal'],
-    'desain-poster': ['desain poster', 'poster digital', 'digital poster', 'lomba poster'],
+    'ui-ux-design': ['ui/ux', 'ui-ux', 'user experience', 'user interface', 'figma', 'design system', 'ux research'],
+    'web-development': ['web development', 'web dev', 'frontend', 'backend', 'fullstack', 'website', 'web', 'html', 'css', 'javascript'],
+    'mobile-development': ['mobile development', 'android', 'ios', 'flutter', 'react native', 'kotlin', 'swift'],
+    'data-science': ['data science', 'machine learning', 'ml', 'artificial intelligence', 'ai', 'deep learning', 'data analysis', 'analitika data'],
+    'competitive-programming': ['competitive programming', 'cp', 'pemrograman kompetitif', 'gemastik', 'icpc', 'olimpos', 'problem solving'],
+    'business-it': ['business it', 'business plan', 'pitching', 'ide bisnis', 'business case', 'analisis bisnis', 'startup', 'wirausaha'],
+    'cyber-security': ['cyber security', 'keamanan siber', 'hacking', 'ctf', 'capture the flag', 'ethical hacking'],
+    'game-development': ['game development', 'game dev', 'pengembangan game', 'unity', 'unreal engine'],
+    'esports': ['esports', 'e-sports', 'mobile legends', 'valorant', 'pubg', 'dota'],
+    'karya-tulis-ilmiah': ['karya tulis ilmiah', 'kti', 'lkti', 'paper', 'jurnal', 'essay', 'esai', 'artikel ilmiah'],
+    'desain-poster': ['desain poster', 'poster digital', 'digital poster', 'lomba poster', 'infografis', 'infographic'],
+    'seminar-webinar': ['seminar', 'webinar', 'talkshow', 'workshop', 'pelatihan', 'bootcamp', 'career insight', 'tech talk'],
     'beasiswa': ['beasiswa', 'scholarship', 'djarum']
 }
 
@@ -292,32 +314,43 @@ def extract_title_from_caption(caption: str) -> str:
     return clean_title(best_title)
 
 
-def clean_event_data(event: dict, categories: list[dict]) -> dict:
-    """Main function to clean and normalize a single event dictionary."""
-    # Clean title
-    event['title'] = clean_title(event.get('title', ''))
+def clean_competition_data(competition: dict, categories: list[dict]) -> dict:
+    """Main function to clean and normalize a single competition dictionary."""
+    
+    # Enhance contact and registration info first, as it might affect other fields
+    enhanced_competition = enhance_registration_info(competition)
 
-    # Parse price and add new keys
-    price_data = parse_price(event.get('price_info', ''))
-    event['price_min'] = price_data['price_min']
-    event['price_max'] = price_data['price_max']
+    # Prioritize existing deadline, otherwise parse from raw text
+    date_data = {}
+    if 'deadline' in enhanced_competition and isinstance(enhanced_competition['deadline'], datetime):
+        # If a valid deadline already exists, preserve it and related fields
+        date_data['deadline'] = enhanced_competition.get('deadline')
+        date_data['event_date_start'] = enhanced_competition.get('event_date_start')
+        date_data['event_date_end'] = enhanced_competition.get('event_date_end')
+        logger.debug(f"Preserving existing deadline for '{enhanced_competition.get('title')}': {date_data['deadline']}")
+    else:
+        # Fallback to parsing from raw text if no valid deadline is present
+        logger.debug(f"No existing deadline for '{enhanced_competition.get('title')}', parsing from date_text.")
+        date_data = parse_dates(enhanced_competition.get('date_text', ''))
 
-    # Parse dates and add new keys
-    date_data = parse_dates(event.get('date_raw_text', ''))
-    event.update(date_data)
+    # Classify the competition to get category IDs
+    category_ids = classify_event(enhanced_competition, categories)
 
-    # Enhance contact and registration info from description
-    event = enhance_registration_info(event)
-
-    # Ensure the 'url' field is set from the (potentially enhanced) registration_url
-    event['url'] = event.get('registration_url')
-
-    # Classify event into categories
-    event['category_ids'] = classify_event(event, categories)
-
-    # Remove old raw fields
-    event.pop('price_info', None)
-    event.pop('date_raw_text', None)
-
-    return event
+    # Build the final, clean dictionary
+    clean_data = {
+        'title': clean_title(enhanced_competition.get('title', '')),
+        'description': enhanced_competition.get('description'),
+        'organizer': enhanced_competition.get('organizer'),
+        'url': enhanced_competition.get('url'),
+        'registration_url': enhanced_competition.get('registration_url'),
+        'poster_url': enhanced_competition.get('poster_url'),
+        'source_id': enhanced_competition.get('source_id'),
+        'participant': enhanced_competition.get('participant'),
+        'location': enhanced_competition.get('location'),
+        'date_text': enhanced_competition.get('date_text'),
+        **date_data,  # Adds deadline, event_date_start, event_date_end
+        'category_ids': category_ids
+    }
+    
+    return clean_data
 

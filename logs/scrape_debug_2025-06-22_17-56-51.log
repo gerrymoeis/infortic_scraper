@@ -1,0 +1,1045 @@
+2025-06-22 17:56:51,367 - root                      - INFO     - Debug log will be saved to logs\scrape_debug_2025-06-22_17-56-51.log
+2025-06-22 17:56:54,137 - infortic_scraper          - INFO     - Memulai proses scraping... (Mode Debug: True)
+2025-06-22 17:56:55,199 - infortic_scraper          - INFO     - Memulai tahap pembersihan data kompetisi kedaluwarsa di database...
+2025-06-22 17:56:55,200 - core.database             - INFO     - Menghapus kompetisi yang sudah kedaluwarsa dari database...
+2025-06-22 17:56:56,166 - httpx                     - INFO     - HTTP Request: DELETE https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/competitions?deadline=lt.2025-06-22T17%3A56%3A55.687200 "HTTP/2 200 OK"
+2025-06-22 17:56:56,186 - core.database             - INFO     - Tidak ada kompetisi kedaluwarsa yang perlu dihapus.
+2025-06-22 17:56:56,186 - infortic_scraper          - INFO     - Tahap pembersihan selesai.
+2025-06-22 17:56:56,186 - core.database             - INFO     - Mengambil daftar kategori dari Supabase...
+2025-06-22 17:56:56,248 - httpx                     - INFO     - HTTP Request: GET https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/categories?select=id%2Cname%2Cslug "HTTP/2 200 OK"
+2025-06-22 17:56:56,253 - core.database             - INFO     - Berhasil mengambil 16 kategori.
+2025-06-22 17:56:56,253 - infortic_scraper          - INFO     - Memulai proses untuk sumber: infolomba.id
+2025-06-22 17:56:56,253 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: infolomba.id
+2025-06-22 17:56:56,313 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-22 17:56:56,323 - core.database             - INFO     - Berhasil mendapatkan source_id: 0e1abfa6-99e7-4bb1-9b50-d44ff46cc8e4
+2025-06-22 17:56:56,325 - scrapers.infolomba.id     - INFO     - Scraper for infolomba.id initialized (Debug: False).
+2025-06-22 17:56:56,326 - scrapers.infolomba.id     - INFO     - Starting Playwright browser...
+2025-06-22 17:56:58,094 - scrapers.infolomba.id     - INFO     - Memulai scrape untuk infolomba.id menggunakan Playwright.
+2025-06-22 17:56:58,516 - scrapers.infolomba.id     - INFO     - Navigating to https://www.infolomba.id/
+2025-06-22 17:57:00,120 - scrapers.infolomba.id     - INFO     - Halaman utama berhasil dimuat.
+2025-06-22 17:57:00,871 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-1/15
+2025-06-22 17:57:05,440 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-2/15
+2025-06-22 17:57:07,539 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-3/15
+2025-06-22 17:57:09,661 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-4/15
+2025-06-22 17:57:11,935 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-5/15
+2025-06-22 17:57:14,099 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-6/15
+2025-06-22 17:57:16,201 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-7/15
+2025-06-22 17:57:18,284 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-8/15
+2025-06-22 17:57:20,370 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-9/15
+2025-06-22 17:57:22,435 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-10/15
+2025-06-22 17:57:24,493 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-11/15
+2025-06-22 17:57:26,557 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-12/15
+2025-06-22 17:57:28,606 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-13/15
+2025-06-22 17:57:30,689 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-14/15
+2025-06-22 17:57:32,740 - scrapers.infolomba.id     - INFO     - Mencoba klik tombol 'Muat lebih banyak event' ke-15/15
+2025-06-22 17:57:34,835 - scrapers.infolomba.id     - INFO     - Debug HTML saved to debug_output\infolomba.id_infolomba_main_page.html
+2025-06-22 17:57:35,095 - scrapers.infolomba.id     - INFO     - Ditemukan 160 link event di infolomba.id.
+2025-06-22 17:57:35,096 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-cita-rasa-kita-kreativitas-di-setiap-gigitan-740
+2025-06-22 17:57:35,096 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-cita-rasa-kita-kreativitas-di-setiap-gigitan-740
+2025-06-22 17:57:35,780 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-cita-rasa-kita-kreativitas-di-setiap-gigitan-740.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:35,824 - scrapers.infolomba.id     - INFO     - Successfully scraped: Cita Rasa Kita: Kreativitas di Setiap Gigitan
+2025-06-22 17:57:35,824 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-academic-international-competition-739
+2025-06-22 17:57:35,824 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-academic-international-competition-739
+2025-06-22 17:57:36,537 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-academic-international-competition-739.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:36,581 - scrapers.infolomba.id     - INFO     - Successfully scraped: Academic International Competition
+2025-06-22 17:57:36,582 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-accounting-elevation-2025-738
+2025-06-22 17:57:36,582 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-accounting-elevation-2025-738
+2025-06-22 17:57:37,294 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-accounting-elevation-2025-738.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:37,418 - scrapers.infolomba.id     - INFO     - Successfully scraped: Accounting Elevation 2025
+2025-06-22 17:57:37,419 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-meddips-x-arpo-2025-737
+2025-06-22 17:57:37,419 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-meddips-x-arpo-2025-737
+2025-06-22 17:57:38,090 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-meddips-x-arpo-2025-737.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:38,191 - scrapers.infolomba.id     - INFO     - Successfully scraped: MEDDIPS X ARPO 2025
+2025-06-22 17:57:38,192 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-aotc-part-v-736
+2025-06-22 17:57:38,192 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-aotc-part-v-736
+2025-06-22 17:57:38,877 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-aotc-part-v-736.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:38,924 - scrapers.infolomba.id     - INFO     - Successfully scraped: AOTC PART V
+2025-06-22 17:57:38,924 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-smart-economic-business-competition-sebc-2025--733
+2025-06-22 17:57:38,924 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-smart-economic-business-competition-sebc-2025--733
+2025-06-22 17:57:39,616 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-smart-economic-business-competition-sebc-2025--733.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:39,668 - scrapers.infolomba.id     - INFO     - Successfully scraped: Smart Economic Business Competition (SEBC) 2025
+2025-06-22 17:57:39,669 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-gempara-grand-event-merah-putih-nusantara-732
+2025-06-22 17:57:39,669 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-gempara-grand-event-merah-putih-nusantara-732
+2025-06-22 17:57:40,318 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-gempara-grand-event-merah-putih-nusantara-732.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:40,362 - scrapers.infolomba.id     - INFO     - Successfully scraped: GEMPARA (Grand Event Merah Putih Nusantara)
+2025-06-22 17:57:40,362 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-delphoria-cup-20-731
+2025-06-22 17:57:40,362 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-delphoria-cup-20-731
+2025-06-22 17:57:41,078 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-delphoria-cup-20-731.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:41,121 - scrapers.infolomba.id     - INFO     - Successfully scraped: Delphoria Cup 2.0
+2025-06-22 17:57:41,121 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-unisla-photography-competition-2025--730
+2025-06-22 17:57:41,121 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-unisla-photography-competition-2025--730
+2025-06-22 17:57:41,780 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-unisla-photography-competition-2025--730.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:41,825 - scrapers.infolomba.id     - INFO     - Successfully scraped: UNISLA PHOTOGRAPHY COMPETITION 2025
+2025-06-22 17:57:41,826 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-cassevas-cup-7th-729
+2025-06-22 17:57:41,826 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-cassevas-cup-7th-729
+2025-06-22 17:57:42,504 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-cassevas-cup-7th-729.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:42,549 - scrapers.infolomba.id     - INFO     - Successfully scraped: Cassevas Cup 7th
+2025-06-22 17:57:42,550 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-kompetisi-ilustrasi-fesyen-nasional--728
+2025-06-22 17:57:42,550 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-kompetisi-ilustrasi-fesyen-nasional--728
+2025-06-22 17:57:43,214 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-kompetisi-ilustrasi-fesyen-nasional--728.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:43,257 - scrapers.infolomba.id     - INFO     - Successfully scraped: Kompetisi Ilustrasi Fesyen Nasional
+2025-06-22 17:57:43,258 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-kreation-kriss-research-competition-727
+2025-06-22 17:57:43,258 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-kreation-kriss-research-competition-727
+2025-06-22 17:57:43,880 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-kreation-kriss-research-competition-727.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:43,975 - scrapers.infolomba.id     - INFO     - Successfully scraped: KREATION (KRISS RESEARCH COMPETITION)
+2025-06-22 17:57:43,975 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-pekan-narasi-pena-nasional-2025-726
+2025-06-22 17:57:43,975 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-pekan-narasi-pena-nasional-2025-726
+2025-06-22 17:57:44,706 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-pekan-narasi-pena-nasional-2025-726.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:44,766 - scrapers.infolomba.id     - INFO     - Successfully scraped: PEKAN NARASI (PENA) NASIONAL 2025
+2025-06-22 17:57:44,766 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-dapatkerja-competition-725
+2025-06-22 17:57:44,767 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-dapatkerja-competition-725
+2025-06-22 17:57:45,553 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-dapatkerja-competition-725.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:45,633 - scrapers.infolomba.id     - INFO     - Successfully scraped: Dapatkerja Competition
+2025-06-22 17:57:45,635 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-spotlight-fun-and-accounting-competition-2025--724
+2025-06-22 17:57:45,635 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-spotlight-fun-and-accounting-competition-2025--724
+2025-06-22 17:57:46,323 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-spotlight-fun-and-accounting-competition-2025--724.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:46,392 - scrapers.infolomba.id     - INFO     - Successfully scraped: SPOTLIGHT FUN AND ACCOUNTING COMPETITION 2025
+2025-06-22 17:57:46,392 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-coloring-competition-festival-jamu-nusantara-723
+2025-06-22 17:57:46,392 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-coloring-competition-festival-jamu-nusantara-723
+2025-06-22 17:57:47,128 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-coloring-competition-festival-jamu-nusantara-723.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:47,190 - scrapers.infolomba.id     - INFO     - Successfully scraped: Coloring Competition Festival Jamu Nusantara
+2025-06-22 17:57:47,190 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-esai-mahasiswa-nasional-2025-722
+2025-06-22 17:57:47,190 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-esai-mahasiswa-nasional-2025-722
+2025-06-22 17:57:47,914 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-esai-mahasiswa-nasional-2025-722.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:47,975 - scrapers.infolomba.id     - INFO     - Successfully scraped: Esai Mahasiswa Nasional 2025
+2025-06-22 17:57:47,975 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-visdec-season-1-720
+2025-06-22 17:57:47,975 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-visdec-season-1-720
+2025-06-22 17:57:48,594 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-visdec-season-1-720.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:48,675 - scrapers.infolomba.id     - INFO     - Successfully scraped: Visdec Season 1
+2025-06-22 17:57:48,676 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-invention-2025-719
+2025-06-22 17:57:48,676 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-invention-2025-719
+2025-06-22 17:57:49,343 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-invention-2025-719.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:49,394 - scrapers.infolomba.id     - INFO     - Successfully scraped: INVENTION 2025
+2025-06-22 17:57:49,395 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-voice-over-communication-events-718
+2025-06-22 17:57:49,395 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-voice-over-communication-events-718
+2025-06-22 17:57:50,051 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-voice-over-communication-events-718.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:50,128 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Voice Over Communication Events
+2025-06-22 17:57:50,128 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-law-fair-lp2dh-2025-717
+2025-06-22 17:57:50,129 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-law-fair-lp2dh-2025-717
+2025-06-22 17:57:50,807 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-law-fair-lp2dh-2025-717.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:50,905 - scrapers.infolomba.id     - INFO     - Successfully scraped: Law Fair LP2DH 2025
+2025-06-22 17:57:50,906 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-teknokrat-english-competition-tecomp-2025-716
+2025-06-22 17:57:50,906 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-teknokrat-english-competition-tecomp-2025-716
+2025-06-22 17:57:51,609 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-teknokrat-english-competition-tecomp-2025-716.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:51,669 - scrapers.infolomba.id     - INFO     - Successfully scraped: Teknokrat English Competition (TECOMP) 2025
+2025-06-22 17:57:51,670 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-dekandang-fest-715
+2025-06-22 17:57:51,670 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-dekandang-fest-715
+2025-06-22 17:57:52,357 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-dekandang-fest-715.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:52,424 - scrapers.infolomba.id     - INFO     - Successfully scraped: DE'KANDANG FEST
+2025-06-22 17:57:52,424 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-borneo-muharram-festival--714
+2025-06-22 17:57:52,424 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-borneo-muharram-festival--714
+2025-06-22 17:57:53,129 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-borneo-muharram-festival--714.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:53,171 - scrapers.infolomba.id     - INFO     - Successfully scraped: Borneo Muharram Festival
+2025-06-22 17:57:53,172 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-porfes-2025--713
+2025-06-22 17:57:53,172 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-porfes-2025--713
+2025-06-22 17:57:53,820 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-porfes-2025--713.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:53,900 - scrapers.infolomba.id     - INFO     - Successfully scraped: PORFES 2025
+2025-06-22 17:57:53,900 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-development-economic-competion--bussines-plan-712
+2025-06-22 17:57:53,900 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-development-economic-competion--bussines-plan-712
+2025-06-22 17:57:54,588 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-development-economic-competion--bussines-plan-712.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:54,639 - scrapers.infolomba.id     - INFO     - Successfully scraped: Development Economic Competion - Bussines Plan
+2025-06-22 17:57:54,639 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-vokus-adbis-navigating-uncertainty-in-business-711
+2025-06-22 17:57:54,639 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-vokus-adbis-navigating-uncertainty-in-business-711
+2025-06-22 17:57:55,305 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-vokus-adbis-navigating-uncertainty-in-business-711.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:55,386 - scrapers.infolomba.id     - INFO     - Successfully scraped: VOKUS ADBIS: Navigating Uncertainty in Business
+2025-06-22 17:57:55,388 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-olympiad-economics-opec-710
+2025-06-22 17:57:55,389 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-olympiad-economics-opec-710
+2025-06-22 17:57:56,155 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-olympiad-economics-opec-710.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:56,225 - scrapers.infolomba.id     - INFO     - Successfully scraped: Olympiad Economics (OPEC)
+2025-06-22 17:57:56,225 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-marketing-by-u-created-by-u-709
+2025-06-22 17:57:56,225 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-marketing-by-u-created-by-u-709
+2025-06-22 17:57:56,879 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-marketing-by-u-created-by-u-709.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:56,959 - scrapers.infolomba.id     - INFO     - Successfully scraped: Marketing By U, Created By U
+2025-06-22 17:57:56,960 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-mbion-champion-quest-2025-708
+2025-06-22 17:57:56,960 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-mbion-champion-quest-2025-708
+2025-06-22 17:57:57,600 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-mbion-champion-quest-2025-708.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:57,645 - scrapers.infolomba.id     - INFO     - Successfully scraped: MBION Champion Quest 2025
+2025-06-22 17:57:57,645 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info--business-competition-semar-entrepreneur-2025--706
+2025-06-22 17:57:57,645 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info--business-competition-semar-entrepreneur-2025--706
+2025-06-22 17:57:58,316 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info--business-competition-semar-entrepreneur-2025--706.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:58,365 - scrapers.infolomba.id     - INFO     - Successfully scraped: BUSINESS COMPETITION SEMAR ENTREPRENEUR 2025
+2025-06-22 17:57:58,365 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-leadcompetition-business-case-704
+2025-06-22 17:57:58,365 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-leadcompetition-business-case-704
+2025-06-22 17:57:59,108 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-leadcompetition-business-case-704.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:59,155 - scrapers.infolomba.id     - INFO     - Successfully scraped: LeadCompetition Business Case
+2025-06-22 17:57:59,155 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-olipa-olimpiade-ilmu-pengetahuan-alam-2025-703
+2025-06-22 17:57:59,155 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-olipa-olimpiade-ilmu-pengetahuan-alam-2025-703
+2025-06-22 17:57:59,823 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-olipa-olimpiade-ilmu-pengetahuan-alam-2025-703.html: 'str' object has no attribute 'content'
+2025-06-22 17:57:59,885 - scrapers.infolomba.id     - INFO     - Successfully scraped: OLIPA (Olimpiade Ilmu Pengetahuan Alam) 2025
+2025-06-22 17:57:59,886 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-ifest-primakara--702
+2025-06-22 17:57:59,886 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-ifest-primakara--702
+2025-06-22 17:58:00,681 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-ifest-primakara--702.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:00,750 - scrapers.infolomba.id     - INFO     - Successfully scraped: IFEST Primakara
+2025-06-22 17:58:00,751 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-creactionfest-701
+2025-06-22 17:58:00,751 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-creactionfest-701
+2025-06-22 17:58:01,516 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-creactionfest-701.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:01,794 - scrapers.infolomba.id     - INFO     - Successfully scraped: CREACTIONFEST
+2025-06-22 17:58:01,794 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-factcount-infographic-competition-2025-700
+2025-06-22 17:58:01,794 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-factcount-infographic-competition-2025-700
+2025-06-22 17:58:03,032 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-factcount-infographic-competition-2025-700.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:03,121 - scrapers.infolomba.id     - INFO     - Successfully scraped: FACTCOUNT INFOGRAPHIC COMPETITION 2025
+2025-06-22 17:58:03,122 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-gloricup-2025-699
+2025-06-22 17:58:03,122 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-gloricup-2025-699
+2025-06-22 17:58:03,842 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-gloricup-2025-699.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:03,997 - scrapers.infolomba.id     - INFO     - Successfully scraped: GLORICUP 2025
+2025-06-22 17:58:03,997 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-poster-designo--698
+2025-06-22 17:58:03,997 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-poster-designo--698
+2025-06-22 17:58:05,000 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-poster-designo--698.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:05,046 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Poster Designo
+2025-06-22 17:58:05,046 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-pekan-it-competition--697
+2025-06-22 17:58:05,047 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-pekan-it-competition--697
+2025-06-22 17:58:05,886 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-pekan-it-competition--697.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:05,951 - scrapers.infolomba.id     - INFO     - Successfully scraped: PEKAN IT COMPETITION
+2025-06-22 17:58:05,951 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-icc-indonesian-counseling-competition-696
+2025-06-22 17:58:05,951 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-icc-indonesian-counseling-competition-696
+2025-06-22 17:58:06,726 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-icc-indonesian-counseling-competition-696.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:06,887 - scrapers.infolomba.id     - INFO     - Successfully scraped: ICC (Indonesian Counseling Competition)
+2025-06-22 17:58:06,888 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-poster-dies-natalis-ke1-695
+2025-06-22 17:58:06,888 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-poster-dies-natalis-ke1-695
+2025-06-22 17:58:07,655 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-poster-dies-natalis-ke1-695.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:07,783 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Poster Dies Natalis Ke-1
+2025-06-22 17:58:07,783 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-industrial-engineering-competition-2025-694
+2025-06-22 17:58:07,783 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-industrial-engineering-competition-2025-694
+2025-06-22 17:58:08,524 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-industrial-engineering-competition-2025-694.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:08,610 - scrapers.infolomba.id     - INFO     - Successfully scraped: Industrial Engineering Competition 2025
+2025-06-22 17:58:08,611 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-festival-bahasa-dan-budaya-693
+2025-06-22 17:58:08,612 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-festival-bahasa-dan-budaya-693
+2025-06-22 17:58:09,351 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-festival-bahasa-dan-budaya-693.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:09,479 - scrapers.infolomba.id     - INFO     - Successfully scraped: Festival Bahasa dan Budaya
+2025-06-22 17:58:09,480 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-rcoc-red-cross-online-competition-691
+2025-06-22 17:58:09,480 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-rcoc-red-cross-online-competition-691
+2025-06-22 17:58:10,459 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-rcoc-red-cross-online-competition-691.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:10,525 - scrapers.infolomba.id     - INFO     - Successfully scraped: RCOC (Red Cross Online Competition)
+2025-06-22 17:58:10,526 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-tball-cup-vol20-690
+2025-06-22 17:58:10,526 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-tball-cup-vol20-690
+2025-06-22 17:58:11,300 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-tball-cup-vol20-690.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:11,359 - scrapers.infolomba.id     - INFO     - Successfully scraped: T-Ball Cup Vol.20
+2025-06-22 17:58:11,359 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-irdo-2025-international-robot-design-olympiad-689
+2025-06-22 17:58:11,359 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-irdo-2025-international-robot-design-olympiad-689
+2025-06-22 17:58:12,058 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-irdo-2025-international-robot-design-olympiad-689.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:12,157 - scrapers.infolomba.id     - INFO     - Successfully scraped: IRDO 2025 (International Robot Design Olympiad)
+2025-06-22 17:58:12,159 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-hypothalamus-competition-688
+2025-06-22 17:58:12,160 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-hypothalamus-competition-688
+2025-06-22 17:58:12,868 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-hypothalamus-competition-688.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:12,933 - scrapers.infolomba.id     - INFO     - Successfully scraped: Hypothalamus Competition
+2025-06-22 17:58:12,934 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-ecodays-2025-687
+2025-06-22 17:58:12,934 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-ecodays-2025-687
+2025-06-22 17:58:13,602 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-ecodays-2025-687.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:13,669 - scrapers.infolomba.id     - INFO     - Successfully scraped: ECODAYS 2025
+2025-06-22 17:58:13,670 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-ruangguru-mathematics-and-logic-championship-rmc-2025-686
+2025-06-22 17:58:13,670 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-ruangguru-mathematics-and-logic-championship-rmc-2025-686
+2025-06-22 17:58:14,439 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-ruangguru-mathematics-and-logic-championship-rmc-2025-686.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:14,504 - scrapers.infolomba.id     - INFO     - Successfully scraped: Ruangguru Mathematics and Logic Championship (RMC) 2025
+2025-06-22 17:58:14,505 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-visiont-competition-2025-685
+2025-06-22 17:58:14,505 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-visiont-competition-2025-685
+2025-06-22 17:58:15,278 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-visiont-competition-2025-685.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:15,343 - scrapers.infolomba.id     - INFO     - Successfully scraped: Visiont Competition 2025
+2025-06-22 17:58:15,343 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-falcons-cup--684
+2025-06-22 17:58:15,343 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-falcons-cup--684
+2025-06-22 17:58:16,035 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-falcons-cup--684.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:16,107 - scrapers.infolomba.id     - INFO     - Successfully scraped: Falcons Cup
+2025-06-22 17:58:16,107 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-business-case-competition--683
+2025-06-22 17:58:16,107 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-business-case-competition--683
+2025-06-22 17:58:16,758 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-business-case-competition--683.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:16,797 - scrapers.infolomba.id     - INFO     - Successfully scraped: Business Case Competition
+2025-06-22 17:58:16,798 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-aup-cup-2025-682
+2025-06-22 17:58:16,798 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-aup-cup-2025-682
+2025-06-22 17:58:17,442 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-aup-cup-2025-682.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:17,491 - scrapers.infolomba.id     - INFO     - Successfully scraped: AUP CUP 2025
+2025-06-22 17:58:17,492 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-the-11th-koin-kime-feb-unnes-681
+2025-06-22 17:58:17,492 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-the-11th-koin-kime-feb-unnes-681
+2025-06-22 17:58:18,142 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-the-11th-koin-kime-feb-unnes-681.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:18,200 - scrapers.infolomba.id     - INFO     - Successfully scraped: The 11th KOIN KIME FEB UNNES
+2025-06-22 17:58:18,200 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-dapatkerja-competition-680
+2025-06-22 17:58:18,200 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-dapatkerja-competition-680
+2025-06-22 17:58:18,932 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-dapatkerja-competition-680.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:18,993 - scrapers.infolomba.id     - INFO     - Successfully scraped: DapatKerja Competition
+2025-06-22 17:58:18,993 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-prismatic-prisma-innovation-and-paper-competition-679
+2025-06-22 17:58:18,994 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-prismatic-prisma-innovation-and-paper-competition-679
+2025-06-22 17:58:19,662 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-prismatic-prisma-innovation-and-paper-competition-679.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:19,731 - scrapers.infolomba.id     - INFO     - Successfully scraped: PRISMATIC (Prisma Innovation and Paper Competition)
+2025-06-22 17:58:19,731 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-tyfocup-focust-678
+2025-06-22 17:58:19,731 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-tyfocup-focust-678
+2025-06-22 17:58:20,458 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-tyfocup-focust-678.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:20,627 - scrapers.infolomba.id     - INFO     - Successfully scraped: TYFOCUP (FOCUST)
+2025-06-22 17:58:20,629 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-meddips-x-arpo-2025-677
+2025-06-22 17:58:20,630 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-meddips-x-arpo-2025-677
+2025-06-22 17:58:21,424 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-meddips-x-arpo-2025-677.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:21,467 - scrapers.infolomba.id     - INFO     - Successfully scraped: MEDDIPS X ARPO 2025
+2025-06-22 17:58:21,467 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lensa-sehat-nusantara-676
+2025-06-22 17:58:21,467 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lensa-sehat-nusantara-676
+2025-06-22 17:58:22,161 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lensa-sehat-nusantara-676.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:22,202 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lensa Sehat Nusantara
+2025-06-22 17:58:22,202 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-economics-paper-competition--talkshow-epact-675
+2025-06-22 17:58:22,202 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-economics-paper-competition--talkshow-epact-675
+2025-06-22 17:58:22,891 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-economics-paper-competition--talkshow-epact-675.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:22,952 - scrapers.infolomba.id     - INFO     - Successfully scraped: Economics Paper Competition & Talkshow (EPACT)
+2025-06-22 17:58:22,953 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-wafifest50-674
+2025-06-22 17:58:22,953 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-wafifest50-674
+2025-06-22 17:58:23,708 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-wafifest50-674.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:23,750 - scrapers.infolomba.id     - INFO     - Successfully scraped: WafiFest5.0
+2025-06-22 17:58:23,750 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-upstract-70-competition-672
+2025-06-22 17:58:23,750 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-upstract-70-competition-672
+2025-06-22 17:58:24,548 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-upstract-70-competition-672.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:24,608 - scrapers.infolomba.id     - INFO     - Successfully scraped: UPSTRACT 7.0 Competition
+2025-06-22 17:58:24,609 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-unimal-constitutional-week-iii-ucw-iii-671
+2025-06-22 17:58:24,609 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-unimal-constitutional-week-iii-ucw-iii-671
+2025-06-22 17:58:25,344 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-unimal-constitutional-week-iii-ucw-iii-671.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:25,410 - scrapers.infolomba.id     - INFO     - Successfully scraped: Unimal Constitutional Week III (UCW III)
+2025-06-22 17:58:25,411 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-desain-maskot-670
+2025-06-22 17:58:25,411 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-desain-maskot-670
+2025-06-22 17:58:26,145 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-desain-maskot-670.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:26,196 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Desain Maskot
+2025-06-22 17:58:26,196 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-agriculture-competition--669
+2025-06-22 17:58:26,197 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-agriculture-competition--669
+2025-06-22 17:58:26,942 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-agriculture-competition--669.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:26,994 - scrapers.infolomba.id     - INFO     - Successfully scraped: Agriculture Competition
+2025-06-22 17:58:26,995 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-aksana-ajang-kreasi-karya-tulis-ilmiah-668
+2025-06-22 17:58:26,995 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-aksana-ajang-kreasi-karya-tulis-ilmiah-668
+2025-06-22 17:58:27,767 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-aksana-ajang-kreasi-karya-tulis-ilmiah-668.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:27,995 - scrapers.infolomba.id     - INFO     - Successfully scraped: AKSANA (Ajang Kreasi Karya Tulis Ilmiah)
+2025-06-22 17:58:27,996 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-national-infographic-chemistry-event-2025-nice-2025-667
+2025-06-22 17:58:27,996 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-national-infographic-chemistry-event-2025-nice-2025-667
+2025-06-22 17:58:28,658 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-national-infographic-chemistry-event-2025-nice-2025-667.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:28,715 - scrapers.infolomba.id     - INFO     - Successfully scraped: National Infographic Chemistry Event 2025 (NICE 2025)
+2025-06-22 17:58:28,716 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lkti-feab-2025--666
+2025-06-22 17:58:28,716 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lkti-feab-2025--666
+2025-06-22 17:58:29,341 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lkti-feab-2025--666.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:29,387 - scrapers.infolomba.id     - INFO     - Successfully scraped: LKTI FEAB 2025
+2025-06-22 17:58:29,388 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-istemcc-2025-665
+2025-06-22 17:58:29,388 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-istemcc-2025-665
+2025-06-22 17:58:30,053 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-istemcc-2025-665.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:30,117 - scrapers.infolomba.id     - INFO     - Successfully scraped: ISTEMCC 2025
+2025-06-22 17:58:30,118 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-thrive-business-case-competition-2025-664
+2025-06-22 17:58:30,118 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-thrive-business-case-competition-2025-664
+2025-06-22 17:58:30,825 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-thrive-business-case-competition-2025-664.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:30,874 - scrapers.infolomba.id     - INFO     - Successfully scraped: THRIVE: Business Case Competition 2025
+2025-06-22 17:58:30,874 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-ascend-2025-663
+2025-06-22 17:58:30,875 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-ascend-2025-663
+2025-06-22 17:58:31,538 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-ascend-2025-663.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:31,621 - scrapers.infolomba.id     - INFO     - Successfully scraped: ASCEND 2025
+2025-06-22 17:58:31,621 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-gebyar-islami-2-662
+2025-06-22 17:58:31,621 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-gebyar-islami-2-662
+2025-06-22 17:58:32,328 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-gebyar-islami-2-662.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:32,377 - scrapers.infolomba.id     - INFO     - Successfully scraped: GEBYAR ISLAMI #2
+2025-06-22 17:58:32,377 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-compas25-eduthon-661
+2025-06-22 17:58:32,377 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-compas25-eduthon-661
+2025-06-22 17:58:32,998 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-compas25-eduthon-661.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:33,045 - scrapers.infolomba.id     - INFO     - Successfully scraped: Compas'25 Eduthon
+2025-06-22 17:58:33,045 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-pamer-seindonesia-660
+2025-06-22 17:58:33,045 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-pamer-seindonesia-660
+2025-06-22 17:58:33,743 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-pamer-seindonesia-660.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:33,794 - scrapers.infolomba.id     - INFO     - Successfully scraped: PAMER Se-Indonesia
+2025-06-22 17:58:33,794 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-sociology-competition-socius-25-659
+2025-06-22 17:58:33,795 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-sociology-competition-socius-25-659
+2025-06-22 17:58:34,417 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-sociology-competition-socius-25-659.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:34,467 - scrapers.infolomba.id     - INFO     - Successfully scraped: Sociology Competition (Socius 25)
+2025-06-22 17:58:34,468 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-acromion-2025-658
+2025-06-22 17:58:34,468 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-acromion-2025-658
+2025-06-22 17:58:35,103 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-acromion-2025-658.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:35,160 - scrapers.infolomba.id     - INFO     - Successfully scraped: Acromion 2025
+2025-06-22 17:58:35,160 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-interfaculty-of-medicine-scientific-competition-faculty-of-medicine-intermedisco--2025-656
+2025-06-22 17:58:35,160 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-interfaculty-of-medicine-scientific-competition-faculty-of-medicine-intermedisco--2025-656
+2025-06-22 17:58:35,826 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-interfaculty-of-medicine-scientific-competition-faculty-of-medicine-intermedisco--2025-656.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:35,892 - scrapers.infolomba.id     - INFO     - Successfully scraped: Interfaculty of Medicine Scientific Competition Faculty of Medicine (INTERMEDISCO)  2025
+2025-06-22 17:58:35,892 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-screnixi-9th-655
+2025-06-22 17:58:35,892 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-screnixi-9th-655
+2025-06-22 17:58:36,611 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-screnixi-9th-655.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:36,688 - scrapers.infolomba.id     - INFO     - Successfully scraped: SCRENIXI 9TH
+2025-06-22 17:58:36,688 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-innovation-and-research-poster-competition-irpoco-2025-654
+2025-06-22 17:58:36,689 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-innovation-and-research-poster-competition-irpoco-2025-654
+2025-06-22 17:58:37,422 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-innovation-and-research-poster-competition-irpoco-2025-654.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:37,475 - scrapers.infolomba.id     - INFO     - Successfully scraped: Innovation and Research Poster Competition (IRPOCO) 2025
+2025-06-22 17:58:37,476 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-astranauts-2025-653
+2025-06-22 17:58:37,476 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-astranauts-2025-653
+2025-06-22 17:58:38,243 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-astranauts-2025-653.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:38,313 - scrapers.infolomba.id     - INFO     - Successfully scraped: Astranauts 2025
+2025-06-22 17:58:38,313 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-poster-dan-vidio-kreatif-652
+2025-06-22 17:58:38,313 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-poster-dan-vidio-kreatif-652
+2025-06-22 17:58:39,007 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-poster-dan-vidio-kreatif-652.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:39,074 - scrapers.infolomba.id     - INFO     - Successfully scraped: LOMBA POSTER DAN VIDIO KREATIF
+2025-06-22 17:58:39,074 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-amb-national-essay-competition-2025-651
+2025-06-22 17:58:39,074 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-amb-national-essay-competition-2025-651
+2025-06-22 17:58:39,868 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-amb-national-essay-competition-2025-651.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:39,938 - scrapers.infolomba.id     - INFO     - Successfully scraped: AMB National Essay Competition 2025
+2025-06-22 17:58:39,938 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-pharmacito-650
+2025-06-22 17:58:39,938 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-pharmacito-650
+2025-06-22 17:58:40,618 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-pharmacito-650.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:40,683 - scrapers.infolomba.id     - INFO     - Successfully scraped: Pharmacito
+2025-06-22 17:58:40,683 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-arasywear-mc-competition-2k25-649
+2025-06-22 17:58:40,684 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-arasywear-mc-competition-2k25-649
+2025-06-22 17:58:41,479 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-arasywear-mc-competition-2k25-649.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:41,540 - scrapers.infolomba.id     - INFO     - Successfully scraped: ArasyWear MC Competition 2K25
+2025-06-22 17:58:41,541 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-bulis-international-competition--648
+2025-06-22 17:58:41,541 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-bulis-international-competition--648
+2025-06-22 17:58:42,216 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-bulis-international-competition--648.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:42,277 - scrapers.infolomba.id     - INFO     - Successfully scraped: Bulis International Competition
+2025-06-22 17:58:42,278 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-aseanchinaindia-youth-leadership-summit-2025-647
+2025-06-22 17:58:42,278 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-aseanchinaindia-youth-leadership-summit-2025-647
+2025-06-22 17:58:42,957 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-aseanchinaindia-youth-leadership-summit-2025-647.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:43,028 - scrapers.infolomba.id     - INFO     - Successfully scraped: ASEAN-CHINA-INDIA Youth Leadership Summit 2025
+2025-06-22 17:58:43,028 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-business-plan-competition-645
+2025-06-22 17:58:43,028 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-business-plan-competition-645
+2025-06-22 17:58:43,713 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-business-plan-competition-645.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:43,753 - scrapers.infolomba.id     - INFO     - Successfully scraped: Business Plan Competition
+2025-06-22 17:58:43,753 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-impact-2025-644
+2025-06-22 17:58:43,753 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-impact-2025-644
+2025-06-22 17:58:44,459 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-impact-2025-644.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:44,510 - scrapers.infolomba.id     - INFO     - Successfully scraped: IMPACT 2025
+2025-06-22 17:58:44,510 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-tos-ldbi-643
+2025-06-22 17:58:44,510 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-tos-ldbi-643
+2025-06-22 17:58:45,264 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-tos-ldbi-643.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:45,305 - scrapers.infolomba.id     - INFO     - Successfully scraped: TOS LDBI
+2025-06-22 17:58:45,306 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-islamic-contest-642
+2025-06-22 17:58:45,306 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-islamic-contest-642
+2025-06-22 17:58:46,064 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-islamic-contest-642.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:46,112 - scrapers.infolomba.id     - INFO     - Successfully scraped: Islamic Contest
+2025-06-22 17:58:46,112 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-diponegoro-science-competition-2025-641
+2025-06-22 17:58:46,112 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-diponegoro-science-competition-2025-641
+2025-06-22 17:58:46,975 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-diponegoro-science-competition-2025-641.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:47,025 - scrapers.infolomba.id     - INFO     - Successfully scraped: Diponegoro Science Competition 2025
+2025-06-22 17:58:47,026 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-akasia-2025-apresiasi-karya-sastra-indonesia-640
+2025-06-22 17:58:47,026 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-akasia-2025-apresiasi-karya-sastra-indonesia-640
+2025-06-22 17:58:47,875 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-akasia-2025-apresiasi-karya-sastra-indonesia-640.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:47,916 - scrapers.infolomba.id     - INFO     - Successfully scraped: AKASIA 2025 (APRESIASI KARYA SASTRA INDONESIA)
+2025-06-22 17:58:47,916 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-poster-tingkat-nasional-639
+2025-06-22 17:58:47,917 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-poster-tingkat-nasional-639
+2025-06-22 17:58:48,851 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-poster-tingkat-nasional-639.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:48,914 - scrapers.infolomba.id     - INFO     - Successfully scraped: LOMBA POSTER TINGKAT NASIONAL
+2025-06-22 17:58:48,914 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-eagle-competition--638
+2025-06-22 17:58:48,914 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-eagle-competition--638
+2025-06-22 17:58:49,701 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-eagle-competition--638.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:49,757 - scrapers.infolomba.id     - INFO     - Successfully scraped: EAGLE Competition
+2025-06-22 17:58:49,758 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-kompetisi-kreator-konten-video-2025-637
+2025-06-22 17:58:49,758 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-kompetisi-kreator-konten-video-2025-637
+2025-06-22 17:58:50,464 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-kompetisi-kreator-konten-video-2025-637.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:50,507 - scrapers.infolomba.id     - INFO     - Successfully scraped: Kompetisi Kreator Konten Video 2025
+2025-06-22 17:58:50,508 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-gambar-uni-eropa-636
+2025-06-22 17:58:50,508 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-gambar-uni-eropa-636
+2025-06-22 17:58:51,217 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-gambar-uni-eropa-636.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:51,268 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Gambar Uni Eropa
+2025-06-22 17:58:51,268 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-nusantara-harmony-25-635
+2025-06-22 17:58:51,269 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-nusantara-harmony-25-635
+2025-06-22 17:58:51,951 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-nusantara-harmony-25-635.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:52,181 - scrapers.infolomba.id     - INFO     - Successfully scraped: Nusantara Harmony 25
+2025-06-22 17:58:52,181 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-business-plan-634
+2025-06-22 17:58:52,181 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-business-plan-634
+2025-06-22 17:58:52,948 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-business-plan-634.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:53,015 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Business Plan
+2025-06-22 17:58:53,015 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-vokal-solo-competations-633
+2025-06-22 17:58:53,015 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-vokal-solo-competations-633
+2025-06-22 17:58:53,930 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-vokal-solo-competations-633.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:53,975 - scrapers.infolomba.id     - INFO     - Successfully scraped: Vokal Solo Competations
+2025-06-22 17:58:53,975 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-veterinary-competition-632
+2025-06-22 17:58:53,975 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-veterinary-competition-632
+2025-06-22 17:58:54,645 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-veterinary-competition-632.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:54,703 - scrapers.infolomba.id     - INFO     - Successfully scraped: VETERINARY COMPETITION
+2025-06-22 17:58:54,704 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-hkpi-kpk-sehat-fkm-ui-2025-631
+2025-06-22 17:58:54,704 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-hkpi-kpk-sehat-fkm-ui-2025-631
+2025-06-22 17:58:55,367 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-hkpi-kpk-sehat-fkm-ui-2025-631.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:55,424 - scrapers.infolomba.id     - INFO     - Successfully scraped: LOMBA HKPI KPK SEHAT FKM UI 2025
+2025-06-22 17:58:55,425 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-kresikars-exhibition-630
+2025-06-22 17:58:55,425 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-kresikars-exhibition-630
+2025-06-22 17:58:56,140 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-kresikars-exhibition-630.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:56,197 - scrapers.infolomba.id     - INFO     - Successfully scraped: Kresikars Exhibition
+2025-06-22 17:58:56,197 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-unofest-20-astralis-629
+2025-06-22 17:58:56,197 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-unofest-20-astralis-629
+2025-06-22 17:58:56,914 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-unofest-20-astralis-629.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:56,970 - scrapers.infolomba.id     - INFO     - Successfully scraped: Unofest 2.0 Astralis
+2025-06-22 17:58:56,970 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-advocacy-compass-628
+2025-06-22 17:58:56,970 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-advocacy-compass-628
+2025-06-22 17:58:57,626 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-advocacy-compass-628.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:57,671 - scrapers.infolomba.id     - INFO     - Successfully scraped: Advocacy Compass
+2025-06-22 17:58:57,671 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-embriogenesis--627
+2025-06-22 17:58:57,671 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-embriogenesis--627
+2025-06-22 17:58:58,340 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-embriogenesis--627.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:58,418 - scrapers.infolomba.id     - INFO     - Successfully scraped: Embriogenesis
+2025-06-22 17:58:58,418 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-fopesco-2025-626
+2025-06-22 17:58:58,418 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-fopesco-2025-626
+2025-06-22 17:58:59,291 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-fopesco-2025-626.html: 'str' object has no attribute 'content'
+2025-06-22 17:58:59,338 - scrapers.infolomba.id     - INFO     - Successfully scraped: FOPESCO 2025
+2025-06-22 17:58:59,339 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lkti-fpp-undip-2025-625
+2025-06-22 17:58:59,340 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lkti-fpp-undip-2025-625
+2025-06-22 17:59:00,004 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lkti-fpp-undip-2025-625.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:00,076 - scrapers.infolomba.id     - INFO     - Successfully scraped: LKTI FPP UNDIP 2025
+2025-06-22 17:59:00,076 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-seleksi-karya-tulis-ilmiah-sakti-2025-624
+2025-06-22 17:59:00,077 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-seleksi-karya-tulis-ilmiah-sakti-2025-624
+2025-06-22 17:59:00,850 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-seleksi-karya-tulis-ilmiah-sakti-2025-624.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:00,929 - scrapers.infolomba.id     - INFO     - Successfully scraped: SELEKSI KARYA TULIS ILMIAH "SAKTI" 2025
+2025-06-22 17:59:00,930 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-business-plan-competition--622
+2025-06-22 17:59:00,930 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-business-plan-competition--622
+2025-06-22 17:59:01,699 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-business-plan-competition--622.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:01,758 - scrapers.infolomba.id     - INFO     - Successfully scraped: Business Plan Competition
+2025-06-22 17:59:01,758 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-english-event-2025-621
+2025-06-22 17:59:01,759 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-english-event-2025-621
+2025-06-22 17:59:02,542 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-english-event-2025-621.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:02,598 - scrapers.infolomba.id     - INFO     - Successfully scraped: English Event 2025
+2025-06-22 17:59:02,599 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-beasiswa-kampung-inggris--620
+2025-06-22 17:59:02,599 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-beasiswa-kampung-inggris--620
+2025-06-22 17:59:03,391 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-beasiswa-kampung-inggris--620.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:03,457 - scrapers.infolomba.id     - INFO     - Successfully scraped: Beasiswa Kampung Inggris
+2025-06-22 17:59:03,458 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-it-class-digital-poster-competition-619
+2025-06-22 17:59:03,458 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-it-class-digital-poster-competition-619
+2025-06-22 17:59:04,164 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-it-class-digital-poster-competition-619.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:04,218 - scrapers.infolomba.id     - INFO     - Successfully scraped: IT CLASS (Digital Poster Competition)
+2025-06-22 17:59:04,218 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-mandalas-cup-618
+2025-06-22 17:59:04,218 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-mandalas-cup-618
+2025-06-22 17:59:05,078 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-mandalas-cup-618.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:05,131 - scrapers.infolomba.id     - INFO     - Successfully scraped: MANDALAS CUP
+2025-06-22 17:59:05,132 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-ratoh-jaroe-competition-617
+2025-06-22 17:59:05,132 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-ratoh-jaroe-competition-617
+2025-06-22 17:59:05,835 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-ratoh-jaroe-competition-617.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:05,916 - scrapers.infolomba.id     - INFO     - Successfully scraped: Ratoh Jaroe Competition
+2025-06-22 17:59:05,916 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-eighty-six-cup-616
+2025-06-22 17:59:05,916 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-eighty-six-cup-616
+2025-06-22 17:59:06,709 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-eighty-six-cup-616.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:06,759 - scrapers.infolomba.id     - INFO     - Successfully scraped: Eighty Six Cup
+2025-06-22 17:59:06,759 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-hypothalamus-competition-615
+2025-06-22 17:59:06,759 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-hypothalamus-competition-615
+2025-06-22 17:59:07,482 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-hypothalamus-competition-615.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:07,541 - scrapers.infolomba.id     - INFO     - Successfully scraped: Hypothalamus Competition
+2025-06-22 17:59:07,542 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-thalassic-2025-614
+2025-06-22 17:59:07,542 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-thalassic-2025-614
+2025-06-22 17:59:08,255 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-thalassic-2025-614.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:08,337 - scrapers.infolomba.id     - INFO     - Successfully scraped: THALASSIC 2025
+2025-06-22 17:59:08,337 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-ecovolution-2025-613
+2025-06-22 17:59:08,338 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-ecovolution-2025-613
+2025-06-22 17:59:09,049 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-ecovolution-2025-613.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:09,108 - scrapers.infolomba.id     - INFO     - Successfully scraped: ECOVOLUTION 2025
+2025-06-22 17:59:09,109 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-national-essay-competition-2025-612
+2025-06-22 17:59:09,109 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-national-essay-competition-2025-612
+2025-06-22 17:59:09,881 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-national-essay-competition-2025-612.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:09,934 - scrapers.infolomba.id     - INFO     - Successfully scraped: National Essay Competition 2025
+2025-06-22 17:59:09,935 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-aksaraya-lomba-cipta-puisi-2025-611
+2025-06-22 17:59:09,935 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-aksaraya-lomba-cipta-puisi-2025-611
+2025-06-22 17:59:10,633 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-aksaraya-lomba-cipta-puisi-2025-611.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:10,692 - scrapers.infolomba.id     - INFO     - Successfully scraped: Aksaraya Lomba Cipta Puisi 2025
+2025-06-22 17:59:10,693 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-finvest-2-610
+2025-06-22 17:59:10,693 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-finvest-2-610
+2025-06-22 17:59:11,377 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-finvest-2-610.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:11,437 - scrapers.infolomba.id     - INFO     - Successfully scraped: FINVEST #2
+2025-06-22 17:59:11,437 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-fba-festival-bahasa-arab-nasional-2025-609
+2025-06-22 17:59:11,438 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-fba-festival-bahasa-arab-nasional-2025-609
+2025-06-22 17:59:12,132 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-fba-festival-bahasa-arab-nasional-2025-609.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:12,181 - scrapers.infolomba.id     - INFO     - Successfully scraped: FBA (Festival Bahasa Arab) Nasional 2025
+2025-06-22 17:59:12,182 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-asean-sparks-608
+2025-06-22 17:59:12,182 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-asean-sparks-608
+2025-06-22 17:59:13,034 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-asean-sparks-608.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:13,084 - scrapers.infolomba.id     - INFO     - Successfully scraped: ASEAN Sparks
+2025-06-22 17:59:13,084 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-hardiknas-2025-607
+2025-06-22 17:59:13,084 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-hardiknas-2025-607
+2025-06-22 17:59:13,776 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-hardiknas-2025-607.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:13,818 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Hardiknas 2025
+2025-06-22 17:59:13,819 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-national-research-innovation-fair-606
+2025-06-22 17:59:13,819 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-national-research-innovation-fair-606
+2025-06-22 17:59:14,814 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-national-research-innovation-fair-606.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:14,862 - scrapers.infolomba.id     - INFO     - Successfully scraped: National Research Innovation Fair
+2025-06-22 17:59:14,862 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-gesid-2025-605
+2025-06-22 17:59:14,862 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-gesid-2025-605
+2025-06-22 17:59:15,584 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-gesid-2025-605.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:15,634 - scrapers.infolomba.id     - INFO     - Successfully scraped: GESID 2025
+2025-06-22 17:59:15,634 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-tsm-economic-days-80-603
+2025-06-22 17:59:15,635 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-tsm-economic-days-80-603
+2025-06-22 17:59:16,368 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-tsm-economic-days-80-603.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:16,413 - scrapers.infolomba.id     - INFO     - Successfully scraped: TSM Economic Days 8.0
+2025-06-22 17:59:16,413 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-upco-602
+2025-06-22 17:59:16,413 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-upco-602
+2025-06-22 17:59:17,175 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-upco-602.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:17,315 - scrapers.infolomba.id     - INFO     - Successfully scraped: UPCO
+2025-06-22 17:59:17,316 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-spiritual-vision-competition-2025-600
+2025-06-22 17:59:17,316 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-spiritual-vision-competition-2025-600
+2025-06-22 17:59:18,049 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-spiritual-vision-competition-2025-600.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:18,099 - scrapers.infolomba.id     - INFO     - Successfully scraped: Spiritual Vision Competition 2025
+2025-06-22 17:59:18,099 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-teras-2025-599
+2025-06-22 17:59:18,099 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-teras-2025-599
+2025-06-22 17:59:18,734 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-teras-2025-599.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:18,790 - scrapers.infolomba.id     - INFO     - Successfully scraped: TERAS 2025
+2025-06-22 17:59:18,791 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-forlawtous-public-speaking-competition-2025-601
+2025-06-22 17:59:18,791 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-forlawtous-public-speaking-competition-2025-601
+2025-06-22 17:59:19,453 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-forlawtous-public-speaking-competition-2025-601.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:19,544 - scrapers.infolomba.id     - INFO     - Successfully scraped: FORLAWTOUS PUBLIC SPEAKING COMPETITION 2025
+2025-06-22 17:59:19,545 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-xperience-iise-2025-business-case-competition-597
+2025-06-22 17:59:19,545 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-xperience-iise-2025-business-case-competition-597
+2025-06-22 17:59:20,250 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-xperience-iise-2025-business-case-competition-597.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:20,308 - scrapers.infolomba.id     - INFO     - Successfully scraped: Xperience IISE 2025 Business Case Competition
+2025-06-22 17:59:20,308 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-accounting-competition-2025-596
+2025-06-22 17:59:20,308 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-accounting-competition-2025-596
+2025-06-22 17:59:21,028 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-accounting-competition-2025-596.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:21,092 - scrapers.infolomba.id     - INFO     - Successfully scraped: Accounting Competition 2025
+2025-06-22 17:59:21,093 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-story-telling-595
+2025-06-22 17:59:21,093 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-story-telling-595
+2025-06-22 17:59:21,848 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-story-telling-595.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:21,926 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Story Telling
+2025-06-22 17:59:21,926 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-world-environment-day-2025-tiktok-competition--594
+2025-06-22 17:59:21,926 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-world-environment-day-2025-tiktok-competition--594
+2025-06-22 17:59:22,650 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-world-environment-day-2025-tiktok-competition--594.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:22,704 - scrapers.infolomba.id     - INFO     - Successfully scraped: World Environment Day 2025 TikTok Competition
+2025-06-22 17:59:22,704 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-isdgs-international-students-government-sdgs-summit-593
+2025-06-22 17:59:22,705 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-isdgs-international-students-government-sdgs-summit-593
+2025-06-22 17:59:23,492 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-isdgs-international-students-government-sdgs-summit-593.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:23,555 - scrapers.infolomba.id     - INFO     - Successfully scraped: ISDGS (International Students Government SDGs Summit)
+2025-06-22 17:59:23,556 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-poster-nasional--592
+2025-06-22 17:59:23,556 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-poster-nasional--592
+2025-06-22 17:59:24,223 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-poster-nasional--592.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:24,279 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Poster Nasional
+2025-06-22 17:59:24,279 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-olimpiade-matematika-nasional-sd--sma-591
+2025-06-22 17:59:24,280 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-olimpiade-matematika-nasional-sd--sma-591
+2025-06-22 17:59:24,914 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-olimpiade-matematika-nasional-sd--sma-591.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:24,976 - scrapers.infolomba.id     - INFO     - Successfully scraped: Olimpiade Matematika Nasional SD & SMA
+2025-06-22 17:59:24,976 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-the-youth-impact-international-business-plan-competition-2025-ibpc2025-590
+2025-06-22 17:59:24,976 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-the-youth-impact-international-business-plan-competition-2025-ibpc2025-590
+2025-06-22 17:59:25,658 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-the-youth-impact-international-business-plan-competition-2025-ibpc2025-590.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:25,726 - scrapers.infolomba.id     - INFO     - Successfully scraped: The Youth Impact International Business Plan Competition 2025 (IBPC2025)
+2025-06-22 17:59:25,727 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-glowfest--589
+2025-06-22 17:59:25,727 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-glowfest--589
+2025-06-22 17:59:26,486 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-glowfest--589.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:26,555 - scrapers.infolomba.id     - INFO     - Successfully scraped: GLOWFEST
+2025-06-22 17:59:26,555 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-impact-2025-588
+2025-06-22 17:59:26,556 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-impact-2025-588
+2025-06-22 17:59:27,212 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-impact-2025-588.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:27,264 - scrapers.infolomba.id     - INFO     - Successfully scraped: IMPACT 2025
+2025-06-22 17:59:27,265 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-medsmotion-2025-587
+2025-06-22 17:59:27,265 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-medsmotion-2025-587
+2025-06-22 17:59:28,057 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-medsmotion-2025-587.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:28,155 - scrapers.infolomba.id     - INFO     - Successfully scraped: Medsmotion 2025
+2025-06-22 17:59:28,156 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-kse-juara-586
+2025-06-22 17:59:28,156 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-kse-juara-586
+2025-06-22 17:59:28,802 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-kse-juara-586.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:28,879 - scrapers.infolomba.id     - INFO     - Successfully scraped: KSE JUARA
+2025-06-22 17:59:28,879 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-forlawtous-public-speaking-competition-2025-585
+2025-06-22 17:59:28,879 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-forlawtous-public-speaking-competition-2025-585
+2025-06-22 17:59:29,519 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-forlawtous-public-speaking-competition-2025-585.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:29,574 - scrapers.infolomba.id     - INFO     - Successfully scraped: FORLAWTOUS PUBLIC SPEAKING COMPETITION 2025
+2025-06-22 17:59:29,575 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-information-system-memorable-exhibition-isme--584
+2025-06-22 17:59:29,575 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-information-system-memorable-exhibition-isme--584
+2025-06-22 17:59:30,281 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-information-system-memorable-exhibition-isme--584.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:30,349 - scrapers.infolomba.id     - INFO     - Successfully scraped: Information System Memorable Exhibition (ISME)
+2025-06-22 17:59:30,350 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-fit-competition-2025-583
+2025-06-22 17:59:30,350 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-fit-competition-2025-583
+2025-06-22 17:59:31,059 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-fit-competition-2025-583.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:31,110 - scrapers.infolomba.id     - INFO     - Successfully scraped: FIT COMPETITION 2025
+2025-06-22 17:59:31,111 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-wasco-x-temilnas-2025-582
+2025-06-22 17:59:31,111 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-wasco-x-temilnas-2025-582
+2025-06-22 17:59:31,805 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-wasco-x-temilnas-2025-582.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:31,857 - scrapers.infolomba.id     - INFO     - Successfully scraped: Wasco x Temilnas 2025
+2025-06-22 17:59:31,857 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-journalistic-insight-competition-581
+2025-06-22 17:59:31,857 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-journalistic-insight-competition-581
+2025-06-22 17:59:32,555 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-journalistic-insight-competition-581.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:32,612 - scrapers.infolomba.id     - INFO     - Successfully scraped: Journalistic Insight Competition
+2025-06-22 17:59:32,613 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-essay-competition--580
+2025-06-22 17:59:32,613 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-essay-competition--580
+2025-06-22 17:59:33,302 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-essay-competition--580.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:33,355 - scrapers.infolomba.id     - INFO     - Successfully scraped: ESSAY COMPETITION
+2025-06-22 17:59:33,355 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-scienta-clash-579
+2025-06-22 17:59:33,355 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-scienta-clash-579
+2025-06-22 17:59:34,051 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-scienta-clash-579.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:34,107 - scrapers.infolomba.id     - INFO     - Successfully scraped: SCIENTA CLASH
+2025-06-22 17:59:34,107 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-trisakti-business-law-fair-578
+2025-06-22 17:59:34,107 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-trisakti-business-law-fair-578
+2025-06-22 17:59:34,789 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-trisakti-business-law-fair-578.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:34,838 - scrapers.infolomba.id     - INFO     - Successfully scraped: Trisakti Business Law Fair
+2025-06-22 17:59:34,838 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-thrive-2025-577
+2025-06-22 17:59:34,838 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-thrive-2025-577
+2025-06-22 17:59:35,479 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-thrive-2025-577.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:35,557 - scrapers.infolomba.id     - INFO     - Successfully scraped: THRIVE 2025
+2025-06-22 17:59:35,558 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-pyc-photo-essay-reels-competition-576
+2025-06-22 17:59:35,558 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-pyc-photo-essay-reels-competition-576
+2025-06-22 17:59:36,189 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-pyc-photo-essay-reels-competition-576.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:36,253 - scrapers.infolomba.id     - INFO     - Successfully scraped: PYC Photo, Essay, Reels Competition
+2025-06-22 17:59:36,253 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-internasional-kreasi-publik-2025-575
+2025-06-22 17:59:36,253 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-internasional-kreasi-publik-2025-575
+2025-06-22 17:59:36,882 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-internasional-kreasi-publik-2025-575.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:36,940 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Internasional Kreasi Publik 2025
+2025-06-22 17:59:36,941 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-lomba-poster-pth-2025-574
+2025-06-22 17:59:36,941 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-lomba-poster-pth-2025-574
+2025-06-22 17:59:37,611 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-lomba-poster-pth-2025-574.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:37,667 - scrapers.infolomba.id     - INFO     - Successfully scraped: Lomba Poster PTH 2025
+2025-06-22 17:59:37,668 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-beasiswa-cendekia-muda-3-573
+2025-06-22 17:59:37,668 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-beasiswa-cendekia-muda-3-573
+2025-06-22 17:59:38,430 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-beasiswa-cendekia-muda-3-573.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:38,497 - scrapers.infolomba.id     - INFO     - Successfully scraped: Beasiswa Cendekia Muda #3
+2025-06-22 17:59:38,497 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-permata-entrepeneurship-competition-572
+2025-06-22 17:59:38,498 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-permata-entrepeneurship-competition-572
+2025-06-22 17:59:39,197 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-permata-entrepeneurship-competition-572.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:39,249 - scrapers.infolomba.id     - INFO     - Successfully scraped: PERMATA ENTREPENEURSHIP COMPETITION
+2025-06-22 17:59:39,250 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-president-university-accounting-days-puad-shc-2025-571
+2025-06-22 17:59:39,250 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-president-university-accounting-days-puad-shc-2025-571
+2025-06-22 17:59:39,928 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-president-university-accounting-days-puad-shc-2025-571.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:39,989 - scrapers.infolomba.id     - INFO     - Successfully scraped: President University Accounting Days: PUAD SHC 2025
+2025-06-22 17:59:39,989 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-festival-hari-bumi-competition-570
+2025-06-22 17:59:39,989 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-festival-hari-bumi-competition-570
+2025-06-22 17:59:40,676 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-festival-hari-bumi-competition-570.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:40,870 - scrapers.infolomba.id     - INFO     - Successfully scraped: Festival Hari Bumi Competition
+2025-06-22 17:59:40,871 - scrapers.infolomba.id     - INFO     - Scraping detail dari: https://www.infolomba.id/info-national-business-plan-competition-2025-569
+2025-06-22 17:59:40,871 - scrapers.infolomba.id     - INFO     - Fetching static page: https://www.infolomba.id/info-national-business-plan-competition-2025-569
+2025-06-22 17:59:41,564 - scrapers.infolomba.id     - ERROR    - Failed to save debug HTML to debug_output\infolomba.id_infolomba.id_info-national-business-plan-competition-2025-569.html: 'str' object has no attribute 'content'
+2025-06-22 17:59:41,634 - scrapers.infolomba.id     - INFO     - Successfully scraped: National Business Plan Competition 2025
+2025-06-22 17:59:41,634 - scrapers.infolomba.id     - INFO     - Closing Playwright browser...
+2025-06-22 17:59:41,821 - infortic_scraper          - INFO     - Selesai scrape dari infolomba.id, mendapatkan 160 kompetisi mentah.
+2025-06-22 17:59:42,067 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'AOTC PART V'
+2025-06-22 17:59:42,073 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Smart Economic Business Competition (SEBC) 2025'
+2025-06-22 17:59:42,087 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Delphoria Cup 2.0'
+2025-06-22 17:59:42,094 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'UNISLA PHOTOGRAPHY COMPETITION 2025'
+2025-06-22 17:59:42,101 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Cassevas Cup 7th'
+2025-06-22 17:59:42,104 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Kompetisi Ilustrasi Fesyen Nasional'
+2025-06-22 17:59:42,111 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'KREATION (KRISS RESEARCH COMPETITION)'
+2025-06-22 17:59:42,137 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'SPOTLIGHT FUN AND ACCOUNTING COMPETITION 2025'
+2025-06-22 17:59:42,145 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Coloring Competition Festival Jamu Nusantara'
+2025-06-22 17:59:42,145 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Coloring Competition Festival Jamu Nusantara' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,162 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Visdec Season 1'
+2025-06-22 17:59:42,178 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Lomba Voice Over Communication Events'
+2025-06-22 17:59:42,178 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Voice Over Communication Events' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,203 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Teknokrat English Competition (TECOMP) 2025'
+2025-06-22 17:59:42,208 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'DE'KANDANG FEST' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,221 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'PORFES 2025'
+2025-06-22 17:59:42,236 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Development Economic Competion - Bussines Plan'
+2025-06-22 17:59:42,240 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'VOKUS ADBIS: Navigating Uncertainty in Business'
+2025-06-22 17:59:42,241 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'VOKUS ADBIS: Navigating Uncertainty in Business' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,252 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Olympiad Economics (OPEC)'
+2025-06-22 17:59:42,260 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Marketing By U, Created By U'
+2025-06-22 17:59:42,271 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'MBION Champion Quest 2025'
+2025-06-22 17:59:42,272 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'MBION Champion Quest 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,282 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'BUSINESS COMPETITION SEMAR ENTREPRENEUR 2025'
+2025-06-22 17:59:42,291 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'LeadCompetition Business Case'
+2025-06-22 17:59:42,291 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'LeadCompetition Business Case' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,303 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'OLIPA (Olimpiade Ilmu Pengetahuan Alam) 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,311 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'IFEST Primakara'
+2025-06-22 17:59:42,319 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'CREACTIONFEST' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,325 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FACTCOUNT INFOGRAPHIC COMPETITION 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,375 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Industrial Engineering Competition 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,387 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Festival Bahasa dan Budaya'
+2025-06-22 17:59:42,393 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'RCOC (Red Cross Online Competition)'
+2025-06-22 17:59:42,394 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'RCOC (Red Cross Online Competition)' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,405 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'T-Ball Cup Vol.20'
+2025-06-22 17:59:42,416 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'IRDO 2025 (International Robot Design Olympiad)'
+2025-06-22 17:59:42,416 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'IRDO 2025 (International Robot Design Olympiad)' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,421 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Hypothalamus Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,438 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Ruangguru Mathematics and Logic Championship (RMC) 2025'
+2025-06-22 17:59:42,456 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Falcons Cup' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,466 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Business Case Competition'
+2025-06-22 17:59:42,466 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Business Case Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,475 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'AUP CUP 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,488 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'The 11th KOIN KIME FEB UNNES' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,518 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'TYFOCUP (FOCUST)'
+2025-06-22 17:59:42,539 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lensa Sehat Nusantara' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,548 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Economics Paper Competition & Talkshow (EPACT)' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,569 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'UPSTRACT 7.0 Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,588 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Lomba Desain Maskot'
+2025-06-22 17:59:42,607 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'AKSANA (Ajang Kreasi Karya Tulis Ilmiah)' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,624 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'LKTI FEAB 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,638 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'ISTEMCC 2025'
+2025-06-22 17:59:42,639 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'ISTEMCC 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,650 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'THRIVE: Business Case Competition 2025'
+2025-06-22 17:59:42,661 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'ASCEND 2025'
+2025-06-22 17:59:42,662 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'ASCEND 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,676 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'GEBYAR ISLAMI #2'
+2025-06-22 17:59:42,691 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Compas'25 Eduthon' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,770 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Sociology Competition (Socius 25)' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,800 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Acromion 2025'
+2025-06-22 17:59:42,832 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Interfaculty of Medicine Scientific Competition Faculty of Medicine (INTERMEDISCO)  2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,845 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'SCRENIXI 9TH'
+2025-06-22 17:59:42,860 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Innovation and Research Poster Competition (IRPOCO) 2025'
+2025-06-22 17:59:42,861 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Innovation and Research Poster Competition (IRPOCO) 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,873 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Astranauts 2025'
+2025-06-22 17:59:42,874 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Astranauts 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,887 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'LOMBA POSTER DAN VIDIO KREATIF' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,916 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Pharmacito' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,929 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'ArasyWear MC Competition 2K25'
+2025-06-22 17:59:42,941 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Bulis International Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,955 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'ASEAN-CHINA-INDIA Youth Leadership Summit 2025'
+2025-06-22 17:59:42,955 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'ASEAN-CHINA-INDIA Youth Leadership Summit 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,981 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Business Plan Competition'
+2025-06-22 17:59:42,983 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Business Plan Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:42,995 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'IMPACT 2025'
+2025-06-22 17:59:42,995 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'IMPACT 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,009 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'TOS LDBI'
+2025-06-22 17:59:43,010 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'TOS LDBI' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,025 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Islamic Contest' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,040 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Diponegoro Science Competition 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,053 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'AKASIA 2025 (APRESIASI KARYA SASTRA INDONESIA)'
+2025-06-22 17:59:43,054 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'AKASIA 2025 (APRESIASI KARYA SASTRA INDONESIA)' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,059 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'LOMBA POSTER TINGKAT NASIONAL' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,072 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'EAGLE Competition'
+2025-06-22 17:59:43,080 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Kompetisi Kreator Konten Video 2025'
+2025-06-22 17:59:43,081 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Kompetisi Kreator Konten Video 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,090 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Lomba Gambar Uni Eropa'
+2025-06-22 17:59:43,091 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Gambar Uni Eropa' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,104 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Nusantara Harmony 25' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,108 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Lomba Business Plan'
+2025-06-22 17:59:43,108 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Business Plan' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,116 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Vokal Solo Competations'
+2025-06-22 17:59:43,116 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Vokal Solo Competations' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,123 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'VETERINARY COMPETITION' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,133 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'LOMBA HKPI KPK SEHAT FKM UI 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,139 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Kresikars Exhibition'
+2025-06-22 17:59:43,152 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Advocacy Compass' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,161 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Embriogenesis' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,169 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'FOPESCO 2025'
+2025-06-22 17:59:43,170 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FOPESCO 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,177 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'LKTI FPP UNDIP 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,184 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'SELEKSI KARYA TULIS ILMIAH "SAKTI" 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,190 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Business Plan Competition'
+2025-06-22 17:59:43,191 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Business Plan Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,198 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'English Event 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,205 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Beasiswa Kampung Inggris'
+2025-06-22 17:59:43,206 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Beasiswa Kampung Inggris' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,215 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'IT CLASS (Digital Poster Competition)' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,223 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'MANDALAS CUP' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,232 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Ratoh Jaroe Competition'
+2025-06-22 17:59:43,232 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Ratoh Jaroe Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,241 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Eighty Six Cup'
+2025-06-22 17:59:43,241 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Eighty Six Cup' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,251 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Hypothalamus Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,262 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'THALASSIC 2025'
+2025-06-22 17:59:43,263 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'THALASSIC 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,279 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'National Essay Competition 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,289 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Aksaraya Lomba Cipta Puisi 2025'
+2025-06-22 17:59:43,290 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Aksaraya Lomba Cipta Puisi 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,300 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'FINVEST #2'
+2025-06-22 17:59:43,300 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FINVEST #2' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,307 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FBA (Festival Bahasa Arab) Nasional 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,320 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'ASEAN Sparks'
+2025-06-22 17:59:43,320 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'ASEAN Sparks' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,327 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Hardiknas 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,340 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'National Research Innovation Fair' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,352 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'GESID 2025'
+2025-06-22 17:59:43,360 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'TSM Economic Days 8.0'
+2025-06-22 17:59:43,361 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'TSM Economic Days 8.0' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,368 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'UPCO' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,378 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Spiritual Vision Competition 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,390 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'TERAS 2025'
+2025-06-22 17:59:43,398 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'FORLAWTOUS PUBLIC SPEAKING COMPETITION 2025'
+2025-06-22 17:59:43,399 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FORLAWTOUS PUBLIC SPEAKING COMPETITION 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,410 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Xperience IISE 2025 Business Case Competition'
+2025-06-22 17:59:43,419 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Accounting Competition 2025'
+2025-06-22 17:59:43,419 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Accounting Competition 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,425 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Lomba Story Telling'
+2025-06-22 17:59:43,426 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Story Telling' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,435 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'World Environment Day 2025 TikTok Competition'
+2025-06-22 17:59:43,436 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'World Environment Day 2025 TikTok Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,453 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'ISDGS (International Students Government SDGs Summit)' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,459 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Poster Nasional' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,470 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Olimpiade Matematika Nasional SD & SMA'
+2025-06-22 17:59:43,470 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Olimpiade Matematika Nasional SD & SMA' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,481 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'The Youth Impact International Business Plan Competition 2025 (IBPC2025)'
+2025-06-22 17:59:43,482 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'The Youth Impact International Business Plan Competition 2025 (IBPC2025)' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,489 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'GLOWFEST'
+2025-06-22 17:59:43,489 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'GLOWFEST' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,501 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'IMPACT 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,506 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Medsmotion 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,517 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'KSE JUARA'
+2025-06-22 17:59:43,517 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'KSE JUARA' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,525 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'FORLAWTOUS PUBLIC SPEAKING COMPETITION 2025'
+2025-06-22 17:59:43,525 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FORLAWTOUS PUBLIC SPEAKING COMPETITION 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,536 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Information System Memorable Exhibition (ISME)' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,541 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'FIT COMPETITION 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,550 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Wasco x Temilnas 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,557 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Journalistic Insight Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,566 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'ESSAY COMPETITION' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,572 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'SCIENTA CLASH' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,581 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Trisakti Business Law Fair'
+2025-06-22 17:59:43,581 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Trisakti Business Law Fair' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,586 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'THRIVE 2025'
+2025-06-22 17:59:43,587 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'THRIVE 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,593 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'PYC Photo, Essay, Reels Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,605 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Internasional Kreasi Publik 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,616 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Lomba Poster PTH 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,629 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'PERMATA ENTREPENEURSHIP COMPETITION'
+2025-06-22 17:59:43,630 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'PERMATA ENTREPENEURSHIP COMPETITION' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,636 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'President University Accounting Days: PUAD SHC 2025'
+2025-06-22 17:59:43,636 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'President University Accounting Days: PUAD SHC 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,639 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'Festival Hari Bumi Competition' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,646 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'National Business Plan Competition 2025'
+2025-06-22 17:59:43,646 - infortic_scraper          - WARNING  - Melewatkan kompetisi 'National Business Plan Competition 2025' karena sudah kedaluwarsa.
+2025-06-22 17:59:43,646 - infortic_scraper          - INFO     - Menambahkan 61 kompetisi yang valid dari infolomba.id untuk disimpan.
+2025-06-22 17:59:43,646 - infortic_scraper          - INFO     - Memulai proses untuk sumber: infolombait.com
+2025-06-22 17:59:43,646 - core.database             - INFO     - Memanggil fungsi RPC 'get_or_create_source_id' untuk sumber: infolombait.com
+2025-06-22 17:59:44,207 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/get_or_create_source_id "HTTP/2 200 OK"
+2025-06-22 17:59:44,213 - core.database             - INFO     - Berhasil mendapatkan source_id: fcb87daf-9ae1-476a-897e-a7c2ade1a7fc
+2025-06-22 17:59:44,214 - scrapers.infolombait.com  - INFO     - Scraper for infolombait.com initialized (Debug: False).
+2025-06-22 17:59:44,216 - scrapers.infolombait.com  - INFO     - Starting Playwright browser...
+2025-06-22 17:59:45,203 - scrapers.infolombait.com  - INFO     - Starting scrape for infolombait.com. Local cache: False
+2025-06-22 17:59:45,203 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/
+2025-06-22 17:59:49,065 - scrapers.infolombait.com  - INFO     - Starting pagination. Will click 'Load more' until the button disappears.
+2025-06-22 17:59:50,044 - scrapers.infolombait.com  - INFO     - Saved pagination debug screenshot to: debug_output\pagination_debug_page_1.png
+2025-06-22 17:59:50,155 - scrapers.infolombait.com  - INFO     - No more 'Load more posts' button found or it's not visible. Reached the end.
+2025-06-22 17:59:50,250 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\main_page_paginated
+2025-06-22 17:59:50,705 - scrapers.infolombait.com  - INFO     - Found 15 event containers on the main page.
+2025-06-22 17:59:50,746 - scrapers.infolombait.com  - INFO     - Found 15 events in total. Starting deep scrape.
+2025-06-22 17:59:50,746 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/its-day-2025.html
+2025-06-22 17:59:50,746 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/its-day-2025.html
+2025-06-22 17:59:51,996 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_its-day-2025.html
+2025-06-22 17:59:52,131 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/its-day-2025.html using regex.
+2025-06-22 17:59:52,132 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/its-day-2025.html
+2025-06-22 17:59:53,133 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/compare-2025.html
+2025-06-22 17:59:53,133 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/compare-2025.html
+2025-06-22 17:59:54,342 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_compare-2025.html
+2025-06-22 17:59:54,610 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/compare-2025.html using regex.
+2025-06-22 17:59:54,610 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/compare-2025.html
+2025-06-22 17:59:55,611 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html
+2025-06-22 17:59:55,611 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html
+2025-06-22 17:59:56,649 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_ui-ux-design-nifc-40-2025.html
+2025-06-22 17:59:56,735 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html using regex.
+2025-06-22 17:59:56,735 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/ui-ux-design-nifc-40-2025.html
+2025-06-22 17:59:57,736 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/inventuon-2025.html
+2025-06-22 17:59:57,736 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/inventuon-2025.html
+2025-06-22 17:59:58,883 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_inventuon-2025.html
+2025-06-22 17:59:58,954 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/inventuon-2025.html using regex.
+2025-06-22 17:59:58,954 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/inventuon-2025.html
+2025-06-22 17:59:59,955 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html
+2025-06-22 17:59:59,955 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html
+2025-06-22 18:00:00,993 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_nifc-web-development-competition-2025.html
+2025-06-22 18:00:01,046 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html using regex.
+2025-06-22 18:00:01,046 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/nifc-web-development-competition-2025.html
+2025-06-22 18:00:02,047 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html
+2025-06-22 18:00:02,047 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html
+2025-06-22 18:00:04,760 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_ui-ux-design-competition-euformatika-24.html
+2025-06-22 18:00:05,132 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html using regex.
+2025-06-22 18:00:05,133 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/ui-ux-design-competition-euformatika-24.html
+2025-06-22 18:00:06,134 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/it-fest-2025.html
+2025-06-22 18:00:06,134 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/it-fest-2025.html
+2025-06-22 18:00:07,231 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_it-fest-2025.html
+2025-06-22 18:00:07,278 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/it-fest-2025.html using regex.
+2025-06-22 18:00:07,278 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/it-fest-2025.html
+2025-06-22 18:00:08,279 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/techfest-2025.html
+2025-06-22 18:00:08,279 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/techfest-2025.html
+2025-06-22 18:00:09,754 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_techfest-2025.html
+2025-06-22 18:00:09,823 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/techfest-2025.html using regex.
+2025-06-22 18:00:09,824 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/techfest-2025.html
+2025-06-22 18:00:10,824 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/pekan-it-competition-025.html
+2025-06-22 18:00:10,824 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/pekan-it-competition-025.html
+2025-06-22 18:00:12,318 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_pekan-it-competition-025.html
+2025-06-22 18:00:12,466 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/pekan-it-competition-025.html using regex.
+2025-06-22 18:00:12,467 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/pekan-it-competition-025.html
+2025-06-22 18:00:13,468 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/it-compfest-2025.html
+2025-06-22 18:00:13,468 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/it-compfest-2025.html
+2025-06-22 18:00:14,829 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_it-compfest-2025.html
+2025-06-22 18:00:15,011 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/it-compfest-2025.html using regex.
+2025-06-22 18:00:15,011 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/it-compfest-2025.html
+2025-06-22 18:00:16,012 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/siega-cup-2025.html
+2025-06-22 18:00:16,012 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/siega-cup-2025.html
+2025-06-22 18:00:17,631 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_siega-cup-2025.html
+2025-06-22 18:00:17,761 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/siega-cup-2025.html using regex.
+2025-06-22 18:00:17,762 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/siega-cup-2025.html
+2025-06-22 18:00:18,762 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/06/inspace-2025.html
+2025-06-22 18:00:18,763 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/06/inspace-2025.html
+2025-06-22 18:00:20,042 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_inspace-2025.html
+2025-06-22 18:00:20,210 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/06/inspace-2025.html using regex.
+2025-06-22 18:00:20,210 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/06/inspace-2025.html
+2025-06-22 18:00:21,211 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html
+2025-06-22 18:00:21,211 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html
+2025-06-22 18:00:22,334 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_national-competition-silogy-expo-2025.html
+2025-06-22 18:00:22,437 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html using regex.
+2025-06-22 18:00:22,438 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/05/national-competition-silogy-expo-2025.html
+2025-06-22 18:00:23,439 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html
+2025-06-22 18:00:23,439 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html
+2025-06-22 18:00:24,751 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_career-insight-computer-science-2025.html
+2025-06-22 18:00:24,861 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html using regex.
+2025-06-22 18:00:24,861 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/05/career-insight-computer-science-2025.html
+2025-06-22 18:00:25,862 - scrapers.infolombait.com  - INFO     - Deep scraping: https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html
+2025-06-22 18:00:25,863 - scrapers.infolombait.com  - INFO     - Fetching live content for https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html
+2025-06-22 18:00:27,118 - scrapers.infolombait.com  - INFO     - Saved content to cache: local_cache\infolombait.com_workshop-motion-verse-2025.html
+2025-06-22 18:00:27,464 - scrapers.infolombait.com  - WARNING  - Could not find specific deadline text for https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html using regex.
+2025-06-22 18:00:27,465 - scrapers.infolombait.com  - ERROR    - Could not find any registration URL for https://www.infolombait.com/2025/05/workshop-motion-verse-2025.html
+2025-06-22 18:00:28,466 - scrapers.infolombait.com  - INFO     - Successfully scraped and processed 15 events from infolombait.com.
+2025-06-22 18:00:28,466 - scrapers.infolombait.com  - INFO     - Closing Playwright browser...
+2025-06-22 18:00:28,917 - infortic_scraper          - INFO     - Selesai scrape dari infolombait.com, mendapatkan 15 kompetisi mentah.
+2025-06-22 18:00:28,917 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'IT'S Day 2025'
+2025-06-22 18:00:28,918 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'IT'S Day 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,919 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'COMPARE 2025'
+2025-06-22 18:00:28,921 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'COMPARE 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,922 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'UI UX Design NIFC 4.0 2025'
+2025-06-22 18:00:28,922 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'UI UX Design NIFC 4.0 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,923 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'INVENTION 2025'
+2025-06-22 18:00:28,923 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'INVENTION 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,923 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'NIFC Web Development Competition 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,924 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'UI UX Design Competition Euformatika 24'
+2025-06-22 18:00:28,924 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'UI UX Design Competition Euformatika 24' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,924 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'IT FEST 2025'
+2025-06-22 18:00:28,925 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'IT FEST 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,925 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'TECHFEST 2025'
+2025-06-22 18:00:28,925 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'TECHFEST 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,925 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Pekan IT Competition 025'
+2025-06-22 18:00:28,926 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'Pekan IT Competition 025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,926 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'IT COMPFEST 2025'
+2025-06-22 18:00:28,926 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'IT COMPFEST 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,927 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'SIEGA CUP 2025'
+2025-06-22 18:00:28,927 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'SIEGA CUP 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,927 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'INSPACE 2025'
+2025-06-22 18:00:28,927 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'INSPACE 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,927 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'NATIONAL COMPETITION SILOGY EXPO 2025'
+2025-06-22 18:00:28,928 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'NATIONAL COMPETITION SILOGY EXPO 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,929 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'Career Insight Computer Science 2025'
+2025-06-22 18:00:28,929 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'Career Insight Computer Science 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,929 - core.data_cleaner         - WARNING  - Tidak ada kategori yang dapat ditetapkan untuk acara: 'WORKSHOP MOTION VERSE 2025'
+2025-06-22 18:00:28,930 - infortic_scraper          - WARNING  - FINAL CHECK: Filtering competition 'WORKSHOP MOTION VERSE 2025' due to missing one or more mandatory fields (registration_url, poster_url, deadline).
+2025-06-22 18:00:28,948 - infortic_scraper          - INFO     - Log scraping telah disimpan di: logs\scrape_log_2025-06-22_18-00-28.json
+2025-06-22 18:00:28,949 - infortic_scraper          - INFO     - Saving 61 validated competitions to the database...
+2025-06-22 18:00:28,950 - core.database             - INFO     - Mencoba menyimpan/memperbarui 61 kompetisi ke Supabase melalui RPC...
+2025-06-22 18:00:29,115 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,183 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,248 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,312 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,374 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,445 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,507 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,565 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,622 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,700 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,761 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,832 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:29,915 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,255 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,313 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,379 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,433 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,507 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,564 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,616 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,679 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,727 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,775 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,838 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,901 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:30,952 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,002 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,065 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,144 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,204 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,262 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,314 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,362 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,414 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,466 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,520 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,574 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,627 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,681 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,743 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,793 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,857 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,919 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:31,972 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,029 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,079 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,129 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,187 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,243 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,293 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,357 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,417 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,472 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,541 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,599 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,656 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,706 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,762 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,818 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,868 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,916 - httpx                     - INFO     - HTTP Request: POST https://jnqozfvnkhaxjfbfjyye.supabase.co/rest/v1/rpc/upsert_competition_with_categories "HTTP/2 200 OK"
+2025-06-22 18:00:32,918 - core.database             - INFO     - Proses penyimpanan selesai. Berhasil: 61, Gagal: 0
+2025-06-22 18:00:32,919 - infortic_scraper          - INFO     - Proses scraping selesai.
+2025-06-22 18:00:32,919 - infortic_scraper          - INFO     - --- Ringkasan Hasil Scraping ---
+2025-06-22 18:00:32,919 - infortic_scraper          - INFO     - infolomba.id: 160 acara
+2025-06-22 18:00:32,919 - infortic_scraper          - INFO     - infolombait.com: 15 acara
+2025-06-22 18:00:32,919 - infortic_scraper          - INFO     - --------------------------------

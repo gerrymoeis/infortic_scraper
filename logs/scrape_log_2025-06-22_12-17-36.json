@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Lomba Esai Nasional 2024 Universitas Indonesia",
+        "description": "Ini adalah deskripsi lomba esai nasional yang diselenggarakan oleh Universitas Indonesia.\nPendaftaran dapat dilakukan melalui link berikut.\nLink Pendaftaran: https://ui.ac.id/pendaftaran-esai-2024\nBiaya pendaftaran gratis.",
+        "organizer": null,
+        "url": null,
+        "registration_url": "https://ui.ac.id/pendaftaran-esai-2024",
+        "poster_url": "https://example.com/poster.jpg",
+        "source_id": "fcb87daf-9ae1-476a-897e-a7c2ade1a7fc",
+        "participant": null,
+        "location": null,
+        "date_text": null,
+        "deadline": "2025-08-15T16:59:59+00:00",
+        "event_date_start": null,
+        "event_date_end": null,
+        "price_min": null,
+        "price_max": null,
+        "category_ids": [
+            "3b2eb41c-edb0-4142-bd8f-6941be747f66"
+        ],
+        "event_type_id": "0582e2b3-ed6f-480b-b5c9-a38d5fb94f7c"
+    },
+    {
+        "title": "Kompetisi UI/UX Gemastik 2024",
+        "description": "Deskripsi untuk kompetisi UI/UX Gemastik 2024.\nInformasi lebih lanjut dan pendaftaran dapat diakses melalui website resmi kami.\nWebsite: https://gemastik.kemdikbud.go.id/2024\nBiaya pendaftaran: Rp 100.000",
+        "organizer": null,
+        "url": null,
+        "registration_url": "https://gemastik.kemdikbud.go.id/2024",
+        "poster_url": "https://example.com/poster_gemastik.jpg",
+        "source_id": "fcb87daf-9ae1-476a-897e-a7c2ade1a7fc",
+        "participant": null,
+        "location": null,
+        "date_text": null,
+        "deadline": "2025-09-01T16:59:59+00:00",
+        "event_date_start": null,
+        "event_date_end": null,
+        "price_min": null,
+        "price_max": null,
+        "category_ids": [
+            "c7bf8a5c-aecc-41ac-8d47-a353b865b720"
+        ],
+        "event_type_id": "0582e2b3-ed6f-480b-b5c9-a38d5fb94f7c"
+    }
+]

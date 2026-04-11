@@ -12,6 +12,11 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
     Extract registration date in human-readable format as fallback when Gemini fails
     Looks for patterns near REGISTRATION keywords only (not event execution keywords)
     
+    PHASE C ENHANCEMENT: Added more patterns for better coverage
+    - Deadline-specific patterns (DL:, Batas Akhir:, Tutup:)
+    - Abbreviated formats (tgl, s.d., hingga)
+    - Numeric formats (DD/MM/YYYY, YYYY-MM-DD)
+    
     Args:
         text: Text containing registration date information
         
@@ -22,11 +27,15 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
     from datetime import datetime, timedelta
     
     # Keywords that indicate REGISTRATION dates (INCLUDE)
+    # PHASE C: Added more deadline-specific keywords
     registration_keywords = [
         'pendaftaran', 'registrasi', 'daftar', 'registration', 'regist',
         'open submission', 'submission', 'open', 'batas pendaftaran', 
         'deadline', 'tutup pendaftaran', 'close registration', 'dl:', 'dl ',
-        'tanggal pendaftaran', 'periode pendaftaran'
+        'tanggal pendaftaran', 'periode pendaftaran',
+        # PHASE C NEW: More deadline keywords
+        'batas', 'batas akhir', 'batas waktu', 'tutup', 'ditutup', 'penutupan',
+        'terakhir', 'akhir', 'closing', 's.d.', 's/d', 'hingga', 'sampai'
     ]
     
     # Keywords that indicate EVENT dates, NOT registration (EXCLUDE)
@@ -194,6 +203,118 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
                         if min_date <= date_obj <= max_future:
                             month_id = convert_month_to_indonesian(month)
                             return f"{day} {month_id} {year}"
+        
+        # PHASE C NEW: Pattern 3 - Numeric date formats
+        numeric_patterns = [
+            # "01/04/2026" or "1/4/2026" (DD/MM/YYYY - Indonesian format)
+            (r'(\d{1,2})/(\d{1,2})/(\d{4})', 'dmy'),
+            # "2026-04-01" (YYYY-MM-DD - ISO format)
+            (r'(\d{4})-(\d{1,2})-(\d{1,2})', 'ymd'),
+            # "01.04.2026" or "1.4.2026" (DD.MM.YYYY)
+            (r'(\d{1,2})\.(\d{1,2})\.(\d{4})', 'dmy'),
+        ]
+        
+        for pattern, format_type in numeric_patterns:
+            match = re.search(pattern, line)
+            if match:
+                groups = match.groups()
+                
+                try:
+                    if format_type == 'dmy':  # DD/MM/YYYY or DD.MM.YYYY
+                        day, month, year = groups
+                        date_str = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+                    elif format_type == 'ymd':  # YYYY-MM-DD
+                        year, month, day = groups
+                        date_str = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+                    
+                    parsed = dateparser.parse(date_str, languages=['id', 'en'])
+                    
+                    if parsed:
+                        date_obj = parsed.date()
+                        
+                        if min_date <= date_obj <= max_future:
+                            # Convert to Indonesian format
+                            month_name = date_obj.strftime('%B')
+                            month_id = convert_month_to_indonesian(month_name)
+                            return f"{date_obj.day} {month_id} {date_obj.year}"
+                except (ValueError, AttributeError):
+                    continue
+        
+        # PHASE C NEW: Pattern 4 - Abbreviated formats without year
+        # These need special handling to infer the year
+        abbreviated_patterns = [
+            # "tgl 1-5 April" or "tanggal 1-5 April"
+            (r'(?:tgl|tanggal)\s*(\d{1,2})\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)', 'range'),
+            # "s.d. 5 April" or "s/d 5 April" (sampai dengan)
+            (r's[./]d[.]?\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)', 'single'),
+            # "hingga 5 April"
+            (r'hingga\s+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)', 'single'),
+        ]
+        
+        for pattern, pattern_type in abbreviated_patterns:
+            match = re.search(pattern, line, re.IGNORECASE)
+            if match:
+                groups = match.groups()
+                
+                # Infer year based on current date
+                current_year = datetime.now().year
+                current_month = datetime.now().month
+                
+                if pattern_type == 'range' and len(groups) == 3:  # "tgl 1-5 April" (range)
+                    day1, day2, month = groups
+                    
+                    # Parse month to number
+                    month_str = f"1 {month} {current_year}"
+                    parsed_month = dateparser.parse(month_str, languages=['id', 'en'])
+                    
+                    if parsed_month:
+                        target_month = parsed_month.month
+                        
+                        # If target month is before current month, assume next year
+                        if target_month < current_month:
+                            year = current_year + 1
+                        else:
+                            year = current_year
+                        
+                        date1_str = f"{day1} {month} {year}"
+                        date2_str = f"{day2} {month} {year}"
+                        
+                        parsed1 = dateparser.parse(date1_str, languages=['id', 'en'])
+                        parsed2 = dateparser.parse(date2_str, languages=['id', 'en'])
+                        
+                        if parsed1 and parsed2:
+                            date1 = parsed1.date()
+                            date2 = parsed2.date()
+                            
+                            if min_date <= date1 <= max_future and min_date <= date2 <= max_future:
+                                month_id = convert_month_to_indonesian(month)
+                                return f"{day1} {month_id} {year} - {day2} {month_id} {year}"
+                
+                elif pattern_type == 'single' and len(groups) == 2:  # "s.d. 5 April" or "hingga 5 April" (single date)
+                    day, month = groups
+                    
+                    # Parse month to number
+                    month_str = f"1 {month} {current_year}"
+                    parsed_month = dateparser.parse(month_str, languages=['id', 'en'])
+                    
+                    if parsed_month:
+                        target_month = parsed_month.month
+                        
+                        # If target month is before current month, assume next year
+                        if target_month < current_month:
+                            year = current_year + 1
+                        else:
+                            year = current_year
+                        
+                        date_str = f"{day} {month} {year}"
+                        parsed = dateparser.parse(date_str, languages=['id', 'en'])
+                        
+                        if parsed:
+                            date_obj = parsed.date()
+                            
+                            if min_date <= date_obj <= max_future:
+                                month_id = convert_month_to_indonesian(month)
+                                return f"{day} {month_id} {year}"
     
     return None
 

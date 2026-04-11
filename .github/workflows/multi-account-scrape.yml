@@ -56,7 +56,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+          echo "GEMINI_API_KEYS=${{ secrets.GEMINI_API_KEYS }}" >> config/.env
           echo "BATCH_SIZE=25" >> config/.env
           echo "DELAY_BETWEEN_REQUESTS=4" >> config/.env
           echo "GEMINI_MODEL=gemini-2.5-flash" >> config/.env
@@ -154,7 +154,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+          echo "GEMINI_API_KEYS=${{ secrets.GEMINI_API_KEYS }}" >> config/.env
       
       - name: Cleanup expired opportunities
         run: |

@@ -18,7 +18,12 @@ with open(config_path, 'r') as f:
 
 class Config:
     # Gemini API - Support multiple keys for rotation
-    _api_keys_str = os.getenv('GEMINI_API_KEYS', os.getenv('GEMINI_API_KEY', ''))
+    # Try GEMINI_API_KEYS first (comma-separated), fallback to single GEMINI_API_KEY
+    _api_keys_str = os.getenv('GEMINI_API_KEYS', '')
+    if not _api_keys_str:
+        # Fallback to single key for backward compatibility
+        _api_keys_str = os.getenv('GEMINI_API_KEY', '')
+    
     GEMINI_API_KEYS = [key.strip() for key in _api_keys_str.split(',') if key.strip()]
     GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else None  # Default to first key
     CURRENT_KEY_INDEX = 0  # Track which key we're using

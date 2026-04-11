@@ -1,0 +1,234 @@
+name: Multi-Account Instagram Scraper
+
+on:
+  schedule:
+    # Run daily at 00:00 WIB (17:00 UTC previous day)
+    # WIB = UTC+7, so 00:00 WIB = 17:00 UTC
+    - cron: '0 17 * * *'
+  workflow_dispatch:  # Allow manual trigger
+    inputs:
+      accounts:
+        description: 'Accounts to scrape (comma-separated, or "all")'
+        required: false
+        default: 'all'
+        type: string
+      max_parallel:
+        description: 'Maximum parallel jobs (1-7)'
+        required: false
+        default: '4'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+
+jobs:
+  scrape-account:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        account:
+          - infolomba
+          - csrelatedcompetitions
+          - informasilomba
+          - info.lomba
+          - eventmahasiswa8
+          - info.lomba.beasiswa
+          - info.event_
+      max-parallel: 4  # Run 4 accounts simultaneously (well within 20 job limit)
+      fail-fast: false  # Continue even if one account fails
+    
+    # Skip accounts not in manual input (if provided)
+    if: |
+      github.event_name == 'schedule' || 
+      github.event.inputs.accounts == 'all' || 
+      contains(github.event.inputs.accounts, matrix.account)
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Install Node dependencies
+        run: |
+          cd scraper
+          npm ci
+          npx playwright install chromium
+          npx playwright install-deps chromium
+      
+      - name: Install Tesseract OCR
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr
+      
+      - name: Select Gemini API Key
+        id: api_key
+        run: |
+          # Rotate API keys based on matrix job index
+          KEYS="${{ secrets.GEMINI_API_KEY }}"
+          IFS=',' read -ra KEY_ARRAY <<< "$KEYS"
+          
+          # Get job index from strategy context
+          # GitHub doesn't expose job index directly, so we calculate it
+          ACCOUNTS=("infolomba" "csrelatedcompetitions" "informasilomba" "info.lomba" "eventmahasiswa8" "info.lomba.beasiswa" "info.event_")
+          INDEX=0
+          for i in "${!ACCOUNTS[@]}"; do
+            if [[ "${ACCOUNTS[$i]}" == "${{ matrix.account }}" ]]; then
+              INDEX=$i
+              break
+            fi
+          done
+          
+          # Rotate keys
+          KEY_INDEX=$((INDEX % ${#KEY_ARRAY[@]}))
+          SELECTED_KEY="${KEY_ARRAY[$KEY_INDEX]}"
+          
+          echo "key=$SELECTED_KEY" >> $GITHUB_OUTPUT
+          echo "Using API key #$((KEY_INDEX + 1)) for account ${{ matrix.account }}"
+      
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
+          echo "GEMINI_API_KEY=${{ steps.api_key.outputs.key }}" >> config/.env
+          echo "BATCH_SIZE=25" >> config/.env
+          echo "DELAY_BETWEEN_REQUESTS=4" >> config/.env
+          echo "GEMINI_MODEL=gemini-2.5-flash" >> config/.env
+      
+      - name: Create session.json from secret
+        run: |
+          cd scraper
+          echo '${{ secrets.INSTAGRAM_SESSION }}' > session.json
+      
+      - name: Create account-specific scraper config
+        run: |
+          # Create config for single account
+          cat > config/scraper.config.json << EOF
+          {
+            "accounts": ["${{ matrix.account }}"],
+            "scrollCount": 2,
+            "deepScrapeMode": true,
+            "downloadImages": true,
+            "batchSize": 25,
+            "delayBetweenRequests": 4
+          }
+          EOF
+          echo "Created config for account: ${{ matrix.account }}"
+      
+      - name: Run quick tests before pipeline
+        run: |
+          pytest tests/unit/ -v -m unit --tb=short --maxfail=3
+        continue-on-error: false
+      
+      - name: Run scraping for account
+        id: scrape
+        run: |
+          echo "Scraping account: ${{ matrix.account }}"
+          cd scraper
+          node scraper.js
+        continue-on-error: true
+      
+      - name: Run extraction for account
+        id: extract
+        if: steps.scrape.outcome == 'success'
+        run: |
+          echo "Extracting data for account: ${{ matrix.account }}"
+          python src/extraction/main.py scraper/instagram_data.json
+        continue-on-error: true
+      
+      - name: Run database insertion for account
+        id: insert
+        if: steps.extract.outcome == 'success'
+        run: |
+          echo "Inserting data for account: ${{ matrix.account }}"
+          # Find latest extracted file
+          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+          if [ -n "$LATEST_FILE" ]; then
+            python src/database/main.py "$LATEST_FILE"
+          else
+            echo "No extracted data file found"
+            exit 1
+          fi
+        continue-on-error: true
+      
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.account }}-${{ github.run_number }}
+          path: |
+            data/processed/*.json
+            data/failed/*.json
+            scraper/instagram_data.json
+          retention-days: 7
+      
+      - name: Account Summary
+        if: always()
+        run: |
+          echo "## Account: ${{ matrix.account }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Scraping**: ${{ steps.scrape.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Extraction**: ${{ steps.extract.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Insertion**: ${{ steps.insert.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **API Key**: #$(($(echo "${{ matrix.account }}" | wc -c) % 3 + 1))" >> $GITHUB_STEP_SUMMARY
+  
+  cleanup-and-verify:
+    needs: scrape-account
+    runs-on: ubuntu-latest
+    if: always()  # Run even if some accounts failed
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+      
+      - name: Cleanup expired opportunities
+        run: |
+          python scripts/mark_expired.py
+        continue-on-error: true
+      
+      - name: Verify results
+        run: |
+          python scripts/verify.py
+        continue-on-error: true
+      
+      - name: Pipeline Summary
+        if: always()
+        run: |
+          echo "## Multi-Account Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run Number**: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Accounts Processed**: 7" >> $GITHUB_STEP_SUMMARY
+          echo "- **Max Parallel**: 4" >> $GITHUB_STEP_SUMMARY
+

@@ -1,6 +1,6 @@
 {
-  "accounts": ["infolomba", "lomba.it"],
-  "scrollCount": 3,
+  "accounts": ["infolomba", "csrelatedcompetitions", "informasilomba", "info.lomba", "eventmahasiswa8", "info.lomba.beasiswa", "info.event_"],
+  "scrollCount": 2,
   "deepScrapeMode": true,
   "downloadImages": true,
   "batchSize": 25,

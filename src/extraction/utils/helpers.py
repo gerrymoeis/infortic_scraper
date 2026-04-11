@@ -28,6 +28,7 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
     
     # Keywords that indicate REGISTRATION dates (INCLUDE)
     # PHASE C: Added more deadline-specific keywords
+    # PHASE E.2: Added user-observed patterns
     registration_keywords = [
         'pendaftaran', 'registrasi', 'daftar', 'registration', 'regist',
         'open submission', 'submission', 'open', 'batas pendaftaran', 
@@ -35,7 +36,10 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
         'tanggal pendaftaran', 'periode pendaftaran',
         # PHASE C NEW: More deadline keywords
         'batas', 'batas akhir', 'batas waktu', 'tutup', 'ditutup', 'penutupan',
-        'terakhir', 'akhir', 'closing', 's.d.', 's/d', 'hingga', 'sampai'
+        'terakhir', 'akhir', 'closing', 's.d.', 's/d', 'hingga', 'sampai',
+        # PHASE E.2 NEW: User-observed high-confidence patterns
+        'catat tanggal', 'jangan sampai kelewatan', 'jangan lewatkan',
+        'segera daftar', 'buruan daftar', 'daftar sekarang'
     ]
     
     # Keywords that indicate EVENT dates, NOT registration (EXCLUDE)
@@ -67,6 +71,120 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
         # INCLUDE: Check if line contains registration keywords OR date icon
         if not (any(kw in line_lower for kw in registration_keywords) or has_date_icon):
             continue
+        
+        # PHASE E.2: HIGH PRIORITY - "DL" or "Deadline" patterns (most reliable)
+        # These patterns have highest confidence based on user observation
+        dl_patterns = [
+            # "DL: 15 April 2026" or "Deadline: 15 April 2026"
+            r'(?:DL|Deadline)[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "DL 15/04/2026" or "Deadline 15/04/2026"
+            r'(?:DL|Deadline)[:\s]+(\d{1,2})/(\d{1,2})/(\d{4})',
+            # "DL: 15-20 April 2026" (range with DL)
+            r'(?:DL|Deadline)[:\s]+(\d{1,2})\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+        ]
+        
+        for pattern in dl_patterns:
+            match = re.search(pattern, line, re.IGNORECASE)
+            if match:
+                groups = match.groups()
+                
+                if len(groups) == 3 and groups[0].isdigit() and groups[2].isdigit() and len(groups[2]) == 4:
+                    # "DL: 15 April 2026" format
+                    day, month, year = groups
+                    date_str = f"{day} {month} {year}"
+                    parsed = dateparser.parse(date_str, languages=['id', 'en'])
+                    
+                    if parsed:
+                        date_obj = parsed.date()
+                        if min_date <= date_obj <= max_future:
+                            month_id = convert_month_to_indonesian(month)
+                            return f"{day} {month_id} {year}"
+                
+                elif len(groups) == 3 and '/' in line:
+                    # "DL 15/04/2026" format (DD/MM/YYYY)
+                    day, month, year = groups
+                    try:
+                        date_str = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+                        parsed = dateparser.parse(date_str, languages=['id', 'en'])
+                        
+                        if parsed:
+                            date_obj = parsed.date()
+                            if min_date <= date_obj <= max_future:
+                                month_name = date_obj.strftime('%B')
+                                month_id = convert_month_to_indonesian(month_name)
+                                return f"{date_obj.day} {month_id} {date_obj.year}"
+                    except (ValueError, AttributeError):
+                        continue
+                
+                elif len(groups) == 4:
+                    # "DL: 15-20 April 2026" format (range)
+                    day1, day2, month, year = groups
+                    date1_str = f"{day1} {month} {year}"
+                    date2_str = f"{day2} {month} {year}"
+                    
+                    parsed1 = dateparser.parse(date1_str, languages=['id', 'en'])
+                    parsed2 = dateparser.parse(date2_str, languages=['id', 'en'])
+                    
+                    if parsed1 and parsed2:
+                        date1 = parsed1.date()
+                        date2 = parsed2.date()
+                        
+                        if min_date <= date1 <= max_future and min_date <= date2 <= max_future:
+                            month_id = convert_month_to_indonesian(month)
+                            return f"{day1} {month_id} {year} - {day2} {month_id} {year}"
+        
+        # PHASE E.2: HIGH PRIORITY - "catat tanggal" or "jangan sampai kelewatan" with date range
+        # These phrases strongly indicate registration dates
+        high_confidence_phrases = [
+            # "catat tanggal: 1-14 April 2026" or "catat tanggal 1-14 April 2026"
+            r'catat tanggal[:\s]+(\d{1,2})\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "jangan sampai kelewatan: 1-14 April 2026"
+            r'jangan (?:sampai )?kelewatan[:\s]+(\d{1,2})\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "catat tanggal: 1 April - 14 April 2026"
+            r'catat tanggal[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "jangan sampai kelewatan: 1 April - 14 April 2026"
+            r'jangan (?:sampai )?kelewatan[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+        ]
+        
+        for pattern in high_confidence_phrases:
+            match = re.search(pattern, line, re.IGNORECASE)
+            if match:
+                groups = match.groups()
+                
+                if len(groups) == 4:
+                    # "catat tanggal: 1-14 April 2026" format
+                    day1, day2, month, year = groups
+                    date1_str = f"{day1} {month} {year}"
+                    date2_str = f"{day2} {month} {year}"
+                    
+                    parsed1 = dateparser.parse(date1_str, languages=['id', 'en'])
+                    parsed2 = dateparser.parse(date2_str, languages=['id', 'en'])
+                    
+                    if parsed1 and parsed2:
+                        date1 = parsed1.date()
+                        date2 = parsed2.date()
+                        
+                        if min_date <= date1 <= max_future and min_date <= date2 <= max_future:
+                            month_id = convert_month_to_indonesian(month)
+                            return f"{day1} {month_id} {year} - {day2} {month_id} {year}"
+                
+                elif len(groups) == 5:
+                    # "catat tanggal: 1 April - 14 April 2026" format
+                    day1, month1, day2, month2, year = groups
+                    date1_str = f"{day1} {month1} {year}"
+                    date2_str = f"{day2} {month2} {year}"
+                    
+                    parsed1 = dateparser.parse(date1_str, languages=['id', 'en'])
+                    parsed2 = dateparser.parse(date2_str, languages=['id', 'en'])
+                    
+                    if parsed1 and parsed2:
+                        date1 = parsed1.date()
+                        date2 = parsed2.date()
+                        
+                        if min_date <= date1 <= max_future and min_date <= date2 <= max_future:
+                            month1_id = convert_month_to_indonesian(month1)
+                            month2_id = convert_month_to_indonesian(month2)
+                            return f"{day1} {month1_id} {year} - {day2} {month2_id} {year}"
         
         # Pattern 1: Date ranges with dash (e.g., "1–30 April 2026", "21-31 Maret 2026", "19 Oktober — 5 November 2025")
         range_patterns = [

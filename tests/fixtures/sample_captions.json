@@ -1,0 +1,26 @@
+{
+  "infolomba": [
+    {
+      "post_id": "SAMPLE_001",
+      "caption": "LOMBA ESSAY NASIONAL 2026\n\nTema: Inovasi Teknologi\n\nDeadline: 20 April 2026\nPendaftaran: 15 April 2026\nCP: 08123456789\nLink: https://bit.ly/lombaessay\n\nTerbuka untuk SMA/SMK",
+      "image_path": "data/images/SAMPLE_001.jpg"
+    },
+    {
+      "post_id": "SAMPLE_002",
+      "caption": "BEASISWA S1 2026\n\nFull Scholarship\n\nDeadline: 30 Mei 2026\nInfo: beasiswa@university.ac.id\n\nTerbuka untuk lulusan SMA",
+      "image_path": "data/images/SAMPLE_002.jpg"
+    },
+    {
+      "post_id": "SAMPLE_003",
+      "caption": "WORKSHOP AI & MACHINE LEARNING\n\nGratis!\n\nTanggal: 10-12 Juni 2026\nDaftar: https://workshop.ai/register\n\nUntuk Mahasiswa & Umum",
+      "image_path": "data/images/SAMPLE_003.jpg"
+    }
+  ],
+  "lomba.it": [
+    {
+      "post_id": "SAMPLE_004",
+      "caption": "KOMPETISI ROBOTIK SD 2026\n\nDeadline: 15 Juni 2026\nCP: 0812-3456-7890\n\nKhusus SD & SMP",
+      "image_path": "data/images/SAMPLE_004.jpg"
+    }
+  ]
+}

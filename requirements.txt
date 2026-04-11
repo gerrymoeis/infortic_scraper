@@ -6,3 +6,9 @@ Pillow>=10.0.0
 dateparser>=1.1.0  # Better date parsing for OCR text and fallbacks
 fuzzywuzzy>=0.18.0  # Fuzzy string matching for duplicate detection
 python-Levenshtein>=0.21.0  # Speedup for fuzzywuzzy (optional but recommended)
+
+# Testing dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+pytest-timeout>=2.1.0

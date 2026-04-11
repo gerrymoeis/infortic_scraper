@@ -54,6 +54,11 @@ jobs:
           cd scraper
           echo '${{ secrets.INSTAGRAM_SESSION }}' > session.json
       
+      - name: Run quick tests before pipeline
+        run: |
+          pytest tests/unit/ -v -m unit --tb=short --maxfail=3
+        continue-on-error: false
+      
       - name: Run complete pipeline
         id: pipeline
         run: |

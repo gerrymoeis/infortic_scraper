@@ -1,0 +1,52 @@
+[
+  {
+    "post_id": "SAMPLE_001",
+    "title": "LOMBA ESSAY NASIONAL 2026",
+    "category": "competition",
+    "deadline_date": "2026-04-20",
+    "registration_date": "2026-04-15",
+    "contact": "08123456789",
+    "registration_url": "https://bit.ly/lombaessay",
+    "audiences": ["sma", "smk"],
+    "organizer": "Panitia Lomba Essay",
+    "description": "Lomba essay dengan tema Inovasi Teknologi",
+    "source_account": "infolomba",
+    "image_path": "data/images/SAMPLE_001.jpg"
+  },
+  {
+    "post_id": "SAMPLE_002",
+    "title": "BEASISWA S1 2026",
+    "category": "scholarship",
+    "deadline_date": "2026-05-30",
+    "contact": "beasiswa@university.ac.id",
+    "audiences": ["sma"],
+    "organizer": "University",
+    "description": "Full Scholarship untuk S1",
+    "source_account": "infolomba",
+    "image_path": "data/images/SAMPLE_002.jpg"
+  },
+  {
+    "post_id": "SAMPLE_003",
+    "title": "WORKSHOP AI & MACHINE LEARNING",
+    "category": "workshop",
+    "deadline_date": "2026-06-10",
+    "registration_url": "https://workshop.ai/register",
+    "audiences": ["s1", "umum"],
+    "organizer": "Workshop AI",
+    "description": "Workshop gratis tentang AI dan Machine Learning",
+    "source_account": "infolomba",
+    "image_path": "data/images/SAMPLE_003.jpg"
+  },
+  {
+    "post_id": "SAMPLE_004",
+    "title": "KOMPETISI ROBOTIK SD 2026",
+    "category": "competition",
+    "deadline_date": "2026-06-15",
+    "contact": "0812-3456-7890",
+    "audiences": ["sd", "smp"],
+    "organizer": "Panitia Robotik",
+    "description": "Kompetisi robotik untuk SD dan SMP",
+    "source_account": "lomba.it",
+    "image_path": "data/images/SAMPLE_004.jpg"
+  }
+]

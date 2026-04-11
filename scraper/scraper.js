@@ -7,8 +7,8 @@ const config = require('../config/scraper.config.json');
 chromium.use(stealth());
 
 const SESSION_FILE = 'session.json';
-const OUTPUT_FILE = 'instagram_data.json';
-const IMAGES_FOLDER = '../data/images';
+const OUTPUT_FILE = path.join(__dirname, 'instagram_data.json');  // Absolute path in scraper folder
+const IMAGES_FOLDER = path.join(__dirname, '..', 'data', 'images');  // Absolute path to data/images
 
 const sleep = (min, max) => new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (max - min + 1) + min)));
 

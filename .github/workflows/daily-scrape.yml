@@ -51,6 +51,7 @@ jobs:
       - name: Run complete pipeline
         id: pipeline
         run: |
+          # Pipeline includes: Scraping -> Extraction -> Insertion -> Cleanup -> Verification
           python run.py
         continue-on-error: true
       

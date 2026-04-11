@@ -53,35 +53,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y tesseract-ocr
       
-      - name: Select Gemini API Key
-        id: api_key
-        run: |
-          # Rotate API keys based on matrix job index
-          KEYS="${{ secrets.GEMINI_API_KEY }}"
-          IFS=',' read -ra KEY_ARRAY <<< "$KEYS"
-          
-          # Get job index from strategy context
-          # GitHub doesn't expose job index directly, so we calculate it
-          ACCOUNTS=("infolomba" "csrelatedcompetitions" "informasilomba" "info.lomba" "eventmahasiswa8" "info.lomba.beasiswa" "info.event_")
-          INDEX=0
-          for i in "${!ACCOUNTS[@]}"; do
-            if [[ "${ACCOUNTS[$i]}" == "${{ matrix.account }}" ]]; then
-              INDEX=$i
-              break
-            fi
-          done
-          
-          # Rotate keys
-          KEY_INDEX=$((INDEX % ${#KEY_ARRAY[@]}))
-          SELECTED_KEY="${KEY_ARRAY[$KEY_INDEX]}"
-          
-          echo "key=$SELECTED_KEY" >> $GITHUB_OUTPUT
-          echo "Using API key #$((KEY_INDEX + 1)) for account ${{ matrix.account }}"
-      
       - name: Create .env file
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
-          echo "GEMINI_API_KEY=${{ steps.api_key.outputs.key }}" >> config/.env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
           echo "BATCH_SIZE=25" >> config/.env
           echo "DELAY_BETWEEN_REQUESTS=4" >> config/.env
           echo "GEMINI_MODEL=gemini-2.5-flash" >> config/.env
@@ -157,7 +132,6 @@ jobs:
           echo "- **Scraping**: ${{ steps.scrape.outcome }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Extraction**: ${{ steps.extract.outcome }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Insertion**: ${{ steps.insert.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **API Key**: #$(($(echo "${{ matrix.account }}" | wc -c) % 3 + 1))" >> $GITHUB_STEP_SUMMARY
   
   cleanup-and-verify:
     needs: scrape-account

@@ -50,13 +50,26 @@ class GeminiClient:
             logger.info(f"Initialized Gemini client with model: {config.GEMINI_MODEL}")
     
     def _rotate_api_key(self):
-        """Rotate to next API key"""
-        if len(config.GEMINI_API_KEYS) > 1:
-            new_key = config.get_next_api_key()
-            logger.info(f"Rotating to API key #{config.CURRENT_KEY_INDEX + 1}")
-            self._initialize_client(new_key)
-            return True
-        return False
+        """
+        Rotate to next API key
+        
+        Returns:
+            True if successfully rotated to a new key, False if all keys exhausted
+        """
+        if len(config.GEMINI_API_KEYS) <= 1:
+            return False
+        
+        # Track starting index to avoid infinite loop
+        starting_index = config.CURRENT_KEY_INDEX
+        
+        # Try next key
+        new_key = config.get_next_api_key()
+        logger.info(f"Rotating to API key #{config.CURRENT_KEY_INDEX + 1}")
+        self._initialize_client(new_key)
+        
+        # Return True if we haven't cycled through all keys yet
+        # (We'll try this key, and if it fails, the caller will call us again)
+        return True
     
     def create_batch_prompt(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None) -> str:
         """
@@ -378,6 +391,10 @@ Return ONLY the JSON array, no other text.
             response = None
             last_error = None
             
+            # Track which API keys we've tried for quota errors
+            tried_keys = set()
+            tried_keys.add(config.CURRENT_KEY_INDEX)
+            
             for attempt in range(1, config.MAX_RETRIES + 1):
                 try:
                     if USE_NEW_API:
@@ -411,13 +428,17 @@ Return ONLY the JSON array, no other text.
                     if 'quota' in error_msg.lower() or 'rate limit' in error_msg.lower() or '429' in error_msg:
                         logger.warning(f"API quota exceeded on key #{config.CURRENT_KEY_INDEX + 1}")
                         
-                        # Try rotating to next API key
-                        if self._rotate_api_key():
-                            logger.info("Retrying with rotated API key...")
-                            continue  # Retry with new key
-                        else:
-                            logger.error("All API keys exhausted. Please wait for quota reset or add more keys.")
-                            return []
+                        # Try rotating to next API key if we haven't tried all keys yet
+                        if len(tried_keys) < len(config.GEMINI_API_KEYS):
+                            if self._rotate_api_key():
+                                tried_keys.add(config.CURRENT_KEY_INDEX)
+                                logger.info(f"Retrying with API key #{config.CURRENT_KEY_INDEX + 1} (tried {len(tried_keys)}/{len(config.GEMINI_API_KEYS)} keys)")
+                                continue  # Retry with new key
+                        
+                        # All keys exhausted
+                        logger.error(f"All {len(config.GEMINI_API_KEYS)} API keys exhausted. Please wait for quota reset or add more keys.")
+                        logger.info(f"Tried keys: {sorted([i+1 for i in tried_keys])}")
+                        return []
                     
                     # Check for authentication errors
                     if 'api key' in error_msg.lower() or 'authentication' in error_msg.lower():

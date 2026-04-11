@@ -58,13 +58,32 @@ class GeminiClient:
             return True
         return False
     
-    def create_batch_prompt(self, captions_batch: List[Dict]) -> str:
-        """Create optimized prompt for batch processing with simplified output"""
+    def create_batch_prompt(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None) -> str:
+        """
+        Create optimized prompt for batch processing with simplified output
+        
+        Args:
+            captions_batch: List of caption dictionaries
+            ocr_texts: Optional dict mapping post_id to (ocr_text, confidence) tuples
+        """
         
         captions_text = []
         for item in captions_batch:
+            post_id = item['post_id']
             caption_preview = item['caption'][:500]
-            captions_text.append(f"ID: {item['post_id']}\nCaption: {caption_preview}...")
+            
+            # Build caption entry
+            entry = f"ID: {post_id}\nCaption: {caption_preview}..."
+            
+            # Add OCR text if available (PHASE C PART 3 STAGE 3)
+            if ocr_texts and post_id in ocr_texts:
+                ocr_text, ocr_confidence = ocr_texts[post_id]
+                # Limit OCR text to 1000 chars to manage token usage
+                ocr_preview = ocr_text[:1000] if ocr_text else ""
+                if ocr_preview:
+                    entry += f"\nImage Text (OCR, {ocr_confidence}% confidence): {ocr_preview}..."
+            
+            captions_text.append(entry)
         
         captions_string = "\n\n---\n\n".join(captions_text)
         
@@ -72,6 +91,29 @@ class GeminiClient:
 You are extracting structured data from Indonesian competition/opportunity announcements from Instagram.
 
 IMPORTANT: Keep output simple and focused on essential information only.
+
+=== CRITICAL: TWO TEXT SOURCES ===
+
+You will receive TWO sources of text for each post:
+1. CAPTION: The Instagram caption text
+2. IMAGE TEXT (OCR): Text extracted from the poster/image (when available)
+
+EXTRACTION PRIORITY BY FIELD:
+- DATES (registration_date): Check IMAGE TEXT first, then caption
+- CONTACT (phone): Check IMAGE TEXT first, then caption  
+- URLS (registration_url): Check IMAGE TEXT first, then caption
+- TITLE: Caption first, then IMAGE TEXT if needed
+- DESCRIPTION: Caption first, supplement with IMAGE TEXT
+- ORGANIZER: Caption @mentions first, then IMAGE TEXT, then caption text
+
+WHY? Event details (dates, contacts, URLs) are USUALLY in the poster image, not the caption!
+
+TRIGGER PHRASES - If caption says:
+- "Lihat poster" / "Cek poster" / "Detail di poster" / "Info lengkap di poster"
+- "Swipe untuk info" / "Slide untuk detail"
+→ Extract EVERYTHING from IMAGE TEXT!
+
+===================================
 
 Process these {len(captions_batch)} captions and return a JSON array with one object per caption.
 
@@ -119,17 +161,27 @@ EXTRACTION RULES:
    - umum: General/Public (all ages)
 
 5. REGISTRATION_DATE: Extract registration period in Indonesian format
+   
+   ⚠️ CRITICAL: Check IMAGE TEXT first! Dates are usually in the poster.
+   
    - Format: "DD Month YYYY - DD Month YYYY"
    - Example: "1 Maret 2026 - 31 Maret 2026"
    - If only one date: "DD Month YYYY"
-   - If no date found: null
-   - Look for: "Pendaftaran", "Registrasi", "Daftar"
+   - Look for keywords: "Pendaftaran", "Registrasi", "Daftar", "Deadline", "Batas"
+   - Check IMAGE TEXT before caption
+   - If no date in either source: null
 
 6. CONTACT: Extract PRIMARY contact phone number (just ONE)
+   
+   ⚠️ CRITICAL: Check IMAGE TEXT first! Contact info is usually in the poster.
+   
    - Remove all spaces and dashes
    - Format: numbers only (e.g., "081234567890")
+   - Look for: "CP:", "Contact:", "WA:", "Narahubung:", phone numbers
+   - Check for wa.me links in IMAGE TEXT
+   - Check IMAGE TEXT before caption
    - Pick the first/main contact person
-   - If no phone found: null
+   - If no phone found in either source: null
 
 7. EVENT_TYPE: Determine event format
    - "online" if mentions: Online, Daring, Virtual, Zoom, Google Meet
@@ -201,11 +253,15 @@ EXTRACTION RULES:
    - Caption: "Lokasi: Pondok Pesantren Al-Muhajirin" (no organizer mentioned) → null ✗
 
 10. REGISTRATION_URL: Extract PRIMARY registration link (just ONE)
+    
+    ⚠️ CRITICAL: Check IMAGE TEXT first! URLs are usually in the poster.
+    
     - Pick the main registration URL
     - Look for: bit.ly, forms.gle, linktr.ee, or any https link
     - Prefer links near "Daftar", "Pendaftaran", "Registration"
+    - Check IMAGE TEXT before caption
     - If multiple links, pick the first one
-    - If no link found: null
+    - If no link found in either source: null
 
 Return ONLY a JSON array with this EXACT structure:
 [
@@ -272,6 +328,26 @@ Output: {{
   "registration_url": null
 }}
 
+EXAMPLE 4 (OCR-heavy - details in image):
+Input Caption: "LOMBA DESAIN POSTER 2026 🎨\\nLihat poster untuk detail lengkap!\\n#lomba #desain"
+Input Image Text (OCR, 85% confidence): "LOMBA DESAIN POSTER NASIONAL 2026\\nPendaftaran: 15-30 April 2026\\nCP: 0812-3456-7890\\nLink: bit.ly/desainposter2026\\nOrganizer: Universitas Indonesia\\nGRATIS"
+Output: {{
+  "post_id": "OCR123",
+  "title": "LOMBA DESAIN POSTER 2026",
+  "description": "Lomba desain poster tingkat nasional. Lihat poster untuk detail lengkap.",
+  "category": "competition",
+  "audiences": ["sma", "s1"],
+  "registration_date": "15 April 2026 - 30 April 2026",
+  "contact": "081234567890",
+  "event_type": "online",
+  "fee_type": "gratis",
+  "organizer": "Universitas Indonesia",
+  "registration_url": "bit.ly/desainposter2026"
+}}
+
+NOTE: Caption says "Lihat poster untuk detail lengkap" - this means check IMAGE TEXT!
+All details (dates, contact, URL, organizer) were extracted from IMAGE TEXT, not caption.
+
 CRITICAL REMINDERS:
 - Title: Keep original language from caption
 - Description: ALWAYS in Bahasa Indonesia
@@ -282,13 +358,19 @@ Return ONLY the JSON array, no other text.
         
         return prompt
     
-    def process_batch(self, captions_batch: List[Dict]) -> List[Dict]:
-        """Process a batch of captions using Gemini API with comprehensive error handling"""
+    def process_batch(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None) -> List[Dict]:
+        """
+        Process a batch of captions using Gemini API with comprehensive error handling
+        
+        Args:
+            captions_batch: List of caption dictionaries
+            ocr_texts: Optional dict mapping post_id to (ocr_text, confidence) tuples
+        """
         
         logger.info(f"[BATCH] Processing {len(captions_batch)} captions...")
         
         try:
-            prompt = self.create_batch_prompt(captions_batch)
+            prompt = self.create_batch_prompt(captions_batch, ocr_texts)
             
             # Call Gemini API with retry logic
             response = None

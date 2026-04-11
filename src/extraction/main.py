@@ -143,8 +143,8 @@ class DataExtractor:
             logger.info(f"  [BATCH {batch_num}/{total_batches}] Posts {i+1}-{min(i+config.BATCH_SIZE, total_captions)}")
             
             try:
-                # Process batch with Gemini
-                batch_results = self.gemini_client.process_batch(batch)
+                # Process batch with Gemini (PHASE C PART 3 STAGE 3: Pass OCR texts)
+                batch_results = self.gemini_client.process_batch(batch, ocr_texts)
                 
                 if batch_results:
                     # Add metadata to results with robust fallback logic

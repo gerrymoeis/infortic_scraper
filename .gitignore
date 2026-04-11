@@ -11,6 +11,11 @@ venv/
 dist/
 build/
 
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
 # Environment
 .env
 config/.env
@@ -38,3 +43,4 @@ scraper/instagram_images/
 
 # Logs
 *.log
+logs/

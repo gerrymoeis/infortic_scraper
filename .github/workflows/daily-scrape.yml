@@ -53,7 +53,6 @@ jobs:
         run: |
           cd scraper
           echo '${{ secrets.INSTAGRAM_SESSION }}' > session.json
-        if: ${{ secrets.INSTAGRAM_SESSION != '' }}
       
       - name: Run complete pipeline
         id: pipeline

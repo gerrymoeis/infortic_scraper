@@ -151,10 +151,12 @@ EXTRACTION RULES:
    - "festival" (festival, pameran)
    - "hackathon" (hackathon)
 
-4. AUDIENCES: Extract target audiences ["smp", "sma", "smk", "d3", "d4", "s1", "umum"]
+4. AUDIENCES: Extract target audiences ["sd", "smp", "sma", "smk", "d2", "d3", "d4", "s1", "umum"]
+   - sd: Sekolah Dasar (Elementary School)
    - smp: Sekolah Menengah Pertama (Junior High School)
    - sma: Sekolah Menengah Atas (Senior High School)
    - smk: Sekolah Menengah Kejuruan (Vocational High School)
+   - d2: Diploma 2
    - d3: Diploma 3
    - d4: Diploma 4
    - s1: Sarjana/Bachelor

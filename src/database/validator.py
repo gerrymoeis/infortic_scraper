@@ -16,7 +16,8 @@ class DataValidator:
     """Validates extracted opportunity data"""
     
     VALID_TYPES = ['competition', 'scholarship', 'internship', 'job', 'freelance', 'training', 'tryout', 'workshop', 'festival', 'hackathon']
-    VALID_AUDIENCES = ['smp', 'sma', 'd3', 'd4', 's1', 'umum']
+    # PHASE C FIX: Added 'smk' (Vocational High School), 'sd' (Elementary School), 'd2' (Diploma 2)
+    VALID_AUDIENCES = ['sd', 'smp', 'sma', 'smk', 'd2', 'd3', 'd4', 's1', 'umum']
     VALID_EVENT_TYPES = ['online', 'offline', 'hybrid']  # Changed from VALID_LOCATION_TYPES
     VALID_FEE_TYPES = ['gratis', 'berbayar']  # Simplified from ['gratis', 'htm', 'range']
     

@@ -70,6 +70,12 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
         
         # Pattern 1: Date ranges with dash (e.g., "1–30 April 2026", "21-31 Maret 2026", "19 Oktober — 5 November 2025")
         range_patterns = [
+            # PHASE C PART 3 STAGE 4: Batch/Gelombang patterns (must come first for priority)
+            # "Batch 1: April 1–14, 2026" or "Gelombang 1: 1-14 April 2026"
+            r'(?:Batch|Gelombang)\s*\d+[:\s]+(\d{1,2})\s*[–\-—]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "Batch 1: 1 April - 14 April 2026"
+            r'(?:Batch|Gelombang)\s*\d+[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s*[–\-—]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            
             # "1–30 April 2026" or "1-30 April 2026"
             r'(\d{1,2})\s*[–\-—]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
             # "April 1 - April 30, 2026"
@@ -808,6 +814,11 @@ def extract_urls(text: str) -> List[str]:
         # PHASE C NEW: Indonesian short links
         r'lynk\.id/[^\s]+',      # Lynk.id
         r'shorten\.asia/[^\s]+', # Shorten.asia
+        
+        # PHASE C PART 3 STAGE 4: Additional short domains
+        r'uns\.id/[^\s]+',       # UNS (Universitas Sebelas Maret) short links
+        r'fyde\.my/[^\s]+',      # Fyde short links
+        r'[a-z]+\.poli[a-z]*\.[a-z]+/[^\s]+',  # Politeknik links (e.g., jti.polinema.ac.id)
         
         r'[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/[^\s]*',  # Domain with path (e.g., sahut.co/event)
     ]

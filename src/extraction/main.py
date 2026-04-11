@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from src.extraction.gemini_client import GeminiClient
 from src.extraction.ocr_extractor import OCRExtractor
+from src.extraction.organizer_validator import OrganizerValidator
 from src.extraction.utils.config import config
 from src.extraction.utils.logger import setup_logger
 from src.extraction.utils.helpers import extract_urls, extract_phone_numbers, get_timestamp, extract_registration_date_fallback, extract_organizer_fallback
@@ -25,6 +26,7 @@ class DataExtractor:
         config.validate()
         self.gemini_client = GeminiClient()
         self.ocr_extractor = OCRExtractor()
+        self.organizer_validator = OrganizerValidator()
         
         # Track OCR usage
         self.ocr_attempts = 0
@@ -196,22 +198,78 @@ class DataExtractor:
                                     fallback_stats['ocr_contacts'] += 1
                                     logger.debug(f"[FALLBACK-OCR] Extracted contact: {phones_ocr[0]}")
                         
-                        # ROBUST FALLBACK: Organizer
+                        # ROBUST FALLBACK: Organizer (PHASE B: With Validation)
                         if not result.get('organizer'):
+                            extracted_organizer = None
+                            extraction_source = None
+                            
                             # Step 1: Try regex on caption
                             fallback_organizer = extract_organizer_fallback(original_caption, account_name)
                             if fallback_organizer:
-                                result['organizer'] = fallback_organizer
-                                fallback_stats['regex_organizers'] += 1
-                                logger.debug(f"[FALLBACK-REGEX] Extracted organizer: {fallback_organizer}")
+                                extracted_organizer = fallback_organizer
+                                extraction_source = 'regex'
                             
-                            # Step 2: Try OCR text (PHASE A NEW)
+                            # Step 2: Try OCR text
                             elif ocr_text:
                                 organizer_ocr = extract_organizer_fallback(ocr_text, account_name)
                                 if organizer_ocr:
-                                    result['organizer'] = organizer_ocr
-                                    fallback_stats['ocr_organizers'] += 1
-                                    logger.debug(f"[FALLBACK-OCR] Extracted organizer: {organizer_ocr}")
+                                    extracted_organizer = organizer_ocr
+                                    extraction_source = 'ocr'
+                            
+                            # Step 3: Try extracting from @mentions
+                            if not extracted_organizer:
+                                mention_organizer = self.organizer_validator.extract_from_mentions(
+                                    original_caption,
+                                    ocr_text
+                                )
+                                if mention_organizer:
+                                    extracted_organizer = mention_organizer
+                                    extraction_source = 'mention'
+                            
+                            # PHASE B: Validate extracted organizer
+                            if extracted_organizer:
+                                validated_organizer, confidence = self.organizer_validator.validate(
+                                    extracted_organizer,
+                                    account_name,
+                                    original_caption,
+                                    ocr_text
+                                )
+                                
+                                if validated_organizer:
+                                    result['organizer'] = validated_organizer
+                                    result['organizer_confidence'] = confidence
+                                    
+                                    # Track by source
+                                    if extraction_source == 'regex':
+                                        fallback_stats['regex_organizers'] += 1
+                                    elif extraction_source == 'ocr':
+                                        fallback_stats['ocr_organizers'] += 1
+                                    elif extraction_source == 'mention':
+                                        fallback_stats['mention_organizers'] = fallback_stats.get('mention_organizers', 0) + 1
+                                    
+                                    logger.debug(f"[FALLBACK-{extraction_source.upper()}] Extracted organizer: {validated_organizer} (confidence: {confidence}%)")
+                                else:
+                                    logger.debug(f"[FALLBACK] Organizer validation failed: '{extracted_organizer}' (confidence: {confidence}%)")
+                        
+                        # PHASE B: Validate Gemini-extracted organizer
+                        elif result.get('organizer'):
+                            gemini_organizer = result['organizer']
+                            validated_organizer, confidence = self.organizer_validator.validate(
+                                gemini_organizer,
+                                account_name,
+                                original_caption,
+                                ocr_text
+                            )
+                            
+                            if validated_organizer:
+                                result['organizer'] = validated_organizer
+                                result['organizer_confidence'] = confidence
+                                logger.debug(f"[GEMINI-VALIDATED] Organizer: {validated_organizer} (confidence: {confidence}%)")
+                            else:
+                                # Gemini extracted invalid organizer, remove it
+                                logger.warning(f"[VALIDATION] Removed invalid Gemini organizer: '{gemini_organizer}' (confidence: {confidence}%)")
+                                result['organizer'] = None
+                                result['organizer_confidence'] = 0
                         
                         # ROBUST FALLBACK: Registration URL
                         if not result.get('registration_url'):
@@ -330,6 +388,21 @@ class DataExtractor:
             logger.warning(f"  Failed Batches:     {len(failed_batches)}")
         if total_fallbacks > 0:
             logger.info(f"  Fallbacks Applied:  {total_fallbacks} times")
+        
+        # PHASE B: Organizer Quality Metrics
+        organizers_extracted = sum(1 for r in all_results if r.get('organizer'))
+        if organizers_extracted > 0:
+            high_conf = sum(1 for r in all_results if r.get('organizer_confidence', 0) >= 90)
+            medium_conf = sum(1 for r in all_results if 60 <= r.get('organizer_confidence', 0) < 90)
+            low_conf = sum(1 for r in all_results if 30 <= r.get('organizer_confidence', 0) < 60)
+            avg_confidence = sum(r.get('organizer_confidence', 0) for r in all_results if r.get('organizer')) / organizers_extracted
+            
+            logger.info(f"\n[ORGANIZER QUALITY] @{account_name}:")
+            logger.info(f"  Organizers Extracted: {organizers_extracted}/{total_captions} ({organizers_extracted/total_captions*100:.1f}%)")
+            logger.info(f"  High Confidence (90-100%): {high_conf} ({high_conf/organizers_extracted*100:.1f}%)")
+            logger.info(f"  Medium Confidence (60-89%): {medium_conf} ({medium_conf/organizers_extracted*100:.1f}%)")
+            logger.info(f"  Low Confidence (30-59%): {low_conf} ({low_conf/organizers_extracted*100:.1f}%)")
+            logger.info(f"  Average Confidence: {avg_confidence:.1f}%")
         
         return all_results
     

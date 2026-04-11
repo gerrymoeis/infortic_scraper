@@ -2,8 +2,9 @@ name: Daily Instagram Scrape
 
 on:
   schedule:
-    # Run daily at 2 AM UTC (adjust to your timezone)
-    - cron: '0 2 * * *'
+    # Run daily at 00:00 WIB (17:00 UTC previous day)
+    # WIB = UTC+7, so 00:00 WIB = 17:00 UTC
+    - cron: '0 17 * * *'
   workflow_dispatch:  # Allow manual trigger
 
 jobs:

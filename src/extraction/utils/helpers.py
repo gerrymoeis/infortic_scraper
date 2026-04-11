@@ -780,13 +780,35 @@ def extract_fee_amount(text: str) -> Optional[float]:
     return None
 
 def extract_urls(text: str) -> List[str]:
-    """Extract URLs using regex, including URLs without http/https prefix"""
+    """
+    Extract URLs using regex, including URLs without http/https prefix
+    
+    PHASE C PART 2: Enhanced with WhatsApp links and more short link services
+    """
     url_patterns = [
         r'https?://[^\s]+',  # Full URLs with http/https
         r'bit\.ly/[^\s]+',   # bit.ly short links
         r'linktr\.ee/[^\s]+', # Linktree
         r'forms\.gle/[^\s]+', # Google Forms
         r's\.id/[^\s]+',      # s.id short links
+        
+        # PHASE C NEW: WhatsApp links
+        r'wa\.me/[^\s]+',     # wa.me/628123456789
+        r'api\.whatsapp\.com/send\?phone=[^\s]+',  # WhatsApp API links
+        r'chat\.whatsapp\.com/[^\s]+',  # WhatsApp group links
+        
+        # PHASE C NEW: More short link services
+        r'tinyurl\.com/[^\s]+',  # TinyURL
+        r'ow\.ly/[^\s]+',        # Ow.ly (Hootsuite)
+        r'rebrand\.ly/[^\s]+',   # Rebrandly
+        r'cutt\.ly/[^\s]+',      # Cutt.ly
+        r'short\.link/[^\s]+',   # Short.link
+        r'tiny\.cc/[^\s]+',      # Tiny.cc
+        
+        # PHASE C NEW: Indonesian short links
+        r'lynk\.id/[^\s]+',      # Lynk.id
+        r'shorten\.asia/[^\s]+', # Shorten.asia
+        
         r'[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/[^\s]*',  # Domain with path (e.g., sahut.co/event)
     ]
     
@@ -815,10 +837,69 @@ def extract_urls(text: str) -> List[str]:
     return unique_urls
 
 def extract_phone_numbers(text: str) -> List[str]:
-    """Extract Indonesian phone numbers"""
-    phone_pattern = r'(?:\+62|0)[\s-]?\d{2,4}[\s-]?\d{3,4}[\s-]?\d{3,4}'
-    phones = re.findall(phone_pattern, text)
-    return [re.sub(r'[\s-]', '', phone) for phone in phones]
+    """
+    Extract Indonesian phone numbers in various formats
+    
+    PHASE C PART 2: Enhanced with WhatsApp links and more formats
+    """
+    phone_patterns = [
+        # Standard format with country code
+        r'(?:\+62|0)[\s-]?\d{2,4}[\s-]?\d{3,4}[\s-]?\d{3,4}',
+        
+        # PHASE C NEW: WhatsApp format (wa.me/628123456789)
+        r'wa\.me/(\d{10,13})',
+        
+        # PHASE C NEW: Without separators (08123456789)
+        r'\b0\d{9,11}\b',
+        
+        # PHASE C NEW: With parentheses (0812) 3456-7890
+        r'0\(\d{3}\)[\s-]?\d{4}[\s-]?\d{4}',
+        
+        # PHASE C NEW: With dots (0812.3456.7890)
+        r'0\d{3}\.\d{4}\.\d{4}',
+        
+        # PHASE C NEW: International format with plus
+        r'\+62[\s-]?\d{2,4}[\s-]?\d{3,4}[\s-]?\d{3,4}',
+    ]
+    
+    phones = []
+    for pattern in phone_patterns:
+        matches = re.findall(pattern, text)
+        for match in matches:
+            # Handle tuple results (from capturing groups)
+            if isinstance(match, tuple):
+                phone = match[0] if match[0] else match
+            else:
+                phone = match
+            
+            # Clean: remove all separators
+            phone = re.sub(r'[\s\-\.\(\)]', '', str(phone))
+            
+            # Remove wa.me/ prefix if present
+            phone = phone.replace('wa.me/', '')
+            
+            # Normalize to +62 format
+            if phone.startswith('0'):
+                phone = '62' + phone[1:]
+            elif phone.startswith('+'):
+                phone = phone[1:]
+            elif not phone.startswith('62'):
+                # Skip if doesn't look like Indonesian number
+                continue
+            
+            # Validate length (Indonesian numbers: 10-13 digits with country code)
+            if 10 <= len(phone) <= 13:
+                phones.append(phone)
+    
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_phones = []
+    for phone in phones:
+        if phone not in seen:
+            seen.add(phone)
+            unique_phones.append(phone)
+    
+    return unique_phones
 
 def extract_contacts(text: str) -> List[dict]:
     """

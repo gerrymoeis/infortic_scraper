@@ -30,6 +30,77 @@ class DataExtractor:
         self.ocr_attempts = 0
         self.ocr_successes = 0
     
+    def extract_all_ocr_texts(self, captions: List[Dict]) -> Dict[str, tuple]:
+        """
+        Extract OCR text from ALL images BEFORE processing with Gemini (Phase A Enhancement)
+        This is the key change - OCR happens FIRST, not as fallback
+        
+        Args:
+            captions: List of caption dictionaries with image info
+        
+        Returns:
+            Dictionary mapping post_id to (ocr_text, confidence_score)
+        """
+        logger.info(f"[OCR] Extracting text from {len(captions)} images...")
+        
+        ocr_texts = {}
+        ocr_stats = {
+            'total_images': 0,
+            'successful': 0,
+            'failed': 0,
+            'no_image': 0,
+            'total_chars': 0,
+            'avg_confidence': []
+        }
+        
+        for item in captions:
+            if 'downloaded_image' not in item:
+                ocr_stats['no_image'] += 1
+                continue
+            
+            ocr_stats['total_images'] += 1
+            image_filename = item['downloaded_image']
+            post_id = item['post_id']
+            
+            # Resolve full path to image
+            project_root = Path(__file__).parent.parent.parent
+            image_path = project_root / 'data' / 'images' / image_filename
+            
+            if not image_path.exists():
+                logger.warning(f"[OCR] Image not found: {image_filename}")
+                ocr_stats['failed'] += 1
+                continue
+            
+            # Extract with preprocessing and confidence
+            ocr_text, confidence = self.ocr_extractor.extract_with_confidence(
+                str(image_path),
+                timeout=10
+            )
+            
+            if ocr_text:
+                ocr_texts[post_id] = (ocr_text, confidence)
+                ocr_stats['successful'] += 1
+                ocr_stats['total_chars'] += len(ocr_text)
+                ocr_stats['avg_confidence'].append(confidence)
+                logger.debug(f"[OCR] {post_id}: {len(ocr_text)} chars, {confidence}% confidence")
+            else:
+                ocr_stats['failed'] += 1
+                logger.debug(f"[OCR] {post_id}: No text extracted")
+        
+        # Log summary
+        success_rate = (ocr_stats['successful'] / ocr_stats['total_images'] * 100) if ocr_stats['total_images'] > 0 else 0
+        avg_conf = sum(ocr_stats['avg_confidence']) // len(ocr_stats['avg_confidence']) if ocr_stats['avg_confidence'] else 0
+        
+        logger.info(f"[OCR] Extraction complete:")
+        logger.info(f"  Total images:      {ocr_stats['total_images']}")
+        logger.info(f"  Successful:        {ocr_stats['successful']} ({success_rate:.1f}%)")
+        logger.info(f"  Failed:            {ocr_stats['failed']}")
+        logger.info(f"  No image:          {ocr_stats['no_image']}")
+        logger.info(f"  Total chars:       {ocr_stats['total_chars']}")
+        logger.info(f"  Avg confidence:    {avg_conf}%")
+        
+        return ocr_texts
+    
     def process_account(self, account_name: str, captions: List[Dict]) -> List[Dict]:
         """Process captions for a single account with error handling"""
         
@@ -39,14 +110,25 @@ class DataExtractor:
         logger.info(f"[ACCOUNT] Processing @{account_name} ({total_captions} posts)")
         logger.info('='*60)
         
+        # PHASE A CHANGE: Extract OCR text from ALL images FIRST
+        ocr_texts = {}
+        if self.ocr_extractor.available:
+            ocr_texts = self.extract_all_ocr_texts(captions)
+        else:
+            logger.warning("[OCR] OCR not available - continuing without OCR enhancement")
+            logger.warning("[OCR] Install Tesseract OCR for better extraction accuracy")
+        
         all_results = []
         failed_batches = []
         fallback_stats = {
             'regex_dates': 0,
             'ocr_dates': 0,
             'regex_contacts': 0,
+            'ocr_contacts': 0,  # NEW: Track OCR contact extractions
             'regex_organizers': 0,
-            'regex_urls': 0
+            'ocr_organizers': 0,  # NEW: Track OCR organizer extractions
+            'regex_urls': 0,
+            'ocr_urls': 0  # NEW: Track OCR URL extractions
         }
         
         # Process in batches
@@ -74,6 +156,12 @@ class DataExtractor:
                         # Store raw caption for frontend display
                         result['raw_caption'] = original_caption
                         
+                        # Get post_id for OCR text lookup
+                        post_id = batch[j]['post_id']
+                        ocr_text = None
+                        if post_id in ocr_texts:
+                            ocr_text, ocr_confidence = ocr_texts[post_id]
+                        
                         # ROBUST FALLBACK: Registration Date
                         if not result.get('registration_date'):
                             # Step 1: Try regex fallback on caption
@@ -83,49 +171,51 @@ class DataExtractor:
                                 fallback_stats['regex_dates'] += 1
                                 logger.debug(f"[FALLBACK-REGEX] Extracted registration_date: {fallback_date}")
                             
-                            # Step 2: Try OCR fallback on image (if regex failed)
-                            elif self.ocr_extractor.available and 'downloaded_image' in batch[j]:
-                                self.ocr_attempts += 1
-                                image_filename = batch[j]['downloaded_image']
-                                
-                                # Resolve full path to image
-                                project_root = Path(__file__).parent.parent.parent
-                                image_path = project_root / 'data' / 'images' / image_filename
-                                
-                                # Extract text from image
-                                ocr_text = self.ocr_extractor.extract_text(str(image_path), timeout=5)
-                                
-                                if ocr_text:
-                                    # Try to extract date from OCR text
-                                    ocr_date = extract_registration_date_fallback(ocr_text)
-                                    if ocr_date:
-                                        result['registration_date'] = ocr_date
-                                        self.ocr_successes += 1
-                                        fallback_stats['ocr_dates'] += 1
-                                        logger.debug(f"[FALLBACK-OCR] Extracted registration_date: {ocr_date}")
-                                    else:
-                                        logger.debug(f"[FALLBACK-OCR] No date found in OCR text")
-                                else:
-                                    logger.debug(f"[FALLBACK-OCR] No text extracted from image")
+                            # Step 2: Try OCR text (already extracted)
+                            elif ocr_text:
+                                ocr_date = extract_registration_date_fallback(ocr_text)
+                                if ocr_date:
+                                    result['registration_date'] = ocr_date
+                                    fallback_stats['ocr_dates'] += 1
+                                    logger.debug(f"[FALLBACK-OCR] Extracted registration_date: {ocr_date}")
                         
                         # ROBUST FALLBACK: Contact Phone
                         if not result.get('contact'):
+                            # Step 1: Try regex on caption
                             phones = extract_phone_numbers(original_caption)
                             if phones:
                                 result['contact'] = phones[0]
                                 fallback_stats['regex_contacts'] += 1
-                                logger.debug(f"[FALLBACK] Extracted contact via regex: {phones[0]}")
+                                logger.debug(f"[FALLBACK-REGEX] Extracted contact: {phones[0]}")
+                            
+                            # Step 2: Try OCR text (PHASE A NEW)
+                            elif ocr_text:
+                                phones_ocr = extract_phone_numbers(ocr_text)
+                                if phones_ocr:
+                                    result['contact'] = phones_ocr[0]
+                                    fallback_stats['ocr_contacts'] += 1
+                                    logger.debug(f"[FALLBACK-OCR] Extracted contact: {phones_ocr[0]}")
                         
                         # ROBUST FALLBACK: Organizer
                         if not result.get('organizer'):
+                            # Step 1: Try regex on caption
                             fallback_organizer = extract_organizer_fallback(original_caption, account_name)
                             if fallback_organizer:
                                 result['organizer'] = fallback_organizer
                                 fallback_stats['regex_organizers'] += 1
-                                logger.debug(f"[FALLBACK] Extracted organizer via fallback: {fallback_organizer}")
+                                logger.debug(f"[FALLBACK-REGEX] Extracted organizer: {fallback_organizer}")
+                            
+                            # Step 2: Try OCR text (PHASE A NEW)
+                            elif ocr_text:
+                                organizer_ocr = extract_organizer_fallback(ocr_text, account_name)
+                                if organizer_ocr:
+                                    result['organizer'] = organizer_ocr
+                                    fallback_stats['ocr_organizers'] += 1
+                                    logger.debug(f"[FALLBACK-OCR] Extracted organizer: {organizer_ocr}")
                         
                         # ROBUST FALLBACK: Registration URL
                         if not result.get('registration_url'):
+                            # Step 1: Try regex on caption
                             urls = extract_urls(original_caption)
                             if urls:
                                 # Prioritize registration-related URLs
@@ -150,7 +240,29 @@ class DataExtractor:
                                 if best_url:
                                     result['registration_url'] = best_url
                                     fallback_stats['regex_urls'] += 1
-                                    logger.debug(f"[FALLBACK] Extracted registration_url via regex: {best_url}")
+                                    logger.debug(f"[FALLBACK-REGEX] Extracted registration_url: {best_url}")
+                            
+                            # Step 2: Try OCR text (PHASE A NEW)
+                            elif ocr_text:
+                                urls_ocr = extract_urls(ocr_text)
+                                if urls_ocr:
+                                    # Same prioritization logic
+                                    registration_keywords = ['daftar', 'regist', 'form', 'pendaftaran', 'bit.ly', 'forms.gle', 'linktr.ee', 's.id']
+                                    
+                                    best_url = None
+                                    for url in urls_ocr:
+                                        url_lower = url.lower()
+                                        if any(kw in url_lower for kw in registration_keywords):
+                                            best_url = url
+                                            break
+                                    
+                                    if not best_url and urls_ocr:
+                                        best_url = urls_ocr[0]
+                                    
+                                    if best_url:
+                                        result['registration_url'] = best_url
+                                        fallback_stats['ocr_urls'] += 1
+                                        logger.debug(f"[FALLBACK-OCR] Extracted registration_url: {best_url}")
                         
                         # Add source metadata
                         result['source_url'] = batch[j]['url']
@@ -199,10 +311,16 @@ class DataExtractor:
                 logger.info(f"    - OCR Dates:        {fallback_stats['ocr_dates']} extracted")
             if fallback_stats['regex_contacts'] > 0:
                 logger.info(f"    - Regex Contacts:   {fallback_stats['regex_contacts']} extracted")
+            if fallback_stats['ocr_contacts'] > 0:
+                logger.info(f"    - OCR Contacts:     {fallback_stats['ocr_contacts']} extracted")
             if fallback_stats['regex_organizers'] > 0:
                 logger.info(f"    - Regex Organizers: {fallback_stats['regex_organizers']} extracted")
+            if fallback_stats['ocr_organizers'] > 0:
+                logger.info(f"    - OCR Organizers:   {fallback_stats['ocr_organizers']} extracted")
             if fallback_stats['regex_urls'] > 0:
                 logger.info(f"    - Regex URLs:       {fallback_stats['regex_urls']} extracted")
+            if fallback_stats['ocr_urls'] > 0:
+                logger.info(f"    - OCR URLs:         {fallback_stats['ocr_urls']} extracted")
         
         success_rate = len(all_results)/total_captions*100 if total_captions > 0 else 0
         logger.info(f"\n[ACCOUNT SUMMARY] @{account_name}:")

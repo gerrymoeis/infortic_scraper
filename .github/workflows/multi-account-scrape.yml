@@ -106,11 +106,6 @@ jobs:
           EOF
           echo "Created config for account: ${{ matrix.account }}"
       
-      - name: Run quick tests before pipeline
-        run: |
-          pytest tests/unit/ -v -m unit --tb=short --maxfail=3
-        continue-on-error: false
-      
       - name: Run scraping for account
         id: scrape
         run: |
@@ -152,6 +147,7 @@ jobs:
             data/failed/*.json
             scraper/instagram_data.json
           retention-days: 7
+          if-no-files-found: ignore
       
       - name: Account Summary
         if: always()

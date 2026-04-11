@@ -1,0 +1,8 @@
+{
+  "accounts": ["infolomba", "lomba.it"],
+  "scrollCount": 3,
+  "deepScrapeMode": true,
+  "downloadImages": true,
+  "batchSize": 25,
+  "delayBetweenRequests": 4
+}

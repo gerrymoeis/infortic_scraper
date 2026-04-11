@@ -1,0 +1,389 @@
+"""
+Gemini API Client for data extraction
+"""
+
+import json
+import sys
+import time
+from pathlib import Path
+from typing import List, Dict, Optional
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+try:
+    # Try new library first
+    from google import genai
+    from google.genai import types
+    USE_NEW_API = True
+except ImportError:
+    # Fall back to old library
+    import google.generativeai as genai
+    USE_NEW_API = False
+
+from src.extraction.utils.config import config
+from src.extraction.utils.logger import setup_logger
+
+logger = setup_logger('gemini')
+
+class GeminiClient:
+    def __init__(self):
+        """Initialize Gemini client with API key rotation support"""
+        self._initialize_client(config.GEMINI_API_KEY)
+    
+    def _initialize_client(self, api_key: str):
+        """Initialize or reinitialize client with given API key"""
+        if USE_NEW_API:
+            # New API (google.genai)
+            self.client = genai.Client(api_key=api_key)
+            logger.info(f"Initialized Gemini client with model: {config.GEMINI_MODEL}")
+        else:
+            # Old API (google.generativeai) - deprecated but still works
+            genai.configure(api_key=api_key)
+            self.model = genai.GenerativeModel(
+                config.GEMINI_MODEL,
+                generation_config={
+                    "response_mime_type": "application/json",
+                    "temperature": config.TEMPERATURE,
+                }
+            )
+            logger.info(f"Initialized Gemini client with model: {config.GEMINI_MODEL}")
+    
+    def _rotate_api_key(self):
+        """Rotate to next API key"""
+        if len(config.GEMINI_API_KEYS) > 1:
+            new_key = config.get_next_api_key()
+            logger.info(f"Rotating to API key #{config.CURRENT_KEY_INDEX + 1}")
+            self._initialize_client(new_key)
+            return True
+        return False
+    
+    def create_batch_prompt(self, captions_batch: List[Dict]) -> str:
+        """Create optimized prompt for batch processing with simplified output"""
+        
+        captions_text = []
+        for item in captions_batch:
+            caption_preview = item['caption'][:500]
+            captions_text.append(f"ID: {item['post_id']}\nCaption: {caption_preview}...")
+        
+        captions_string = "\n\n---\n\n".join(captions_text)
+        
+        prompt = f"""
+You are extracting structured data from Indonesian competition/opportunity announcements from Instagram.
+
+IMPORTANT: Keep output simple and focused on essential information only.
+
+Process these {len(captions_batch)} captions and return a JSON array with one object per caption.
+
+CAPTIONS:
+{captions_string}
+
+EXTRACTION RULES:
+
+1. TITLE: Extract the main event/program title exactly as stated
+   - Use the exact title from the caption (keep original language)
+   - Example: "Program English For Trainer" → keep as "Program English For Trainer"
+   - Example: "LNGSHOT" → keep as "LNGSHOT"
+   - Keep it clean, without emojis
+   - Max 100 characters
+
+2. DESCRIPTION: Create a brief, accurate description IN BAHASA INDONESIA
+   - CRITICAL: ALWAYS write in Bahasa Indonesia, regardless of caption language
+   - If caption has clear details: Summarize key benefits and requirements
+   - If caption is vague/ambiguous: Write "Informasi [category] terkait [topic]. Lihat poster untuk detail lengkap."
+   - Examples:
+     * Clear caption → "Program pelatihan bahasa Inggris gratis selama 6 bulan dengan OJT dan peluang kerja"
+     * Vague caption → "Informasi lomba terkait UKM. Lihat poster untuk detail lengkap."
+   - Use natural, conversational Indonesian
+   - Max 200 characters
+
+3. CATEGORY: Identify using ONE of these:
+   - "competition" (lomba, kompetisi, turnamen)
+   - "scholarship" (beasiswa)
+   - "internship" (magang)
+   - "job" (lowongan kerja)
+   - "freelance" (freelance)
+   - "training" (pelatihan, kursus)
+   - "tryout" (try out, simulasi)
+   - "workshop" (workshop, seminar)
+   - "festival" (festival, pameran)
+   - "hackathon" (hackathon)
+
+4. AUDIENCES: Extract target audiences ["smp", "sma", "d3", "d4", "s1", "umum"]
+
+5. REGISTRATION_DATE: Extract registration period in Indonesian format
+   - Format: "DD Month YYYY - DD Month YYYY"
+   - Example: "1 Maret 2026 - 31 Maret 2026"
+   - If only one date: "DD Month YYYY"
+   - If no date found: null
+   - Look for: "Pendaftaran", "Registrasi", "Daftar"
+
+6. CONTACT: Extract PRIMARY contact phone number (just ONE)
+   - Remove all spaces and dashes
+   - Format: numbers only (e.g., "081234567890")
+   - Pick the first/main contact person
+   - If no phone found: null
+
+7. EVENT_TYPE: Determine event format
+   - "online" if mentions: Online, Daring, Virtual, Zoom, Google Meet
+   - "offline" if mentions: city name, venue, location
+   - "hybrid" if mentions both online and offline
+   - Default to "online" if unclear
+
+8. FEE_TYPE: Simple classification
+   - "gratis" if mentions: GRATIS, FREE, Tanpa Biaya
+   - "berbayar" if mentions any fee amount
+   - Default to "gratis" if unclear
+
+9. ORGANIZER: Extract the ACTUAL organization/institution name
+   
+   CRITICAL RULES:
+   - Extract ONLY the real organization/institution name
+   - DO NOT extract generic phrases like: "para expert", "sekolah yang sama", "kreativitas", "adu logika", "inovasi masa depan"
+   - DO NOT extract caption fragments or transition phrases: "oleh karena itu", "karena itu", "oleh sebab itu"
+   - DO NOT use the Instagram source account (infolomba, lomba.it) as organizer
+   - DO NOT extract descriptive text, adjectives, or filler words
+   - If caption mentions location/venue but no organizer → return null
+   
+   LOOK FOR (in priority order):
+   1. Instagram account tags (@mentions) - MOST RELIABLE SOURCE
+      - Look for @mentions that appear AFTER the event description
+      - Common patterns: "@organizationname" at the end of caption
+      - Examples:
+        * @almuhajirin3_purwakarta → "Pondok Pesantren Al-Muhajirin 3 Purwakarta"
+        * @smptiga_almuhajirinpurwakarta → "SMP Tiga Al-Muhajirin Purwakarta"
+        * @parekampunginggris → "Pare Kampung Inggris"
+      - SKIP these accounts (they are info/source accounts, NOT organizers):
+        * @infolomba, @lomba.it, @lomba_id, @info_lomba
+   
+   2. "by [name]", "dari [name]", "presented by [name]", "proudly presents" patterns
+      - "by Excelraya" → "Excelraya" ✓
+      - "MPK & OSIS SMA Negeri 63 Jakarta Mempersembahkan" → "SMA Negeri 63 Jakarta" ✓
+      - "Oleh karena itu" → null (transition phrase, NOT organizer) ✗
+      - "Oleh sebab itu" → null (transition phrase, NOT organizer) ✗
+   
+   3. Hashtags with organization names
+      - #PareKampungInggris → "Pare Kampung Inggris"
+      - #UniversitasBrawijaya → "Universitas Brawijaya"
+   
+   4. Organization names in specific contexts
+      - "MPK & OSIS SMA Negeri 63", "Universitas Indonesia", "Pondok Pesantren X"
+   
+   SIMPLIFICATION RULES:
+   - If "BEM Fakultas X Universitas Y" → use "Universitas Y"
+   - If "Himpunan Mahasiswa X ITERA" → use "ITERA"
+   - If "Departemen X Institut Y" → use "Institut Y"
+   - Prefer shorter, cleaner names (max 50 characters)
+   
+   VALIDATION - Return null if:
+   - Text is a generic phrase, adjective, or filler word
+   - Text is a caption fragment or transition phrase
+   - Text is the source Instagram account
+   - Text describes the event type rather than organizer
+   - No clear organizer is mentioned in the caption
+   
+   Examples:
+   - Caption: "...@almuhajirin3_purwakarta @smptiga..." → "Pondok Pesantren Al-Muhajirin 3 Purwakarta" ✓
+   - Caption: "Math Challenge by Excelraya" → "Excelraya" ✓
+   - Caption: "BEM Fakultas Ilmu Komputer Universitas Katolik Soegijapranata" → "Universitas Katolik Soegijapranata" ✓
+   - Caption: "Himpunan Mahasiswa Informatika ITERA" → "ITERA" ✓
+   - Caption: "Oleh karena itu, kami mengajak..." → null (transition phrase) ✗
+   - Caption: "para expert di bidang..." → null (generic phrase) ✗
+   - Caption: "sekolah yang sama" → null (generic phrase) ✗
+   - Caption: "Posted by @infolomba" → null (source account) ✗
+   - Caption: "Lokasi: Pondok Pesantren Al-Muhajirin" (no organizer mentioned) → null ✗
+
+10. REGISTRATION_URL: Extract PRIMARY registration link (just ONE)
+    - Pick the main registration URL
+    - Look for: bit.ly, forms.gle, linktr.ee, or any https link
+    - Prefer links near "Daftar", "Pendaftaran", "Registration"
+    - If multiple links, pick the first one
+    - If no link found: null
+
+Return ONLY a JSON array with this EXACT structure:
+[
+  {{
+    "post_id": "string",
+    "title": "string",
+    "description": "string (max 200 chars)",
+    "category": "competition|scholarship|internship|job|freelance|training|tryout|workshop|festival|hackathon",
+    "audiences": ["smp", "sma", "d3", "d4", "s1", "umum"],
+    "registration_date": "DD Month YYYY - DD Month YYYY or null",
+    "contact": "string (numbers only) or null",
+    "event_type": "online|offline|hybrid",
+    "fee_type": "gratis|berbayar",
+    "organizer": "string or null",
+    "registration_url": "string or null"
+  }}
+]
+
+EXAMPLE 1 (Clear caption):
+Input: "MATH CHALLENGE 2026\\nPendaftaran: 1-31 Maret 2026\\nCP: 0812-3456-7890\\nBiaya: Rp 50.000\\nOnline via Zoom\\nDaftar: https://bit.ly/mathchallenge"
+Output: {{
+  "post_id": "ABC123",
+  "title": "MATH CHALLENGE 2026",
+  "description": "Kompetisi matematika online dengan biaya pendaftaran Rp 50.000 dan total hadiah menarik",
+  "category": "competition",
+  "audiences": ["umum"],
+  "registration_date": "1 Maret 2026 - 31 Maret 2026",
+  "contact": "081234567890",
+  "event_type": "online",
+  "fee_type": "berbayar",
+  "organizer": null,
+  "registration_url": "https://bit.ly/mathchallenge"
+}}
+
+EXAMPLE 2 (Vague/ambiguous caption):
+Input: "Ada yang satu UKM nggak nih? 👀\\n#infolomba #lngshot #ukm"
+Output: {{
+  "post_id": "XYZ789",
+  "title": "LNGSHOT",
+  "description": "Informasi lomba terkait UKM. Lihat poster untuk detail lengkap.",
+  "category": "competition",
+  "audiences": ["s1"],
+  "registration_date": null,
+  "contact": null,
+  "event_type": "online",
+  "fee_type": "gratis",
+  "organizer": null,
+  "registration_url": null
+}}
+
+EXAMPLE 3 (English caption):
+Input: "English Training Program\\nFREE 100%\\n6 months intensive + 2 months OJT\\nJob opportunities"
+Output: {{
+  "post_id": "DEF456",
+  "title": "English Training Program",
+  "description": "Program pelatihan bahasa Inggris gratis selama 6 bulan dengan OJT dan peluang kerja",
+  "category": "training",
+  "audiences": ["umum"],
+  "registration_date": null,
+  "contact": null,
+  "event_type": "online",
+  "fee_type": "gratis",
+  "organizer": null,
+  "registration_url": null
+}}
+
+CRITICAL REMINDERS:
+- Title: Keep original language from caption
+- Description: ALWAYS in Bahasa Indonesia
+- For vague captions: Use "Informasi [category] terkait [topic]. Lihat poster untuk detail lengkap."
+
+Return ONLY the JSON array, no other text.
+"""
+        
+        return prompt
+    
+    def process_batch(self, captions_batch: List[Dict]) -> List[Dict]:
+        """Process a batch of captions using Gemini API with comprehensive error handling"""
+        
+        logger.info(f"[BATCH] Processing {len(captions_batch)} captions...")
+        
+        try:
+            prompt = self.create_batch_prompt(captions_batch)
+            
+            # Call Gemini API with retry logic
+            response = None
+            last_error = None
+            
+            for attempt in range(1, config.MAX_RETRIES + 1):
+                try:
+                    if USE_NEW_API:
+                        # New API call
+                        response = self.client.models.generate_content(
+                            model=config.GEMINI_MODEL,
+                            contents=prompt,
+                            config=types.GenerateContentConfig(
+                                response_mime_type="application/json",
+                                temperature=config.TEMPERATURE,
+                            )
+                        )
+                        response_text = response.text
+                    else:
+                        # Old API call
+                        response = self.model.generate_content(prompt)
+                        response_text = response.text
+                    
+                    # Success - break retry loop
+                    break
+                    
+                except KeyboardInterrupt:
+                    logger.warning("[INTERRUPT] Interrupted by user")
+                    raise
+                    
+                except Exception as e:
+                    last_error = e
+                    error_msg = str(e)
+                    
+                    # Check for quota/rate limit errors
+                    if 'quota' in error_msg.lower() or 'rate limit' in error_msg.lower() or '429' in error_msg:
+                        logger.warning(f"API quota exceeded on key #{config.CURRENT_KEY_INDEX + 1}")
+                        
+                        # Try rotating to next API key
+                        if self._rotate_api_key():
+                            logger.info("Retrying with rotated API key...")
+                            continue  # Retry with new key
+                        else:
+                            logger.error("All API keys exhausted. Please wait for quota reset or add more keys.")
+                            return []
+                    
+                    # Check for authentication errors
+                    if 'api key' in error_msg.lower() or 'authentication' in error_msg.lower():
+                        logger.error(f"Authentication error with API key #{config.CURRENT_KEY_INDEX + 1}")
+                        return []
+                    
+                    # Retry for other errors
+                    if attempt < config.MAX_RETRIES:
+                        wait_time = 2 ** attempt
+                        logger.warning(f"Attempt {attempt}/{config.MAX_RETRIES} failed, retrying in {wait_time}s...")
+                        time.sleep(wait_time)
+                    else:
+                        logger.error(f"All {config.MAX_RETRIES} attempts failed")
+                        raise last_error
+            
+            if response is None:
+                logger.error("[ERROR] No response received from API")
+                return []
+            
+            # Parse JSON response
+            json_text = response_text.strip()
+            
+            # Remove markdown code blocks if present
+            if json_text.startswith('```'):
+                json_text = json_text.replace('```json', '').replace('```', '').strip()
+            
+            # Parse JSON
+            try:
+                extracted_data = json.loads(json_text)
+            except json.JSONDecodeError as e:
+                logger.warning(f"JSON parsing error, attempting recovery...")
+                
+                # Try to extract JSON from response
+                import re
+                json_match = re.search(r'\[.*\]', json_text, re.DOTALL)
+                if json_match:
+                    try:
+                        extracted_data = json.loads(json_match.group(0))
+                        logger.info("Successfully recovered JSON from response")
+                    except:
+                        logger.error("Could not recover JSON from response")
+                        return []
+                else:
+                    return []
+            
+            # Validate response is a list
+            if not isinstance(extracted_data, list):
+                logger.error(f"Expected list, got {type(extracted_data)}")
+                return []
+            
+            logger.info(f"Successfully extracted {len(extracted_data)} items")
+            return extracted_data
+            
+        except KeyboardInterrupt:
+            logger.warning("Batch processing interrupted by user")
+            raise
+            
+        except Exception as e:
+            logger.error(f"Unexpected error: {type(e).__name__}: {str(e)[:100]}")
+            return []

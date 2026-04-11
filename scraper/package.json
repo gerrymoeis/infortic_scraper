@@ -1,0 +1,15 @@
+{
+  "name": "infortic-scraper",
+  "version": "1.0.0",
+  "description": "Instagram opportunity scraper",
+  "main": "scraper.js",
+  "scripts": {
+    "start": "node scraper.js"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.58.2",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

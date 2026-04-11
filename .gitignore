@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+config/.env
+
+# Data
+data/backup/*.json
+data/failed/*.json
+data/processed/*.json
+data/images/*
+!data/**/.gitkeep
+
+# Node
+node_modules/
+scraper/node_modules/
+scraper/instagram_data.json
+scraper/session.json
+scraper/instagram_images/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log

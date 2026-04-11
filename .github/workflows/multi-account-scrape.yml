@@ -6,25 +6,6 @@ on:
     # WIB = UTC+7, so 00:00 WIB = 17:00 UTC
     - cron: '0 17 * * *'
   workflow_dispatch:  # Allow manual trigger
-    inputs:
-      accounts:
-        description: 'Accounts to scrape (comma-separated, or "all")'
-        required: false
-        default: 'all'
-        type: string
-      max_parallel:
-        description: 'Maximum parallel jobs (1-7)'
-        required: false
-        default: '4'
-        type: choice
-        options:
-          - '1'
-          - '2'
-          - '3'
-          - '4'
-          - '5'
-          - '6'
-          - '7'
 
 jobs:
   scrape-account:
@@ -41,12 +22,6 @@ jobs:
           - info.event_
       max-parallel: 4  # Run 4 accounts simultaneously (well within 20 job limit)
       fail-fast: false  # Continue even if one account fails
-    
-    # Skip accounts not in manual input (if provided)
-    if: |
-      github.event_name == 'schedule' || 
-      github.event.inputs.accounts == 'all' || 
-      contains(github.event.inputs.accounts, matrix.account)
     
     steps:
       - name: Checkout code
@@ -231,4 +206,3 @@ jobs:
           echo "- **Timestamp**: $(date -u)" >> $GITHUB_STEP_SUMMARY
           echo "- **Accounts Processed**: 7" >> $GITHUB_STEP_SUMMARY
           echo "- **Max Parallel**: 4" >> $GITHUB_STEP_SUMMARY
-

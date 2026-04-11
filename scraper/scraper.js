@@ -68,8 +68,13 @@ async function main() {
     }
     
     const browser = await chromium.launch({ 
-        headless: false,
-        args: ['--disable-blink-features=AutomationControlled']
+        headless: true,  // Changed to true for GitHub Actions compatibility
+        args: [
+            '--disable-blink-features=AutomationControlled',
+            '--no-sandbox',  // Required for GitHub Actions
+            '--disable-setuid-sandbox',  // Required for GitHub Actions
+            '--disable-dev-shm-usage'  // Prevents crashes in containerized environments
+        ]
     });
     
     const context = await browser.newContext({
@@ -90,11 +95,11 @@ async function main() {
     const isLoggedIn = await page.locator('svg[aria-label*="Search"], svg[aria-label*="Home"]').count() > 0;
 
     if (!isLoggedIn) {
-        console.log("[AUTH] Not logged in - waiting for manual login (60s timeout)...");
-        await page.waitForTimeout(60000); 
-        const cookies = await context.cookies();
-        fs.writeFileSync(SESSION_FILE, JSON.stringify(cookies, null, 2));
-        console.log("[SESSION] Session saved successfully");
+        console.log("[AUTH] ERROR: Not logged in!");
+        console.log("[AUTH] Please ensure INSTAGRAM_SESSION secret is set correctly in GitHub");
+        console.log("[AUTH] Run scraper locally once to generate session.json, then copy to GitHub Secret");
+        await browser.close();
+        process.exit(1);  // Exit with error code
     } else {
         console.log("[AUTH] Already logged in");
     }

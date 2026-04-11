@@ -164,6 +164,29 @@ class DataExtractor:
                         if post_id in ocr_texts:
                             ocr_text, ocr_confidence = ocr_texts[post_id]
                         
+                        # ROBUST FALLBACK: Title (PHASE C PART 3)
+                        if not result.get('title') or not result.get('title').strip():
+                            # Try to extract from first line of caption
+                            if original_caption:
+                                first_line = original_caption.split('\n')[0].strip()
+                                # Remove common prefixes
+                                for prefix in ['📢', '🎉', '🔥', '✨', '⚡', '🎯', '📣']:
+                                    first_line = first_line.replace(prefix, '').strip()
+                                
+                                if first_line and len(first_line) >= 5:
+                                    # Use first 100 characters as title
+                                    result['title'] = first_line[:100]
+                                    fallback_stats['title_fallback'] = fallback_stats.get('title_fallback', 0) + 1
+                                    logger.debug(f"[FALLBACK-CAPTION] Extracted title: {result['title'][:50]}...")
+                            
+                            # If still no title, try OCR text
+                            if (not result.get('title') or not result.get('title').strip()) and ocr_text:
+                                first_line_ocr = ocr_text.split('\n')[0].strip()
+                                if first_line_ocr and len(first_line_ocr) >= 5:
+                                    result['title'] = first_line_ocr[:100]
+                                    fallback_stats['title_fallback_ocr'] = fallback_stats.get('title_fallback_ocr', 0) + 1
+                                    logger.debug(f"[FALLBACK-OCR] Extracted title: {result['title'][:50]}...")
+                        
                         # ROBUST FALLBACK: Registration Date
                         if not result.get('registration_date'):
                             # Step 1: Try regex fallback on caption
@@ -363,6 +386,10 @@ class DataExtractor:
         total_fallbacks = sum(fallback_stats.values())
         if total_fallbacks > 0:
             logger.info(f"  [FALLBACK] Applied fallbacks:")
+            if fallback_stats.get('title_fallback', 0) > 0:
+                logger.info(f"    - Title (Caption):  {fallback_stats['title_fallback']} extracted")
+            if fallback_stats.get('title_fallback_ocr', 0) > 0:
+                logger.info(f"    - Title (OCR):      {fallback_stats['title_fallback_ocr']} extracted")
             if fallback_stats['regex_dates'] > 0:
                 logger.info(f"    - Regex Dates:      {fallback_stats['regex_dates']} extracted")
             if fallback_stats['ocr_dates'] > 0:

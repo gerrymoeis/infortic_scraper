@@ -32,11 +32,13 @@ class OrganizerValidator:
         """Initialize validator with blacklists and patterns"""
         
         # Generic phrases that are NOT valid organizers
+        # NOTE: Removed single words like 'universitas', 'kampus', 'sekolah'
+        # because they reject valid university names like "Universitas Indonesia"
         self.generic_blacklist = [
             'para expert', 'sekolah yang sama', 'kreativitas', 'adu logika',
             'inovasi masa depan', 'kesempatan', 'teman-teman', 'sobat',
             'karena itu', 'oleh karena itu', 'oleh sebab itu',
-            'berbagai kampus', 'kampus', 'sekolah', 'universitas',
+            'berbagai kampus',  # Keep multi-word generic phrases
             'para peserta', 'peserta', 'panitia', 'penyelenggara'
         ]
         
@@ -106,8 +108,9 @@ class OrganizerValidator:
                 logger.debug(f"[VALIDATOR] Rejected (source account): '{organizer}' contains '{account}'")
                 return None, 0
         
-        # 4. Single generic word check
-        if organizer_lower in ['para', 'sekolah', 'teman', 'sobat', 'kesempatan', 'kreativitas', 'kampus']:
+        # 4. Single generic word check (only reject truly generic single words)
+        # NOTE: Removed 'sekolah', 'kampus', 'universitas' because they can be part of valid names
+        if organizer_lower in ['para', 'teman', 'sobat', 'kesempatan', 'kreativitas']:
             logger.debug(f"[VALIDATOR] Rejected (single generic word): '{organizer}'")
             return None, 0
         

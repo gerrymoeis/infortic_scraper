@@ -109,7 +109,14 @@ EXTRACTION RULES:
    - "festival" (festival, pameran)
    - "hackathon" (hackathon)
 
-4. AUDIENCES: Extract target audiences ["smp", "sma", "d3", "d4", "s1", "umum"]
+4. AUDIENCES: Extract target audiences ["smp", "sma", "smk", "d3", "d4", "s1", "umum"]
+   - smp: Sekolah Menengah Pertama (Junior High School)
+   - sma: Sekolah Menengah Atas (Senior High School)
+   - smk: Sekolah Menengah Kejuruan (Vocational High School)
+   - d3: Diploma 3
+   - d4: Diploma 4
+   - s1: Sarjana/Bachelor
+   - umum: General/Public (all ages)
 
 5. REGISTRATION_DATE: Extract registration period in Indonesian format
    - Format: "DD Month YYYY - DD Month YYYY"
@@ -207,7 +214,7 @@ Return ONLY a JSON array with this EXACT structure:
     "title": "string",
     "description": "string (max 200 chars)",
     "category": "competition|scholarship|internship|job|freelance|training|tryout|workshop|festival|hackathon",
-    "audiences": ["smp", "sma", "d3", "d4", "s1", "umum"],
+    "audiences": ["smp", "sma", "smk", "d3", "d4", "s1", "umum"],
     "registration_date": "DD Month YYYY - DD Month YYYY or null",
     "contact": "string (numbers only) or null",
     "event_type": "online|offline|hybrid",

@@ -111,6 +111,7 @@ def mark_expired_opportunities():
             SET status = 'expired',
                 updated_at = NOW()
             WHERE id = %s
+            RETURNING id
         """
         
         success_count = 0
@@ -118,8 +119,12 @@ def mark_expired_opportunities():
         
         for opp in expired_opps:
             try:
-                db.execute_insert(update_query, (opp['id'],))
-                success_count += 1
+                result = db.execute_insert(update_query, (opp['id'],))
+                if result:
+                    success_count += 1
+                else:
+                    error_count += 1
+                    logger.error(f"  [ERROR] Failed to update {opp['title']}: No result returned")
             except Exception as e:
                 error_count += 1
                 logger.error(f"  [ERROR] Failed to update {opp['title']}: {e}")

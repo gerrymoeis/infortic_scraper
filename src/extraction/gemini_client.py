@@ -424,9 +424,14 @@ Return ONLY the JSON array, no other text.
                     last_error = e
                     error_msg = str(e)
                     
-                    # Check for quota/rate limit errors
-                    if 'quota' in error_msg.lower() or 'rate limit' in error_msg.lower() or '429' in error_msg:
-                        logger.warning(f"API quota exceeded on key #{config.CURRENT_KEY_INDEX + 1}")
+                    # Check for quota/rate limit errors OR authentication errors (invalid key)
+                    # Both should trigger key rotation to try other keys
+                    is_quota_error = 'quota' in error_msg.lower() or 'rate limit' in error_msg.lower() or '429' in error_msg
+                    is_auth_error = 'api key' in error_msg.lower() or 'authentication' in error_msg.lower() or '403' in error_msg or 'forbidden' in error_msg.lower()
+                    
+                    if is_quota_error or is_auth_error:
+                        error_type = "quota exceeded" if is_quota_error else "authentication failed (invalid/expired key)"
+                        logger.warning(f"API {error_type} on key #{config.CURRENT_KEY_INDEX + 1}")
                         
                         # Try rotating to next API key if we haven't tried all keys yet
                         if len(tried_keys) < len(config.GEMINI_API_KEYS):
@@ -436,13 +441,8 @@ Return ONLY the JSON array, no other text.
                                 continue  # Retry with new key
                         
                         # All keys exhausted
-                        logger.error(f"All {len(config.GEMINI_API_KEYS)} API keys exhausted. Please wait for quota reset or add more keys.")
+                        logger.error(f"All {len(config.GEMINI_API_KEYS)} API keys exhausted or invalid.")
                         logger.info(f"Tried keys: {sorted([i+1 for i in tried_keys])}")
-                        return []
-                    
-                    # Check for authentication errors
-                    if 'api key' in error_msg.lower() or 'authentication' in error_msg.lower():
-                        logger.error(f"Authentication error with API key #{config.CURRENT_KEY_INDEX + 1}")
                         return []
                     
                     # Retry for other errors

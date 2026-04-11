@@ -128,9 +128,59 @@ python scripts/verify.py
 The repository includes automated daily scraping:
 
 1. Push to GitHub
-2. Add secrets: `DATABASE_URL`, `GEMINI_API_KEY`
+2. Configure GitHub Secrets (see below)
 3. Workflow runs daily at 2 AM UTC
 4. Manual trigger available in Actions tab
+
+### GitHub Secrets Setup
+
+Navigate to your repository → Settings → Secrets and variables → Actions → New repository secret
+
+Add the following secrets:
+
+1. **DATABASE_URL**
+   - Your Neon PostgreSQL connection string
+   - Format: `postgresql://user:password@host:port/database?sslmode=require`
+   - Example: `postgresql://user:pass@ep-cool-name-123456.us-east-2.aws.neon.tech/neondb?sslmode=require`
+
+2. **GEMINI_API_KEY**
+   - Your Google Gemini API key
+   - Get it from: https://aistudio.google.com/app/apikey
+   - Format: `AIzaSy...` (starts with AIzaSy)
+
+3. **INSTAGRAM_SESSION**
+   - Instagram session cookies for authentication
+   - Required for scraper to access Instagram
+   
+   **How to get session.json content:**
+   
+   a. Run the scraper locally once:
+   ```bash
+   cd scraper
+   node scraper.js
+   ```
+   
+   b. After successful login, copy the entire content of `scraper/session.json`
+   
+   c. Paste the entire JSON array into the GitHub Secret (including the `[` and `]` brackets)
+   
+   d. The content should look like:
+   ```json
+   [
+     {
+       "name": "csrftoken",
+       "value": "...",
+       "domain": ".instagram.com",
+       ...
+     },
+     ...
+   ]
+   ```
+   
+   **Important Notes:**
+   - Session expires after ~60 days, you'll need to update the secret
+   - Never commit `session.json` to the repository
+   - Keep your session.json secure (it provides access to your Instagram account)
 
 See [Usage Guide](docs/USAGE.md) for cron and Task Scheduler setup.
 

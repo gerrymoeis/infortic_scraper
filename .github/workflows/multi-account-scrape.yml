@@ -53,10 +53,29 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y tesseract-ocr
       
-      - name: Create .env file
+      - name: Create .env file with dedicated API key
         run: |
+          # Get all API keys
+          KEYS="${{ secrets.GEMINI_API_KEY }}"
+          
+          # Convert comma-separated keys to array
+          IFS=',' read -ra KEY_ARRAY <<< "$KEYS"
+          
+          # Assign key based on matrix job index (0-6 for 7 accounts)
+          # This ensures each scraper gets a dedicated key
+          ACCOUNT_INDEX=${{ strategy.job-index }}
+          KEY_INDEX=$((ACCOUNT_INDEX % ${#KEY_ARRAY[@]}))
+          ASSIGNED_KEY="${KEY_ARRAY[$KEY_INDEX]}"
+          
+          # Log assignment (safely, without exposing key)
+          echo "Account: ${{ matrix.account }}"
+          echo "Job Index: $ACCOUNT_INDEX"
+          echo "Assigned Key Index: $KEY_INDEX (of ${#KEY_ARRAY[@]} keys)"
+          echo "Key Preview: ${ASSIGNED_KEY:0:20}...${ASSIGNED_KEY: -4}"
+          
+          # Create .env with assigned key + all keys for fallback
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+          echo "GEMINI_API_KEY=$ASSIGNED_KEY,$KEYS" >> config/.env
           echo "BATCH_SIZE=25" >> config/.env
           echo "DELAY_BETWEEN_REQUESTS=4" >> config/.env
           echo "GEMINI_MODEL=gemini-2.5-flash" >> config/.env

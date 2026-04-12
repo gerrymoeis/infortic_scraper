@@ -24,7 +24,14 @@ class Config:
     GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else None  # Default to first key
     CURRENT_KEY_INDEX = 0  # Track which key we're using
     
+    # Model configuration with fallback support
     GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.5-flash')
+    FALLBACK_MODELS = [
+        'gemini-2.5-flash',       # Primary: 10 RPM, 250 RPD
+        'gemini-2.0-flash-lite',  # Fallback: 15 RPM, 1000 RPD  
+        'gemini-1.5-flash'        # Last resort: 15 RPM, 1500 RPD
+    ]
+    CURRENT_MODEL_INDEX = 0  # Track which model we're using
     
     # Extractor settings
     BATCH_SIZE = int(os.getenv('BATCH_SIZE', json_config.get('batchSize', 25)))
@@ -49,6 +56,22 @@ class Config:
         cls.CURRENT_KEY_INDEX = (cls.CURRENT_KEY_INDEX + 1) % len(cls.GEMINI_API_KEYS)
         cls.GEMINI_API_KEY = cls.GEMINI_API_KEYS[cls.CURRENT_KEY_INDEX]
         return cls.GEMINI_API_KEY
+    
+    @classmethod
+    def get_next_model(cls):
+        """Rotate to next fallback model"""
+        if len(cls.FALLBACK_MODELS) <= 1:
+            return cls.GEMINI_MODEL
+        
+        cls.CURRENT_MODEL_INDEX = (cls.CURRENT_MODEL_INDEX + 1) % len(cls.FALLBACK_MODELS)
+        cls.GEMINI_MODEL = cls.FALLBACK_MODELS[cls.CURRENT_MODEL_INDEX]
+        return cls.GEMINI_MODEL
+    
+    @classmethod
+    def reset_model(cls):
+        """Reset to primary model"""
+        cls.CURRENT_MODEL_INDEX = 0
+        cls.GEMINI_MODEL = cls.FALLBACK_MODELS[0]
     
     @classmethod
     def validate(cls):

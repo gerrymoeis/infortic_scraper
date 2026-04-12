@@ -59,16 +59,28 @@ class GeminiClient:
         if len(config.GEMINI_API_KEYS) <= 1:
             return False
         
-        # Track starting index to avoid infinite loop
-        starting_index = config.CURRENT_KEY_INDEX
-        
         # Try next key
         new_key = config.get_next_api_key()
         logger.info(f"Rotating to API key #{config.CURRENT_KEY_INDEX + 1}")
         self._initialize_client(new_key)
         
-        # Return True if we haven't cycled through all keys yet
-        # (We'll try this key, and if it fails, the caller will call us again)
+        return True
+    
+    def _rotate_model(self):
+        """
+        Rotate to next fallback model
+        
+        Returns:
+            True if successfully rotated to a new model, False if all models exhausted
+        """
+        if len(config.FALLBACK_MODELS) <= 1:
+            return False
+        
+        # Try next model
+        new_model = config.get_next_model()
+        logger.info(f"Rotating to model: {new_model}")
+        self._initialize_client(config.GEMINI_API_KEY)
+        
         return True
     
     def create_batch_prompt(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None) -> str:
@@ -391,11 +403,14 @@ Return ONLY the JSON array, no other text.
             response = None
             last_error = None
             
-            # Track which API keys we've tried for quota errors
-            tried_keys = set()
-            tried_keys.add(config.CURRENT_KEY_INDEX)
+            # Track which API keys and models we've tried
+            tried_combinations = set()
+            tried_combinations.add((config.CURRENT_KEY_INDEX, config.CURRENT_MODEL_INDEX))
             
-            for attempt in range(1, config.MAX_RETRIES + 1):
+            # Maximum attempts: all keys × all models
+            max_attempts = len(config.GEMINI_API_KEYS) * len(config.FALLBACK_MODELS)
+            
+            for attempt in range(1, max_attempts + 1):
                 try:
                     if USE_NEW_API:
                         # New API call
@@ -414,6 +429,7 @@ Return ONLY the JSON array, no other text.
                         response_text = response.text
                     
                     # Success - break retry loop
+                    logger.info(f"✅ Success with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL}")
                     break
                     
                 except KeyboardInterrupt:
@@ -422,36 +438,72 @@ Return ONLY the JSON array, no other text.
                     
                 except Exception as e:
                     last_error = e
-                    error_msg = str(e)
+                    error_msg = str(e).lower()
                     
-                    # Check for quota/rate limit errors OR authentication errors (invalid key)
-                    # Both should trigger key rotation to try other keys
-                    is_quota_error = 'quota' in error_msg.lower() or 'rate limit' in error_msg.lower() or '429' in error_msg
-                    is_auth_error = 'api key' in error_msg.lower() or 'authentication' in error_msg.lower() or '403' in error_msg or 'forbidden' in error_msg.lower()
+                    # Classify error type
+                    is_quota_error = 'quota' in error_msg or 'rate limit' in error_msg or '429' in error_msg
+                    is_auth_error = 'api key' in error_msg or 'authentication' in error_msg or '403' in error_msg or 'forbidden' in error_msg
+                    is_model_error = 'model' in error_msg and '403' in error_msg
+                    is_region_error = 'region' in error_msg or 'location' in error_msg or 'country' in error_msg
+                    is_tos_error = 'terms of service' in error_msg or 'tos' in error_msg or 'violation' in error_msg
                     
-                    if is_quota_error or is_auth_error:
-                        error_type = "quota exceeded" if is_quota_error else "authentication failed (invalid/expired key)"
-                        logger.warning(f"API {error_type} on key #{config.CURRENT_KEY_INDEX + 1}")
-                        
-                        # Try rotating to next API key if we haven't tried all keys yet
-                        if len(tried_keys) < len(config.GEMINI_API_KEYS):
+                    # Log error details
+                    if is_model_error:
+                        logger.warning(f"⚠️  Model access denied for {config.GEMINI_MODEL} on key #{config.CURRENT_KEY_INDEX + 1}")
+                    elif is_region_error:
+                        logger.error(f"❌ Geographic restriction detected - API not available in this region")
+                        return []
+                    elif is_tos_error:
+                        logger.error(f"❌ Terms of Service violation detected on key #{config.CURRENT_KEY_INDEX + 1}")
+                        # Try next key, this one is flagged
+                    elif is_quota_error:
+                        logger.warning(f"⚠️  Quota exceeded on key #{config.CURRENT_KEY_INDEX + 1}")
+                    elif is_auth_error:
+                        logger.warning(f"⚠️  Authentication failed on key #{config.CURRENT_KEY_INDEX + 1}")
+                    else:
+                        logger.warning(f"⚠️  Error: {str(e)[:100]}")
+                    
+                    # Determine next action
+                    should_rotate_key = is_quota_error or is_auth_error or is_tos_error
+                    should_rotate_model = is_model_error
+                    
+                    # Try rotating model first if model error
+                    if should_rotate_model:
+                        # Try next model with same key
+                        if config.CURRENT_MODEL_INDEX < len(config.FALLBACK_MODELS) - 1:
+                            self._rotate_model()
+                            tried_combinations.add((config.CURRENT_KEY_INDEX, config.CURRENT_MODEL_INDEX))
+                            logger.info(f"🔄 Retrying with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL} (attempt {attempt}/{max_attempts})")
+                            continue
+                        else:
+                            # All models tried with this key, rotate key and reset model
+                            should_rotate_key = True
+                            config.reset_model()
+                    
+                    # Try rotating key if needed
+                    if should_rotate_key:
+                        # Check if we have more keys to try
+                        if len(tried_combinations) < max_attempts:
+                            # Reset model to primary before trying next key
+                            config.reset_model()
+                            
                             if self._rotate_api_key():
-                                tried_keys.add(config.CURRENT_KEY_INDEX)
-                                logger.info(f"Retrying with API key #{config.CURRENT_KEY_INDEX + 1} (tried {len(tried_keys)}/{len(config.GEMINI_API_KEYS)} keys)")
-                                continue  # Retry with new key
+                                tried_combinations.add((config.CURRENT_KEY_INDEX, config.CURRENT_MODEL_INDEX))
+                                logger.info(f"🔄 Retrying with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL} (attempt {attempt}/{max_attempts})")
+                                continue
                         
-                        # All keys exhausted
-                        logger.error(f"All {len(config.GEMINI_API_KEYS)} API keys exhausted or invalid.")
-                        logger.info(f"Tried keys: {sorted([i+1 for i in tried_keys])}")
+                        # All combinations exhausted
+                        logger.error(f"❌ All {max_attempts} combinations exhausted (keys: {len(config.GEMINI_API_KEYS)}, models: {len(config.FALLBACK_MODELS)})")
+                        logger.info(f"Tried combinations: {len(tried_combinations)}")
                         return []
                     
-                    # Retry for other errors
-                    if attempt < config.MAX_RETRIES:
-                        wait_time = 2 ** attempt
-                        logger.warning(f"Attempt {attempt}/{config.MAX_RETRIES} failed, retrying in {wait_time}s...")
+                    # For other errors, use exponential backoff
+                    if attempt < max_attempts:
+                        wait_time = min(2 ** attempt, 30)  # Cap at 30 seconds
+                        logger.warning(f"Retrying in {wait_time}s...")
                         time.sleep(wait_time)
                     else:
-                        logger.error(f"All {config.MAX_RETRIES} attempts failed")
+                        logger.error(f"All {max_attempts} attempts failed")
                         raise last_error
             
             if response is None:

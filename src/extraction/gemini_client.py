@@ -395,8 +395,12 @@ Return ONLY the JSON array, no other text.
         """
         
         logger.info(f"[BATCH] Processing {len(captions_batch)} captions...")
+        logger.info(f"[API] Sending request to Gemini API (this may take 30-60 seconds)...")
         
         try:
+            import time
+            api_start_time = time.time()
+            
             prompt = self.create_batch_prompt(captions_batch, ocr_texts)
             
             # Call Gemini API with retry logic
@@ -412,6 +416,10 @@ Return ONLY the JSON array, no other text.
             
             for attempt in range(1, max_attempts + 1):
                 try:
+                    # Log progress for attempts after the first
+                    if attempt > 1:
+                        logger.info(f"[RETRY] Attempt {attempt}/{max_attempts} with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL}")
+                    
                     if USE_NEW_API:
                         # New API call
                         response = self.client.models.generate_content(
@@ -429,7 +437,8 @@ Return ONLY the JSON array, no other text.
                         response_text = response.text
                     
                     # Success - break retry loop
-                    logger.info(f"✅ Success with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL}")
+                    api_duration = time.time() - api_start_time
+                    logger.info(f"[SUCCESS] Response received in {api_duration:.1f}s with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL}")
                     break
                     
                 except KeyboardInterrupt:

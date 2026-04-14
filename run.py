@@ -29,29 +29,38 @@ def run_command(cmd, cwd=None, description="", step_num=0, total_steps=0):
     step_start = datetime.now()
     
     try:
-        result = subprocess.run(
+        # Use Popen to stream output in real-time (prevents hanging)
+        process = subprocess.Popen(
             cmd,
             cwd=cwd,
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             text=True,
-            check=True
+            bufsize=1,
+            universal_newlines=True
         )
         
-        if result.stdout:
-            print(result.stdout)
+        # Stream output line by line
+        for line in process.stdout:
+            print(line, end='')
+        
+        # Wait for process to complete
+        return_code = process.wait()
         
         step_duration = datetime.now() - step_start
-        logger.info(f"[COMPLETE] {description}: SUCCESS ({step_duration.total_seconds():.1f}s)")
-        return True
         
-    except subprocess.CalledProcessError as e:
+        if return_code == 0:
+            logger.info(f"[COMPLETE] {description}: SUCCESS ({step_duration.total_seconds():.1f}s)")
+            return True
+        else:
+            logger.error(f"[FAILED] {description}: FAILED ({step_duration.total_seconds():.1f}s)")
+            logger.error(f"[ERROR] Exit code: {return_code}")
+            return False
+        
+    except Exception as e:
         step_duration = datetime.now() - step_start
         logger.error(f"[FAILED] {description}: FAILED ({step_duration.total_seconds():.1f}s)")
-        logger.error(f"[ERROR] Exit code: {e.returncode}")
-        if e.stdout:
-            logger.error(f"[OUTPUT] {e.stdout}")
-        if e.stderr:
-            logger.error(f"[ERROR] {e.stderr}")
+        logger.error(f"[ERROR] {str(e)}")
         return False
 
 def find_latest_extracted_file():

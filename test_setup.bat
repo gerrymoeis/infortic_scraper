@@ -29,7 +29,7 @@ if not exist "venv\Scripts\python.exe" (
     echo.
     echo To create virtual environment:
     echo   1. Open PowerShell or Command Prompt
-    echo   2. Navigate to: %cd%
+    echo   2. Navigate to the infortic_scraper directory
     echo   3. Run: python -m venv venv
     echo   4. Run: venv\Scripts\activate
     echo   5. Run: pip install -r requirements.txt
@@ -41,8 +41,8 @@ echo [PASS] Virtual environment exists
 echo.
 
 echo [TEST 3/6] Checking Python packages...
-call venv\Scripts\activate.bat
-python -c "import google.genai; import playwright; print('[PASS] Required packages installed')" 2>nul
+call "%cd%\venv\Scripts\activate.bat"
+python -c "import google.generativeai; print('[PASS] Required packages installed')" 2>nul
 if errorlevel 1 (
     echo [FAIL] Required packages not installed!
     echo.
@@ -80,7 +80,7 @@ if errorlevel 1 (
 echo.
 
 echo [TEST 6/6] Checking database connection...
-python -c "from src.database.client import db; print('[PASS] Database connection successful')" 2>nul
+python -c "import os; from dotenv import load_dotenv; load_dotenv('config/.env'); from src.database.client import DatabaseClient; db = DatabaseClient(os.getenv('DATABASE_URL')); db.connect(); db.close(); print('[PASS] Database connection successful')" 2>nul
 if errorlevel 1 (
     echo [FAIL] Could not connect to database
     echo [INFO] Check your DATABASE_URL in config/.env
@@ -89,15 +89,16 @@ if errorlevel 1 (
 )
 echo.
 
-call venv\Scripts\deactivate.bat 2>nul
+call "%cd%\venv\Scripts\deactivate.bat" 2>nul
 
 echo ============================================================
 echo All Tests Passed!
 echo ============================================================
 echo.
 echo Your setup is ready. You can now:
-echo   1. Test manually: run_daily_scraper.bat
-echo   2. Set up Task Scheduler (see instructions below)
+echo   1. Test with minimal data: test_minimal_run.bat
+echo   2. Run full pipeline: run_daily_scraper.bat
+echo   3. Set up Task Scheduler for automation
 echo.
 echo ============================================================
 echo.

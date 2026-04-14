@@ -33,7 +33,7 @@ if not exist "venv\Scripts\activate.bat" (
 
 REM Activate virtual environment
 echo [STEP 1/2] Activating Python virtual environment...
-call venv\Scripts\activate.bat
+call "%cd%\venv\Scripts\activate.bat"
 
 REM Check if activation was successful
 if errorlevel 1 (
@@ -54,7 +54,7 @@ REM Capture exit code
 set PIPELINE_EXIT_CODE=%errorlevel%
 
 REM Deactivate virtual environment
-call venv\Scripts\deactivate.bat 2>nul
+call "%cd%\venv\Scripts\deactivate.bat" 2>nul
 
 echo.
 echo ============================================================

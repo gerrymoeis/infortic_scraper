@@ -17,7 +17,6 @@ echo [TEST 1/6] Checking directory...
 echo Current directory: %cd%
 if not exist "run.py" (
     echo [FAIL] run.py not found! Are you in the correct directory?
-    pause
     exit /b 1
 )
 echo [PASS] Directory is correct
@@ -34,7 +33,6 @@ if not exist "venv\Scripts\python.exe" (
     echo   4. Run: venv\Scripts\activate
     echo   5. Run: pip install -r requirements.txt
     echo.
-    pause
     exit /b 1
 )
 echo [PASS] Virtual environment exists
@@ -51,7 +49,6 @@ if errorlevel 1 (
     echo   2. Run: pip install -r requirements.txt
     echo   3. Run: playwright install chromium
     echo.
-    pause
     exit /b 1
 )
 echo.
@@ -64,7 +61,6 @@ if not exist "config\.env" (
     echo   - GEMINI_API_KEY=your_keys_here
     echo   - DATABASE_URL=your_database_url
     echo.
-    pause
     exit /b 1
 )
 echo [PASS] config/.env exists
@@ -74,7 +70,6 @@ echo [TEST 5/6] Checking Gemini API keys...
 python -c "from src.extraction.utils.config import config; print(f'[INFO] Found {len(config.GEMINI_API_KEYS)} API keys'); print('[PASS] API keys loaded')" 2>nul
 if errorlevel 1 (
     echo [FAIL] Could not load API keys from config/.env
-    pause
     exit /b 1
 )
 echo.
@@ -84,7 +79,6 @@ python -c "import os; from dotenv import load_dotenv; load_dotenv('config/.env')
 if errorlevel 1 (
     echo [FAIL] Could not connect to database
     echo [INFO] Check your DATABASE_URL in config/.env
-    pause
     exit /b 1
 )
 echo.
@@ -102,5 +96,3 @@ echo   3. Set up Task Scheduler for automation
 echo.
 echo ============================================================
 echo.
-
-pause

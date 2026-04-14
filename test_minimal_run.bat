@@ -28,7 +28,6 @@ REM Check if Python virtual environment exists
 if not exist "venv\Scripts\activate.bat" (
     echo [ERROR] Virtual environment not found!
     echo [ERROR] Please run test_setup.bat first
-    pause
     exit /b 1
 )
 
@@ -62,7 +61,6 @@ echo [STEP 3/6] Activating Python virtual environment...
 call "%cd%\venv\Scripts\activate.bat"
 if errorlevel 1 (
     echo [ERROR] Failed to activate virtual environment
-    pause
     exit /b 1
 )
 echo [SUCCESS] Virtual environment activated
@@ -152,19 +150,16 @@ echo.
 
 if %SCRAPER_EXIT_CODE% neq 0 (
     echo [RESULT] FAILED at scraping step
-    pause
     exit /b %SCRAPER_EXIT_CODE%
 )
 
 if %EXTRACTION_EXIT_CODE% neq 0 (
     echo [RESULT] FAILED at extraction step
-    pause
     exit /b %EXTRACTION_EXIT_CODE%
 )
 
 if %INSERTION_EXIT_CODE% neq 0 (
     echo [RESULT] FAILED at insertion step
-    pause
     exit /b %INSERTION_EXIT_CODE%
 )
 
@@ -175,5 +170,4 @@ echo   1. Check database for new opportunities
 echo   2. If successful, run full pipeline: run_daily_scraper.bat
 echo   3. Set up Task Scheduler for daily automation
 echo.
-pause
 exit /b 0

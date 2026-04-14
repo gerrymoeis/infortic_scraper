@@ -27,7 +27,6 @@ if not exist "venv\Scripts\activate.bat" (
     echo [ERROR] Please run: python -m venv venv
     echo [ERROR] Then: venv\Scripts\activate
     echo [ERROR] Then: pip install -r requirements.txt
-    pause
     exit /b 1
 )
 
@@ -38,7 +37,6 @@ call "%cd%\venv\Scripts\activate.bat"
 REM Check if activation was successful
 if errorlevel 1 (
     echo [ERROR] Failed to activate virtual environment
-    pause
     exit /b 1
 )
 

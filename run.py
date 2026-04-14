@@ -37,7 +37,9 @@ def run_command(cmd, cwd=None, description="", step_num=0, total_steps=0):
             stderr=subprocess.STDOUT,
             text=True,
             bufsize=1,
-            universal_newlines=True
+            universal_newlines=True,
+            encoding='utf-8',
+            errors='replace'  # Replace invalid characters instead of crashing
         )
         
         # Stream output line by line

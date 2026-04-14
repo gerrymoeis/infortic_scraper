@@ -455,9 +455,17 @@ Return ONLY the JSON array, no other text.
                     is_model_error = 'model' in error_msg and '403' in error_msg
                     is_region_error = 'region' in error_msg or 'location' in error_msg or 'country' in error_msg
                     is_tos_error = 'terms of service' in error_msg or 'tos' in error_msg or 'violation' in error_msg
+                    is_server_error = '503' in error_msg or 'service unavailable' in error_msg or '500' in error_msg or '502' in error_msg
                     
                     # Log error details
-                    if is_model_error:
+                    if is_server_error:
+                        # Server overload - wait and retry with exponential backoff
+                        wait_time = min(2 ** attempt, 60)  # Max 60 seconds
+                        logger.warning(f"⚠️  Server error (503/500) - waiting {wait_time}s before retry...")
+                        time.sleep(wait_time)
+                        logger.info(f"🔄 Retrying with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL} (attempt {attempt}/{max_attempts})")
+                        continue
+                    elif is_model_error:
                         logger.warning(f"⚠️  Model access denied for {config.GEMINI_MODEL} on key #{config.CURRENT_KEY_INDEX + 1}")
                     elif is_region_error:
                         logger.error(f"❌ Geographic restriction detected - API not available in this region")

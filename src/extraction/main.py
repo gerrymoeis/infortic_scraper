@@ -146,6 +146,13 @@ class DataExtractor:
                 # Process batch with Gemini (PHASE C PART 3 STAGE 3: Pass OCR texts)
                 batch_results = self.gemini_client.process_batch(batch, ocr_texts)
                 
+                # Add delay between batches to avoid overwhelming API (except for last batch)
+                if batch_num < total_batches:
+                    import time
+                    delay = config.DELAY_BETWEEN_REQUESTS
+                    logger.info(f"  [WAIT] Waiting {delay}s before next batch...")
+                    time.sleep(delay)
+                
                 if batch_results:
                     # Add metadata to results with robust fallback logic
                     for j, result in enumerate(batch_results):

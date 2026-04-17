@@ -25,7 +25,7 @@ class ColoredFormatter(logging.Formatter):
         return super().format(record)
 
 def setup_logger(name='extractor'):
-    """Setup logger with file and console handlers"""
+    """Setup logger with file and console handlers with proper Unicode support"""
     
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
@@ -34,16 +34,27 @@ def setup_logger(name='extractor'):
     if logger.handlers:
         return logger
     
-    # Console handler - use UTF-8 encoding for Windows
+    # Console handler with UTF-8 encoding for cross-platform Unicode support
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.INFO)
     
-    # Set encoding to UTF-8 with error handling
+    # Configure UTF-8 encoding with graceful fallback for Windows
+    # This prevents UnicodeEncodeError on Windows consoles that don't support UTF-8
     if hasattr(console_handler.stream, 'reconfigure'):
         try:
+            # Try to reconfigure stream to UTF-8 with 'replace' error handling
+            # 'replace' will substitute unsupported characters with '?' instead of crashing
             console_handler.stream.reconfigure(encoding='utf-8', errors='replace')
-        except:
-            pass  # If reconfigure fails, continue with default
+        except Exception:
+            # If reconfigure fails, wrap the stream with a UTF-8 writer
+            try:
+                import codecs
+                console_handler.stream = codecs.getwriter('utf-8')(
+                    console_handler.stream.buffer, errors='replace'
+                )
+            except Exception:
+                # Last resort: continue with default encoding
+                pass
     
     console_formatter = ColoredFormatter(
         '[%(asctime)s] [%(levelname)s] %(message)s',
@@ -51,12 +62,12 @@ def setup_logger(name='extractor'):
     )
     console_handler.setFormatter(console_formatter)
     
-    # File handler
+    # File handler with UTF-8 encoding
     log_dir = Path(__file__).parent.parent.parent.parent / 'logs'
     log_dir.mkdir(exist_ok=True)
     
     log_file = log_dir / f"{name}_{datetime.now().strftime('%Y-%m-%d')}.log"
-    file_handler = logging.FileHandler(log_file)
+    file_handler = logging.FileHandler(log_file, encoding='utf-8', errors='replace')
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter(
         '[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s',

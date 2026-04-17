@@ -24,12 +24,12 @@ class Config:
     GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else None  # Default to first key
     CURRENT_KEY_INDEX = 0  # Track which key we're using
     
-    # Model configuration with fallback support
-    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.5-flash')
+    # Model configuration - Use only gemini-3.1-flash-lite-preview
+    # This model has the BEST free tier limits: 15 RPM, 500 RPD, 250K TPM
+    # Other models have LOWER limits (5 RPM, 20 RPD) and should NOT be used as fallbacks
+    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-3.1-flash-lite-preview')
     FALLBACK_MODELS = [
-        'gemini-2.5-flash',       # Primary: 10 RPM, 250 RPD
-        'gemini-2.0-flash-lite',  # Fallback: 15 RPM, 1000 RPD  
-        'gemini-1.5-flash'        # Last resort: 15 RPM, 1500 RPD
+        'gemini-3.1-flash-lite-preview',  # Only model - best free tier limits
     ]
     CURRENT_MODEL_INDEX = 0  # Track which model we're using
     

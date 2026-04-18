@@ -158,6 +158,165 @@ class GeminiClient:
         
         return True
     
+    def _create_multimodal_content(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None):
+        """
+        Create multimodal content with images for Gemini Vision API
+        
+        Args:
+            captions_batch: List of caption dictionaries
+            ocr_texts: Optional dict mapping post_id to (ocr_text, confidence) tuples
+            
+        Returns:
+            List of content parts (text + images) for Gemini API
+        """
+        from PIL import Image
+        from pathlib import Path
+        import base64
+        import io
+        
+        # Start with the instruction prompt
+        instruction = """
+You are extracting structured data from Indonesian competition/opportunity announcements from Instagram.
+
+CRITICAL: You will receive BOTH caption text AND poster images for each post.
+
+EXTRACTION PRIORITY:
+- DATES (registration_date): Extract from IMAGE first (dates are usually in the poster)
+- CONTACT (phone): Extract from IMAGE first
+- URLS (registration_url): Extract from IMAGE first
+- TITLE: Caption first, then IMAGE if needed
+- ORGANIZER: Caption @mentions first, then IMAGE
+
+Process these posts and return a JSON array with one object per post.
+
+EXTRACTION RULES:
+
+1. TITLE: Extract the main event/program title exactly as stated
+   - Keep original language, max 100 characters
+
+2. DESCRIPTION: Create a brief description IN BAHASA INDONESIA
+   - ALWAYS write in Bahasa Indonesia
+   - Max 200 characters
+
+3. CATEGORY: ONE of: competition, scholarship, internship, job, freelance, training, tryout, workshop, festival, hackathon
+
+4. AUDIENCES: Target audiences ["sd", "smp", "sma", "smk", "d2", "d3", "d4", "s1", "umum"]
+
+5. REGISTRATION_DATE: Extract registration period in Indonesian format
+   - Format: "DD Month YYYY - DD Month YYYY"
+   - Example: "1 Maret 2026 - 31 Maret 2026"
+   - ⚠️ CRITICAL: Look at the IMAGE first! Dates are usually in the poster.
+   - Look for keywords: "Pendaftaran", "Registrasi", "Daftar", "Deadline", "Batas", "Tutup"
+   - If only one date: "DD Month YYYY"
+   - If no date found: null
+
+6. CONTACT: Extract PRIMARY contact phone number (just ONE)
+   - ⚠️ CRITICAL: Look at the IMAGE first! Contact info is usually in the poster.
+   - Remove all spaces and dashes
+   - Format: numbers only (e.g., "081234567890")
+   - Look for: "CP:", "Contact:", "WA:", "Narahubung:", phone numbers, wa.me links
+   - If no phone found: null
+
+7. EVENT_TYPE: "online", "offline", or "hybrid"
+
+8. FEE_TYPE: "gratis" or "berbayar"
+
+9. ORGANIZER: Extract the ACTUAL organization/institution name
+   - Look for @mentions, "by [name]", "dari [name]" patterns
+   - DO NOT extract generic phrases or transition words
+   - If no clear organizer: null
+
+10. REGISTRATION_URL: Extract PRIMARY registration link (just ONE)
+    - ⚠️ CRITICAL: Look at the IMAGE first! URLs are usually in the poster.
+    - Look for: bit.ly, forms.gle, linktr.ee, or any https link
+    - If no link found: null
+
+Return ONLY a JSON array with this structure:
+[
+  {
+    "post_id": "string",
+    "title": "string",
+    "description": "string (max 200 chars)",
+    "category": "competition|scholarship|internship|job|freelance|training|tryout|workshop|festival|hackathon",
+    "audiences": ["smp", "sma", "smk", "d3", "d4", "s1", "umum"],
+    "registration_date": "DD Month YYYY - DD Month YYYY or null",
+    "contact": "string (numbers only) or null",
+    "event_type": "online|offline|hybrid",
+    "fee_type": "gratis|berbayar",
+    "organizer": "string or null",
+    "registration_url": "string or null"
+  }
+]
+
+Now processing the posts:
+"""
+        
+        # Build content parts: instruction + (caption + image) for each post
+        content_parts = [instruction]
+        
+        project_root = Path(__file__).parent.parent.parent
+        image_dir = project_root / 'data' / 'images'
+        
+        images_loaded = 0
+        images_failed = 0
+        
+        for i, item in enumerate(captions_batch, 1):
+            post_id = item['post_id']
+            caption = item['caption']
+            
+            # Add caption text
+            caption_text = f"\n\n=== POST {i}/{len(captions_batch)} ===\nID: {post_id}\nCaption: {caption}\n"
+            content_parts.append(caption_text)
+            
+            # Try to load and add image
+            if 'downloaded_image' in item:
+                image_filename = item['downloaded_image']
+                image_path = image_dir / image_filename
+                
+                if image_path.exists():
+                    try:
+                        # Load image
+                        img = Image.open(image_path)
+                        
+                        # Convert to RGB if needed (remove alpha channel)
+                        if img.mode in ('RGBA', 'LA', 'P'):
+                            img = img.convert('RGB')
+                        
+                        # Resize if too large (max 1024x1024 to save tokens)
+                        max_size = 1024
+                        if img.width > max_size or img.height > max_size:
+                            img.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
+                        
+                        # Convert to bytes
+                        img_byte_arr = io.BytesIO()
+                        img.save(img_byte_arr, format='JPEG', quality=85)
+                        img_bytes = img_byte_arr.getvalue()
+                        
+                        # Add image to content
+                        content_parts.append({
+                            'mime_type': 'image/jpeg',
+                            'data': base64.b64encode(img_bytes).decode('utf-8')
+                        })
+                        
+                        images_loaded += 1
+                        logger.debug(f"[IMAGE] Loaded {image_filename} ({img.width}x{img.height})")
+                        
+                    except Exception as e:
+                        images_failed += 1
+                        logger.warning(f"[IMAGE] Failed to load {image_filename}: {e}")
+                        content_parts.append(f"[Image {image_filename} could not be loaded]\n")
+                else:
+                    images_failed += 1
+                    logger.warning(f"[IMAGE] Not found: {image_filename}")
+                    content_parts.append(f"[Image {image_filename} not found]\n")
+            else:
+                images_failed += 1
+                content_parts.append(f"[No image available for this post]\n")
+        
+        logger.info(f"[IMAGES] Loaded {images_loaded}/{len(captions_batch)} images successfully ({images_failed} failed)")
+        
+        return content_parts
+    
     def create_batch_prompt(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None) -> str:
         """
         Create optimized prompt for batch processing with simplified output
@@ -460,16 +619,21 @@ Return ONLY the JSON array, no other text.
         
         return prompt
     
-    def process_batch(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None) -> List[Dict]:
+    def process_batch(self, captions_batch: List[Dict], ocr_texts: Dict[str, tuple] = None, send_images: bool = True) -> List[Dict]:
         """
         Process a batch of captions using Gemini API with comprehensive error handling
         
         Args:
             captions_batch: List of caption dictionaries
             ocr_texts: Optional dict mapping post_id to (ocr_text, confidence) tuples
+            send_images: If True, send actual images to Gemini Vision API (RECOMMENDED for better accuracy)
         """
         
         logger.info(f"[BATCH] Processing {len(captions_batch)} captions...")
+        
+        # Check if we should send images to Gemini
+        if send_images:
+            logger.info(f"[IMAGES] Preparing to send {len(captions_batch)} images to Gemini Vision API...")
         
         # PROACTIVE KEY ROTATION: Rotate to next key before each request
         # This distributes load evenly across all 5 projects
@@ -482,9 +646,17 @@ Return ONLY the JSON array, no other text.
         
         try:
             import time
+            from PIL import Image
+            import io
             api_start_time = time.time()
             
-            prompt = self.create_batch_prompt(captions_batch, ocr_texts)
+            # Prepare multimodal content if images are enabled
+            if send_images:
+                contents = self._create_multimodal_content(captions_batch, ocr_texts)
+            else:
+                # Text-only mode (legacy)
+                prompt = self.create_batch_prompt(captions_batch, ocr_texts)
+                contents = prompt
             
             # Call Gemini API with retry logic
             response = None
@@ -506,7 +678,7 @@ Return ONLY the JSON array, no other text.
                     # New API call
                     response = self.client.models.generate_content(
                         model=config.GEMINI_MODEL,
-                        contents=prompt,
+                        contents=contents,
                         config=types.GenerateContentConfig(
                             response_mime_type="application/json",
                             temperature=config.TEMPERATURE,

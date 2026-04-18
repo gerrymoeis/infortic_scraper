@@ -144,8 +144,8 @@ class DataExtractor:
             logger.info(f"  [BATCH {batch_num}/{total_batches}] Posts {i+1}-{min(i+config.BATCH_SIZE, total_captions)}")
             
             try:
-                # Process batch with Gemini (PHASE C PART 3 STAGE 3: Pass OCR texts)
-                batch_results = self.gemini_client.process_batch(batch, ocr_texts)
+                # Process batch with Gemini (SEND IMAGES for better accuracy!)
+                batch_results = self.gemini_client.process_batch(batch, ocr_texts, send_images=True)
                 
                 # Add delay between batches to avoid overwhelming API (except for last batch)
                 if batch_num < total_batches:

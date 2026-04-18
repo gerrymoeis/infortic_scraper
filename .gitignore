@@ -44,3 +44,17 @@ scraper/instagram_images/
 # Logs
 *.log
 logs/
+
+# Documentation with potential secrets
+*SETUP*.md
+*SECRETS*.md
+*GUIDE*.md
+*_backup*.md
+replacements.txt
+leaked_keys.txt
+clean_keys.sh
+
+# Except safe documentation
+!QUICK_START.md
+!README.md
+!SETUP_GUIDE.md

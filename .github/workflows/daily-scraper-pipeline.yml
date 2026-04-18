@@ -287,15 +287,38 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
           echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
       
+      - name: Debug downloaded files
+        run: |
+          echo "=== Debugging downloaded files ==="
+          echo "Current directory: $(pwd)"
+          echo "Contents of data/processed/:"
+          ls -la data/processed/ || echo "data/processed/ does not exist"
+          echo "All extracted_data files:"
+          find . -name "extracted_data_*.json" -type f || echo "No extracted_data files found"
+          echo "=================================="
+      
       - name: Run database insertion
         id: insert
         run: |
+          # First try the expected location
           LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+          
+          # If not found, search everywhere
+          if [ -z "$LATEST_FILE" ]; then
+            echo "File not found in data/processed/, searching everywhere..."
+            LATEST_FILE=$(find . -name "extracted_data_*.json" -type f | head -1)
+          fi
+          
           if [ -n "$LATEST_FILE" ]; then
+            echo "✓ Found extracted data file: $LATEST_FILE"
+            echo "File size: $(wc -c < "$LATEST_FILE") bytes"
+            echo "Record count: $(jq 'length' "$LATEST_FILE")"
             echo "Inserting data from: $LATEST_FILE"
             python src/database/main.py "$LATEST_FILE"
           else
-            echo "✗ No extracted data file found"
+            echo "✗ No extracted data file found anywhere"
+            echo "Available files:"
+            find . -name "*.json" -type f | head -10
             exit 1
           fi
         timeout-minutes: 10

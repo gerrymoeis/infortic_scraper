@@ -11,7 +11,7 @@ on:
   schedule:
     # Run daily at 13:00 WIB (06:00 UTC)
     # WIB = UTC+7, so 13:00 WIB = 06:00 UTC
-    - cron: '0 6 * * *'
+    - cron: '0 7 * * *'
   
   workflow_dispatch:  # Allow manual trigger for testing
     inputs:

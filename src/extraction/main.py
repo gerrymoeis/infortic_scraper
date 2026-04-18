@@ -66,7 +66,8 @@ class DataExtractor:
             
             # Resolve full path to image
             project_root = Path(__file__).parent.parent.parent
-            image_path = project_root / 'data' / 'images' / image_filename
+            # FIX: Images are in scraper/instagram_images/, not data/images/
+            image_path = project_root / 'scraper' / 'instagram_images' / image_filename
             
             if not image_path.exists():
                 logger.warning(f"[OCR] Image not found: {image_filename}")

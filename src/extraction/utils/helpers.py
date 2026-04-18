@@ -144,6 +144,21 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
             r'catat tanggal[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
             # "jangan sampai kelewatan: 1 April - 14 April 2026"
             r'jangan (?:sampai )?kelewatan[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s*[-–]\s*(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # PHASE E.3 NEW: Additional high-confidence Indonesian patterns
+            # "sampai tanggal: 15 April 2026"
+            r'sampai tanggal[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "pendaftaran ditutup: 15 April 2026"
+            r'pendaftaran ditutup[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "batas terakhir: 15 April 2026"
+            r'batas terakhir[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "terakhir pendaftaran: 15 April 2026"
+            r'terakhir pendaftaran[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "deadline pendaftaran: 15 April 2026"
+            r'deadline pendaftaran[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "tutup pendaftaran: 15 April 2026"
+            r'tutup pendaftaran[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
+            # "batas waktu pendaftaran: 15 April 2026"
+            r'batas waktu pendaftaran[:\s]+(\d{1,2})\s+(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
         ]
         
         for pattern in high_confidence_phrases:
@@ -151,7 +166,19 @@ def extract_registration_date_fallback(text: str) -> Optional[str]:
             if match:
                 groups = match.groups()
                 
-                if len(groups) == 4:
+                if len(groups) == 3 and groups[0].isdigit() and groups[2].isdigit() and len(groups[2]) == 4:
+                    # "sampai tanggal: 15 April 2026" format
+                    day, month, year = groups
+                    date_str = f"{day} {month} {year}"
+                    parsed = dateparser.parse(date_str, languages=['id', 'en'])
+                    
+                    if parsed:
+                        date_obj = parsed.date()
+                        if min_date <= date_obj <= max_future:
+                            month_id = convert_month_to_indonesian(month)
+                            return f"{day} {month_id} {year}"
+                
+                elif len(groups) == 4:
                     # "catat tanggal: 1-14 April 2026" format
                     day1, day2, month, year = groups
                     date1_str = f"{day1} {month} {year}"

@@ -194,15 +194,20 @@ class DataInserter:
             status_reason: 'inserted', 'updated', 'expired', 'no_dates', 'error'
         """
         try:
-            # STEP 0: Validate date fields (Phase 3 - Required Field)
-            # Accept if has EITHER registration_date OR deadline_date
+            # STEP 0: Validate date fields (Phase 3 - Enhanced Logic)
+            # Accept posts with OR without dates, but mark them appropriately
             dates = data.get('dates', {})
             has_registration_date = bool(dates.get('registration_date'))
             has_deadline_date = bool(dates.get('deadline_date'))
             
             if not has_registration_date and not has_deadline_date:
-                logger.info(f"[SKIP] No registration_date or deadline_date: {data['title']} (post_id: {data.get('post_id')})")
-                return None, 'no_dates'
+                # PHASE 3 CHANGE: Instead of rejecting, insert with special status
+                logger.info(f"[NO_DEADLINE] No dates found, inserting with special status: {data['title']} (post_id: {data.get('post_id')})")
+                # Mark as no_deadline but continue insertion
+                data['status'] = 'no_deadline'
+            else:
+                # Has at least one date, mark as active
+                data['status'] = 'active'
             
             # STEP 1: Check Expiration (Phase 1 - Task 1.2)
             if self._check_expiration(data):
@@ -324,7 +329,7 @@ class DataInserter:
             data.get('view_count', 0),
             data.get('is_featured', False),
             data.get('tags', []),
-            'active',  # Phase 1: Set status to 'active' for new opportunities
+            data.get('status', 'active'),  # Use status from data (can be 'active' or 'no_deadline')
         )
         
         return self.db.execute_insert(query, params)
@@ -446,7 +451,7 @@ class DataInserter:
             'newly_inserted': 0,
             'updated_existing': 0,
             'skipped_expired': 0,
-            'skipped_no_dates': 0,
+            'inserted_no_deadline': 0,  # NEW: Track posts inserted without deadlines
             'database_errors': 0,
         }
         
@@ -463,19 +468,21 @@ class DataInserter:
             
             # Track specific categories
             if status_reason == 'inserted':
-                stats['newly_inserted'] += 1
+                # Check if this was inserted with no_deadline status
+                if data.get('status') == 'no_deadline':
+                    stats['inserted_no_deadline'] += 1
+                else:
+                    stats['newly_inserted'] += 1
             elif status_reason == 'updated':
                 stats['updated_existing'] += 1
             elif status_reason == 'expired':
                 stats['skipped_expired'] += 1
-            elif status_reason == 'no_dates':
-                stats['skipped_no_dates'] += 1
             elif status_reason == 'error':
                 stats['database_errors'] += 1
         
         # Calculate totals for summary
-        total_saved = stats['newly_inserted'] + stats['updated_existing']
-        total_skipped = stats['skipped_expired'] + stats['skipped_no_dates']
+        total_saved = stats['newly_inserted'] + stats['updated_existing'] + stats['inserted_no_deadline']
+        total_skipped = stats['skipped_expired']
         
         # Improved logging with clear categories
         logger.info(f"\n{'='*60}")
@@ -483,12 +490,12 @@ class DataInserter:
         logger.info(f"  Total Processed:        {stats['total_processed']} records")
         logger.info(f"")
         logger.info(f"  Successfully Saved:")
-        logger.info(f"    - Newly Inserted:     {stats['newly_inserted']} records ({stats['newly_inserted']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - Newly Inserted:     {stats['newly_inserted']} records ({stats['newly_inserted']/stats['total_processed']*100:.1f}%) - with deadlines")
         logger.info(f"    - Updated Existing:   {stats['updated_existing']} records ({stats['updated_existing']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - No Deadline:        {stats['inserted_no_deadline']} records ({stats['inserted_no_deadline']/stats['total_processed']*100:.1f}%) - inserted without deadlines")
         logger.info(f"")
         logger.info(f"  Skipped (Expected):")
         logger.info(f"    - Expired:            {stats['skipped_expired']} records ({stats['skipped_expired']/stats['total_processed']*100:.1f}%) - deadline passed")
-        logger.info(f"    - No Dates:           {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%) - missing registration_date AND deadline_date")
         logger.info(f"")
         logger.info(f"  Errors (Unexpected):")
         logger.info(f"    - Database Errors:    {stats['database_errors']} records ({stats['database_errors']/stats['total_processed']*100:.1f}%)")

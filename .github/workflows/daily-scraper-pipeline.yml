@@ -366,7 +366,7 @@ jobs:
       - name: Mark expired opportunities
         id: cleanup
         run: |
-          python scripts/mark_expired.py
+          python src/database/cleanup_expired.py
         continue-on-error: true
         timeout-minutes: 5
       

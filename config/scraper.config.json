@@ -4,5 +4,5 @@
   "deepScrapeMode": true,
   "downloadImages": true,
   "batchSize": 25,
-  "delayBetweenRequests": 4
+  "delayBetweenRequests": 5
 }

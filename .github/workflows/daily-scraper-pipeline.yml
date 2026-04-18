@@ -1,0 +1,400 @@
+name: Daily Scraper Pipeline
+
+# Complete automated workflow:
+# 1. Scrape Instagram posts from 7 accounts
+# 2. Extract structured data using Gemini AI + OCR
+# 3. Insert/update data in PostgreSQL database
+# 4. Clean up expired opportunities
+# 5. Verify and report results
+
+on:
+  schedule:
+    # Run daily at 13:00 WIB (06:00 UTC)
+    # WIB = UTC+7, so 13:00 WIB = 06:00 UTC
+    - cron: '0 6 * * *'
+  
+  workflow_dispatch:  # Allow manual trigger for testing
+    inputs:
+      skip_scraping:
+        description: 'Skip scraping step (use existing data)'
+        required: false
+        type: boolean
+        default: false
+      accounts:
+        description: 'Accounts to scrape (comma-separated, leave empty for all)'
+        required: false
+        type: string
+        default: ''
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+
+jobs:
+  # Job 1: Scrape Instagram posts
+  scrape:
+    name: Scrape Instagram Posts
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_scraping }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: scraper/package-lock.json
+      
+      - name: Install Node dependencies
+        run: |
+          cd scraper
+          npm ci
+      
+      - name: Install Playwright browsers
+        run: |
+          cd scraper
+          npx playwright install chromium
+          npx playwright install-deps chromium
+      
+      - name: Create scraper config
+        run: |
+          # Use custom accounts if provided, otherwise use all accounts
+          ACCOUNTS="${{ inputs.accounts }}"
+          if [ -z "$ACCOUNTS" ]; then
+            ACCOUNTS="infolomba,csrelatedcompetitions,informasilomba,info.lomba,eventmahasiswa8,info.lomba.beasiswa,info.event_"
+          fi
+          
+          # Convert comma-separated to JSON array
+          ACCOUNTS_JSON=$(echo "$ACCOUNTS" | jq -R 'split(",") | map(select(length > 0))')
+          
+          # Create config
+          cat > config/scraper.config.json << EOF
+          {
+            "accounts": $ACCOUNTS_JSON,
+            "scrollCount": 2,
+            "deepScrapeMode": true,
+            "downloadImages": true,
+            "batchSize": 25,
+            "delayBetweenRequests": 5
+          }
+          EOF
+          
+          echo "Created scraper config for accounts: $ACCOUNTS"
+          cat config/scraper.config.json
+      
+      - name: Create session.json from secret
+        run: |
+          cd scraper
+          echo '${{ secrets.INSTAGRAM_SESSION }}' > session.json
+          echo "Session file created ($(wc -c < session.json) bytes)"
+      
+      - name: Run Instagram scraper
+        id: scrape
+        run: |
+          cd scraper
+          node scraper.js
+        timeout-minutes: 15
+      
+      - name: Check scraping results
+        run: |
+          if [ -f "scraper/instagram_data.json" ]; then
+            POST_COUNT=$(jq 'length' scraper/instagram_data.json)
+            echo "✓ Scraped $POST_COUNT posts"
+            echo "post_count=$POST_COUNT" >> $GITHUB_OUTPUT
+          else
+            echo "✗ No data file found"
+            exit 1
+          fi
+      
+      - name: Upload scraped data
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraped-data-${{ github.run_number }}
+          path: |
+            scraper/instagram_data.json
+            scraper/instagram_images/
+          retention-days: 7
+      
+      - name: Scraping summary
+        if: always()
+        run: |
+          echo "## 📸 Scraping Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f "scraper/instagram_data.json" ]; then
+            POST_COUNT=$(jq 'length' scraper/instagram_data.json)
+            ACCOUNTS=$(jq -r 'group_by(.source_account) | map({account: .[0].source_account, posts: length}) | .[] | "- **\(.account)**: \(.posts) posts"' scraper/instagram_data.json)
+            echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+            echo "**Total Posts**: $POST_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Posts by Account" >> $GITHUB_STEP_SUMMARY
+            echo "$ACCOUNTS" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # Job 2: Extract structured data using AI
+  extract:
+    name: Extract Structured Data
+    runs-on: ubuntu-latest
+    needs: scrape
+    if: ${{ !cancelled() && (needs.scrape.result == 'success' || inputs.skip_scraping) }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Install Tesseract OCR
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-ind
+          tesseract --version
+      
+      - name: Download scraped data
+        if: ${{ !inputs.skip_scraping }}
+        uses: actions/download-artifact@v4
+        with:
+          name: scraped-data-${{ github.run_number }}
+          path: scraper/
+      
+      - name: Create .env file
+        run: |
+          cat > config/.env << EOF
+          # Gemini API Keys (5 keys for proactive rotation)
+          GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+          
+          # Database
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          
+          # Extractor Settings (optimized configuration)
+          BATCH_SIZE=25
+          DELAY_BETWEEN_REQUESTS=5
+          GEMINI_MODEL=gemini-3.1-flash-lite-preview
+          EOF
+          
+          echo "✓ Configuration created"
+      
+      - name: Run AI extraction
+        id: extract
+        run: |
+          python src/extraction/main.py scraper/instagram_data.json
+        timeout-minutes: 20
+      
+      - name: Check extraction results
+        run: |
+          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+          if [ -n "$LATEST_FILE" ]; then
+            EXTRACTED_COUNT=$(jq 'length' "$LATEST_FILE")
+            echo "✓ Extracted $EXTRACTED_COUNT posts"
+            echo "extracted_count=$EXTRACTED_COUNT" >> $GITHUB_OUTPUT
+            echo "extracted_file=$LATEST_FILE" >> $GITHUB_OUTPUT
+          else
+            echo "✗ No extracted data file found"
+            exit 1
+          fi
+      
+      - name: Upload extracted data
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-data-${{ github.run_number }}
+          path: |
+            data/processed/extracted_data_*.json
+            data/processed/extraction_metrics_*.json
+            data/failed/*.json
+          retention-days: 7
+      
+      - name: Extraction summary
+        if: always()
+        run: |
+          echo "## 🧠 Extraction Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+          if [ -n "$LATEST_FILE" ]; then
+            EXTRACTED_COUNT=$(jq 'length' "$LATEST_FILE")
+            
+            # Calculate success rate
+            if [ -f "scraper/instagram_data.json" ]; then
+              SCRAPED_COUNT=$(jq 'length' scraper/instagram_data.json)
+              SUCCESS_RATE=$(echo "scale=1; $EXTRACTED_COUNT * 100 / $SCRAPED_COUNT" | bc)
+              echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+              echo "**Success Rate**: ${SUCCESS_RATE}%" >> $GITHUB_STEP_SUMMARY
+              echo "**Extracted**: $EXTRACTED_COUNT / $SCRAPED_COUNT posts" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+              echo "**Extracted**: $EXTRACTED_COUNT posts" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            # Show metrics if available
+            METRICS_FILE=$(ls -t data/processed/extraction_metrics_*.json 2>/dev/null | head -1)
+            if [ -n "$METRICS_FILE" ]; then
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "### Metrics" >> $GITHUB_STEP_SUMMARY
+              jq -r '"- **API Requests**: \(.total_api_requests // 0)\n- **Processing Time**: \(.total_duration_seconds // 0)s\n- **Avg Response Time**: \(.avg_response_time_seconds // 0)s"' "$METRICS_FILE" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # Job 3: Insert/update database
+  database:
+    name: Update Database
+    runs-on: ubuntu-latest
+    needs: extract
+    if: ${{ !cancelled() && needs.extract.result == 'success' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Download extracted data
+        uses: actions/download-artifact@v4
+        with:
+          name: extracted-data-${{ github.run_number }}
+          path: data/processed/
+      
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+      
+      - name: Run database insertion
+        id: insert
+        run: |
+          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+          if [ -n "$LATEST_FILE" ]; then
+            echo "Inserting data from: $LATEST_FILE"
+            python src/database/main.py "$LATEST_FILE"
+          else
+            echo "✗ No extracted data file found"
+            exit 1
+          fi
+        timeout-minutes: 10
+      
+      - name: Database summary
+        if: always()
+        run: |
+          echo "## 🗄️ Database Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.insert.outcome }}" == "success" ]; then
+            echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+            echo "**Operation**: Data inserted/updated successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # Job 4: Cleanup and verification
+  cleanup:
+    name: Cleanup & Verify
+    runs-on: ubuntu-latest
+    needs: database
+    if: always()  # Run even if previous jobs failed
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+      
+      - name: Mark expired opportunities
+        id: cleanup
+        run: |
+          python scripts/mark_expired.py
+        continue-on-error: true
+        timeout-minutes: 5
+      
+      - name: Verify database
+        id: verify
+        run: |
+          python scripts/verify.py
+        continue-on-error: true
+        timeout-minutes: 5
+      
+      - name: Cleanup summary
+        if: always()
+        run: |
+          echo "## 🧹 Cleanup & Verification" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Mark Expired**: ${{ steps.cleanup.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Verification**: ${{ steps.verify.outcome }}" >> $GITHUB_STEP_SUMMARY
+
+  # Job 5: Final report
+  report:
+    name: Pipeline Report
+    runs-on: ubuntu-latest
+    needs: [scrape, extract, database, cleanup]
+    if: always()
+    
+    steps:
+      - name: Generate pipeline report
+        run: |
+          echo "# 📊 Daily Pipeline Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run Number**: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC') (13:00 WIB)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Job Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Scraping | ${{ needs.scrape.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Extraction | ${{ needs.extract.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Database | ${{ needs.database.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cleanup | ${{ needs.cleanup.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Overall status
+          if [ "${{ needs.scrape.result }}" == "success" ] && [ "${{ needs.extract.result }}" == "success" ] && [ "${{ needs.database.result }}" == "success" ]; then
+            echo "## ✅ Pipeline Status: SUCCESS" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ⚠️ Pipeline Status: PARTIAL SUCCESS" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Next run: Tomorrow at 13:00 WIB (06:00 UTC)*" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Send notification (optional)
+        if: failure()
+        run: |
+          echo "Pipeline failed. Configure notifications here if needed."
+          # Add Slack, Discord, or email notifications here

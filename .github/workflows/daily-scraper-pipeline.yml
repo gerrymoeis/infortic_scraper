@@ -101,7 +101,8 @@ jobs:
       - name: Check scraping results
         run: |
           if [ -f "scraper/instagram_data.json" ]; then
-            POST_COUNT=$(jq 'length' scraper/instagram_data.json)
+            # Count total posts across all accounts
+            POST_COUNT=$(jq '[.[] | length] | add' scraper/instagram_data.json)
             echo "✓ Scraped $POST_COUNT posts"
             echo "post_count=$POST_COUNT" >> $GITHUB_OUTPUT
           else
@@ -124,8 +125,12 @@ jobs:
           echo "## 📸 Scraping Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f "scraper/instagram_data.json" ]; then
-            POST_COUNT=$(jq 'length' scraper/instagram_data.json)
-            ACCOUNTS=$(jq -r 'group_by(.source_account) | map({account: .[0].source_account, posts: length}) | .[] | "- **\(.account)**: \(.posts) posts"' scraper/instagram_data.json)
+            # Count total posts across all accounts
+            POST_COUNT=$(jq '[.[] | length] | add' scraper/instagram_data.json)
+            
+            # Generate account summary
+            ACCOUNTS=$(jq -r 'to_entries | .[] | "- **@\(.key)**: \(.value | length) posts"' scraper/instagram_data.json)
+            
             echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
             echo "**Total Posts**: $POST_COUNT" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY

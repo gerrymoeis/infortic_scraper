@@ -1,7 +1,7 @@
 name: Daily Scraper Pipeline
 
 # Complete automated workflow:
-# 1. Scrape Instagram posts from 7 accounts
+# 1. Scrape Instagram posts from 10 accounts (configurable)
 # 2. Extract structured data using Gemini AI + OCR
 # 3. Insert/update data in PostgreSQL database
 # 4. Clean up expired opportunities
@@ -61,17 +61,14 @@ jobs:
       
       - name: Create scraper config
         run: |
-          # Use custom accounts if provided, otherwise use all accounts
+          # Use custom accounts if provided via manual input
           ACCOUNTS="${{ inputs.accounts }}"
-          if [ -z "$ACCOUNTS" ]; then
-            ACCOUNTS="infolomba,csrelatedcompetitions,informasilomba,info.lomba,eventmahasiswa8,info.lomba.beasiswa,info.event_"
-          fi
-          
-          # Convert comma-separated to JSON array
-          ACCOUNTS_JSON=$(echo "$ACCOUNTS" | jq -R 'split(",") | map(select(length > 0))')
-          
-          # Create config
-          cat > config/scraper.config.json << EOF
+          if [ -n "$ACCOUNTS" ]; then
+            # Convert comma-separated to JSON array for manual input
+            ACCOUNTS_JSON=$(echo "$ACCOUNTS" | jq -R 'split(",") | map(select(length > 0))')
+            
+            # Create config with manual accounts
+            cat > config/scraper.config.json << EOF
           {
             "accounts": $ACCOUNTS_JSON,
             "scrollCount": 2,
@@ -81,9 +78,21 @@ jobs:
             "delayBetweenRequests": 5
           }
           EOF
+            
+            echo "Created scraper config for manual accounts: $ACCOUNTS"
+          else
+            # Use existing config file (default behavior)
+            echo "Using existing scraper config with all configured accounts"
+          fi
           
-          echo "Created scraper config for accounts: $ACCOUNTS"
+          # Show current config
+          echo "Current scraper configuration:"
           cat config/scraper.config.json
+          
+          # Extract and display account list
+          ACCOUNT_LIST=$(jq -r '.accounts | join(", ")' config/scraper.config.json)
+          ACCOUNT_COUNT=$(jq -r '.accounts | length' config/scraper.config.json)
+          echo "Will scrape $ACCOUNT_COUNT accounts: $ACCOUNT_LIST"
       
       - name: Create session.json from secret
         run: |

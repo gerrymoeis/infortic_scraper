@@ -127,10 +127,24 @@ def main():
         # Insert data
         logger.info(f"\n{'='*60}")
         logger.info("[INSERT] Inserting data into database...")
+        logger.info(f"[INSERT] Using optimized batch processing (Phase 2)")
         logger.info('='*60)
         
         inserter = DataInserter(db_client)
-        stats = inserter.insert_batch(normalized_data)
+        
+        # Try optimized batch processing first
+        try:
+            stats = inserter.insert_batch_optimized(normalized_data)
+        except Exception as e:
+            logger.error(f"[ERROR] Optimized batch failed: {e}")
+            logger.warning("[FALLBACK] Switching to chunked batch processing...")
+            
+            try:
+                stats = inserter.insert_batch_chunked(normalized_data, chunk_size=50)
+            except Exception as e2:
+                logger.error(f"[ERROR] Chunked batch failed: {e2}")
+                logger.warning("[FALLBACK] Switching to legacy one-by-one processing...")
+                stats = inserter.insert_batch(normalized_data)
         
         # Final summary
         logger.info(f"\n{'='*60}")

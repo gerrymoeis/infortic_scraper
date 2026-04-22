@@ -321,3 +321,247 @@ class DatabaseClient:
             query += f" LIMIT {limit}"
         
         return self.execute_query(query)
+    
+    # ============================================================================
+    # PHASE 2: BATCH PROCESSING METHODS
+    # ============================================================================
+    
+    def get_existing_post_ids(self, post_ids: List[str]) -> set:
+        """
+        Bulk check which post_ids already exist in database
+        
+        Args:
+            post_ids: List of post IDs to check
+            
+        Returns:
+            Set of existing post_ids
+        """
+        if not post_ids:
+            return set()
+        
+        # Use ANY operator for efficient bulk check
+        query = "SELECT post_id FROM opportunities WHERE post_id = ANY(%s)"
+        results = self.execute_query(query, (post_ids,))
+        
+        return {row['post_id'] for row in results if row['post_id']}
+    
+    def bulk_insert_opportunities(self, records: List[Dict]) -> List[str]:
+        """
+        Bulk insert multiple opportunities at once
+        
+        Args:
+            records: List of normalized opportunity dictionaries
+            
+        Returns:
+            List of inserted opportunity IDs
+        """
+        if not records:
+            return []
+        
+        from psycopg2.extras import execute_values
+        
+        # Prepare data tuples
+        values = []
+        for record in records:
+            dates = record.get('dates', {})
+            values.append((
+                record.get('type_id'),
+                record.get('organizer_id'),
+                record.get('post_id'),
+                record.get('title'),
+                record.get('slug'),
+                record.get('description'),
+                record.get('raw_caption'),
+                record.get('registration_url'),
+                record.get('source_url'),
+                record.get('source_account'),
+                record.get('contact'),
+                record.get('registration_date'),
+                dates.get('start_date'),
+                dates.get('end_date'),
+                dates.get('deadline_date'),
+                record.get('event_type'),
+                record.get('fee_type'),
+                record.get('image_url'),
+                record.get('downloaded_image'),
+                record.get('view_count', 0),
+                record.get('is_featured', False),
+                record.get('tags', []),
+                'active',  # status
+            ))
+        
+        query = """
+            INSERT INTO opportunities (
+                type_id, organizer_id, post_id, title, slug, description,
+                raw_caption, registration_url, source_url, source_account,
+                contact, registration_date, start_date, end_date, deadline_date,
+                event_type, fee_type, image_url, downloaded_image, view_count,
+                is_featured, tags, status, published_at
+            ) VALUES %s
+            RETURNING id
+        """
+        
+        with self.get_cursor() as cursor:
+            # Use execute_values for bulk insert (much faster)
+            result = execute_values(
+                cursor,
+                query,
+                values,
+                template="(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())",
+                fetch=True
+            )
+            return [row['id'] for row in result]
+    
+    def bulk_update_opportunities(self, records: List[Dict]) -> int:
+        """
+        Bulk update multiple opportunities at once
+        
+        Args:
+            records: List of normalized opportunity dictionaries with 'id' field
+            
+        Returns:
+            Number of records updated
+        """
+        if not records:
+            return 0
+        
+        from psycopg2.extras import execute_values
+        
+        # Prepare data tuples
+        values = []
+        for record in records:
+            dates = record.get('dates', {})
+            values.append((
+                record.get('type_id'),
+                record.get('organizer_id'),
+                record.get('title'),
+                record.get('description'),
+                record.get('raw_caption'),
+                record.get('registration_url'),
+                record.get('source_url'),
+                record.get('source_account'),
+                record.get('contact'),
+                record.get('registration_date'),
+                dates.get('start_date'),
+                dates.get('end_date'),
+                dates.get('deadline_date'),
+                record.get('event_type'),
+                record.get('fee_type'),
+                record.get('image_url'),
+                record.get('downloaded_image'),
+                record.get('tags', []),
+                record.get('id'),  # WHERE clause
+            ))
+        
+        # Use temporary table approach for bulk update
+        query = """
+            UPDATE opportunities AS o SET
+                type_id = v.type_id,
+                organizer_id = v.organizer_id,
+                title = v.title,
+                description = v.description,
+                raw_caption = v.raw_caption,
+                registration_url = v.registration_url,
+                source_url = v.source_url,
+                source_account = v.source_account,
+                contact = v.contact,
+                registration_date = v.registration_date,
+                start_date = v.start_date,
+                end_date = v.end_date,
+                deadline_date = v.deadline_date,
+                event_type = v.event_type,
+                fee_type = v.fee_type,
+                image_url = v.image_url,
+                downloaded_image = v.downloaded_image,
+                tags = v.tags,
+                updated_at = NOW()
+            FROM (VALUES %s) AS v(
+                type_id, organizer_id, title, description, raw_caption,
+                registration_url, source_url, source_account, contact,
+                registration_date, start_date, end_date, deadline_date,
+                event_type, fee_type, image_url, downloaded_image, tags, id
+            )
+            WHERE o.id = v.id::uuid
+        """
+        
+        with self.get_cursor() as cursor:
+            execute_values(cursor, query, values)
+            return cursor.rowcount
+    
+    def bulk_insert_audiences(self, opportunity_audiences: List[tuple]) -> int:
+        """
+        Bulk insert opportunity-audience relationships
+        
+        Args:
+            opportunity_audiences: List of (opportunity_id, audience_id) tuples
+            
+        Returns:
+            Number of relationships inserted
+        """
+        if not opportunity_audiences:
+            return 0
+        
+        from psycopg2.extras import execute_values
+        
+        query = """
+            INSERT INTO opportunity_audiences (opportunity_id, audience_id)
+            VALUES %s
+            ON CONFLICT DO NOTHING
+        """
+        
+        with self.get_cursor() as cursor:
+            execute_values(cursor, query, opportunity_audiences)
+            return cursor.rowcount
+    
+    def bulk_get_or_create_organizers(self, organizer_names: List[str]) -> Dict[str, str]:
+        """
+        Bulk get or create organizers
+        
+        Args:
+            organizer_names: List of unique organizer names
+            
+        Returns:
+            Dictionary mapping organizer_name -> organizer_id
+        """
+        if not organizer_names:
+            return {}
+        
+        # Remove duplicates and None values
+        unique_names = list(set(name for name in organizer_names if name))
+        
+        if not unique_names:
+            return {}
+        
+        # Step 1: Get existing organizers
+        query = "SELECT name, id FROM organizers WHERE name = ANY(%s)"
+        results = self.execute_query(query, (unique_names,))
+        
+        existing = {row['name']: row['id'] for row in results}
+        
+        # Step 2: Create missing organizers
+        missing_names = [name for name in unique_names if name not in existing]
+        
+        if missing_names:
+            from psycopg2.extras import execute_values
+            
+            # Prepare values with slugs
+            values = [(name, self._generate_slug(name)) for name in missing_names]
+            
+            insert_query = """
+                INSERT INTO organizers (name, slug)
+                VALUES %s
+                RETURNING name, id
+            """
+            
+            with self.get_cursor() as cursor:
+                new_results = execute_values(
+                    cursor,
+                    insert_query,
+                    values,
+                    fetch=True
+                )
+                
+                for row in new_results:
+                    existing[row['name']] = row['id']
+        
+        return existing

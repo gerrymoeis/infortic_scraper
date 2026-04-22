@@ -450,8 +450,15 @@ class DataInserter:
             'database_errors': 0,
         }
         
+        # Log progress every 10 records
+        progress_interval = 10
+        
         for i, data in enumerate(data_list, 1):
-            logger.info(f"[{i}/{stats['total_processed']}] Processing: {data.get('title', 'Unknown')}")
+            # Progress logging every 10 records
+            if i % progress_interval == 0 or i == 1 or i == stats['total_processed']:
+                logger.info(f"[{i}/{stats['total_processed']}] Processing: {data.get('title', 'Unknown')} ({i/stats['total_processed']*100:.1f}% complete)")
+            else:
+                logger.info(f"[{i}/{stats['total_processed']}] Processing: {data.get('title', 'Unknown')}")
             
             # Check if exists BEFORE processing
             was_existing = self.db.check_duplicate_opportunity(

@@ -308,29 +308,39 @@ jobs:
       
       - name: Run database insertion
         id: insert
-        run: |
-          # First try the expected location
-          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
-          
-          # If not found, search everywhere
-          if [ -z "$LATEST_FILE" ]; then
-            echo "File not found in data/processed/, searching everywhere..."
-            LATEST_FILE=$(find . -name "extracted_data_*.json" -type f | head -1)
-          fi
-          
-          if [ -n "$LATEST_FILE" ]; then
-            echo "✓ Found extracted data file: $LATEST_FILE"
-            echo "File size: $(wc -c < "$LATEST_FILE") bytes"
-            echo "Record count: $(jq 'length' "$LATEST_FILE")"
-            echo "Inserting data from: $LATEST_FILE"
-            python src/database/main.py "$LATEST_FILE"
-          else
-            echo "✗ No extracted data file found anywhere"
-            echo "Available files:"
-            find . -name "*.json" -type f | head -10
-            exit 1
-          fi
-        timeout-minutes: 10
+        uses: nick-invision/retry@v3
+        with:
+          timeout_minutes: 20
+          max_attempts: 2
+          retry_wait_seconds: 30
+          command: |
+            # First try the expected location
+            LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+            
+            # If not found, search everywhere
+            if [ -z "$LATEST_FILE" ]; then
+              echo "File not found in data/processed/, searching everywhere..."
+              LATEST_FILE=$(find . -name "extracted_data_*.json" -type f | head -1)
+            fi
+            
+            if [ -n "$LATEST_FILE" ]; then
+              echo "✓ Found extracted data file: $LATEST_FILE"
+              echo "File size: $(wc -c < "$LATEST_FILE") bytes"
+              RECORD_COUNT=$(jq 'length' "$LATEST_FILE")
+              echo "Record count: $RECORD_COUNT"
+              echo "Inserting data from: $LATEST_FILE"
+              echo ""
+              echo "⏱️  Starting database insertion (timeout: 20 minutes)..."
+              echo "📊 Progress will be logged every 10 records"
+              echo "🔄 Retry enabled: 2 attempts with 30s wait between retries"
+              echo ""
+              python src/database/main.py "$LATEST_FILE"
+            else
+              echo "✗ No extracted data file found anywhere"
+              echo "Available files:"
+              find . -name "*.json" -type f | head -10
+              exit 1
+            fi
       
       - name: Database summary
         if: always()

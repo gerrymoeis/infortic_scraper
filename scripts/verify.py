@@ -149,8 +149,8 @@ def verify_results():
                 print(f"  {cat['code']:15} {cat['count']:3} records ({percentage:5.1f}%)")
         print()
         
-        # 6. Recent Opportunities
-        print("[RECENT] Last 10 Opportunities:")
+        # 6. Recent Opportunities (by created_at)
+        print("[RECENT] Last 10 Created Opportunities:")
         print("-" * 60)
         
         recent = db.execute_query("""
@@ -169,6 +169,29 @@ def verify_results():
             title = opp['title'][:40] + '...' if len(opp['title']) > 40 else opp['title']
             print(f"  {status_tag:10} {title}")
             print(f"             Deadline: {deadline_str} | Created: {created}")
+        print()
+        
+        # 7. Recently Updated Opportunities (PHASE 1 ENHANCEMENT)
+        print("[UPDATED] Last 10 Updated Opportunities:")
+        print("-" * 60)
+        
+        recent_updates = db.execute_query("""
+            SELECT title, status, deadline_date, updated_at, created_at
+            FROM opportunities
+            ORDER BY updated_at DESC
+            LIMIT 10
+        """)
+        
+        for opp in recent_updates:
+            status_tag = "[ACTIVE]" if opp['status'] == 'active' else f"[{opp['status'].upper()}]"
+            deadline = opp.get('deadline_date')
+            deadline_str = str(deadline)[:10] if deadline else 'No deadline'
+            updated = str(opp['updated_at'])[:19]
+            created = str(opp['created_at'])[:19]
+            
+            title = opp['title'][:40] + '...' if len(opp['title']) > 40 else opp['title']
+            print(f"  {status_tag:10} {title}")
+            print(f"             Deadline: {deadline_str} | Updated: {updated} | Created: {created}")
         print()
         
         db.close()

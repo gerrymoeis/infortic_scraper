@@ -81,9 +81,18 @@ class OCRExtractor:
             return None
         
         try:
-            # Check if file exists
-            if not Path(image_path).exists():
-                logger.warning(f"Image file not found: {image_path}")
+            # Check if file exists - ENHANCED LOGGING (Phase 1)
+            image_path_obj = Path(image_path)
+            if not image_path_obj.exists():
+                # Enhanced error logging with full diagnostic info
+                logger.warning(f"[OCR] Image not found: {image_path_obj.name}")
+                logger.warning(f"[OCR] Full path: {image_path_obj.absolute()}")
+                logger.warning(f"[OCR] Working directory: {Path.cwd()}")
+                logger.warning(f"[OCR] Parent directory exists: {image_path_obj.parent.exists()}")
+                if image_path_obj.parent.exists():
+                    # List files in parent directory for debugging
+                    files_in_dir = list(image_path_obj.parent.glob('*'))[:5]
+                    logger.warning(f"[OCR] Files in directory (first 5): {[f.name for f in files_in_dir]}")
                 return None
             
             # Open image
@@ -167,9 +176,11 @@ class OCRExtractor:
             return None, 0
         
         try:
-            # Check if file exists
-            if not Path(image_path).exists():
-                logger.warning(f"Image file not found: {image_path}")
+            # Check if file exists - ENHANCED LOGGING (Phase 1)
+            image_path_obj = Path(image_path)
+            if not image_path_obj.exists():
+                logger.warning(f"[OCR] Image not found: {image_path_obj.name}")
+                logger.warning(f"[OCR] Full path: {image_path_obj.absolute()}")
                 return None, 0
             
             # Open and preprocess image
@@ -233,9 +244,11 @@ class OCRExtractor:
             return None
         
         try:
-            # Check if file exists
-            if not Path(image_path).exists():
-                logger.warning(f"Image file not found: {image_path}")
+            # Check if file exists - ENHANCED LOGGING (Phase 1)
+            image_path_obj = Path(image_path)
+            if not image_path_obj.exists():
+                logger.warning(f"[OCR] Image not found: {image_path_obj.name}")
+                logger.warning(f"[OCR] Full path: {image_path_obj.absolute()}")
                 return None
             
             # Open image

@@ -146,23 +146,40 @@ def main():
                 logger.warning("[FALLBACK] Switching to legacy one-by-one processing...")
                 stats = inserter.insert_batch(normalized_data)
         
-        # Final summary
+        # Final summary - ENHANCED LOGGING (Phase 1)
         logger.info(f"\n{'='*60}")
         logger.info("[COMPLETE] DATABASE INSERTION COMPLETE!")
         logger.info('='*60)
-        logger.info(f"[METRICS] Summary:")
-        logger.info(f"   - Total records: {len(extracted_data)}")
+        logger.info(f"[METRICS] Detailed Summary:")
+        logger.info(f"   - Total records processed: {len(extracted_data)}")
         logger.info(f"   - Valid records: {len(valid_records)}")
         logger.info(f"   - Invalid records: {len(invalid_records)}")
-        logger.info(f"   - Successfully inserted: {stats['newly_inserted']}")
-        logger.info(f"   - Updated (existing): {stats['updated_existing']}")
-        logger.info(f"   - Skipped (expired): {stats['skipped_expired']}")
-        logger.info(f"   - Skipped (no dates): {stats['skipped_no_dates']}")
-        logger.info(f"   - Database errors: {stats['database_errors']}")
+        logger.info(f"")
+        logger.info(f"   📊 INSERTION RESULTS:")
+        logger.info(f"   - ✅ Newly Inserted: {stats['newly_inserted']} records")
+        logger.info(f"   - 🔄 Updated Existing: {stats['updated_existing']} records")
+        logger.info(f"   - ⏭️  Skipped (Expired): {stats['skipped_expired']} records")
+        logger.info(f"   - ⏭️  Skipped (No Dates): {stats['skipped_no_dates']} records")
+        logger.info(f"   - ❌ Database Errors: {stats['database_errors']} records")
+        logger.info(f"")
+        
+        # Calculate success rate
+        total_saved = stats['newly_inserted'] + stats['updated_existing']
+        success_rate = (total_saved / len(valid_records) * 100) if valid_records else 0
+        logger.info(f"   📈 SUCCESS RATE: {success_rate:.1f}% ({total_saved}/{len(valid_records)} saved to database)")
         logger.info('='*60)
         
         if stats['newly_inserted'] > 0 or stats['updated_existing'] > 0:
             logger.info("\n[SUCCESS] Data successfully processed!")
+            
+            # Additional context for updates vs inserts
+            if stats['updated_existing'] > 0 and stats['newly_inserted'] == 0:
+                logger.info(f"[INFO] All {stats['updated_existing']} records were UPDATES (posts already exist from previous runs)")
+                logger.info(f"[INFO] This is normal behavior - duplicate posts are updated, not inserted again")
+            elif stats['newly_inserted'] > 0:
+                logger.info(f"[INFO] {stats['newly_inserted']} NEW opportunities added to database")
+                if stats['updated_existing'] > 0:
+                    logger.info(f"[INFO] {stats['updated_existing']} existing opportunities were updated")
         
     except Exception as e:
         logger.error(f"Fatal error: {e}", exc_info=True)

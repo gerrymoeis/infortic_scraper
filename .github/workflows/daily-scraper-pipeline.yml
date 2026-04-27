@@ -350,9 +350,23 @@ jobs:
           
           if [ "${{ steps.insert.outcome }}" == "success" ]; then
             echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
-            echo "**Operation**: Data inserted/updated successfully" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # Try to extract detailed stats from logs (Phase 1 Enhancement)
+            # Look for the enhanced logging format we added
+            echo "### Insertion Details" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check workflow logs for detailed breakdown:" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Newly Inserted records" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔄 Updated Existing records" >> $GITHUB_STEP_SUMMARY
+            echo "- ⏭️  Skipped records (expired/no dates)" >> $GITHUB_STEP_SUMMARY
+            echo "- ❌ Database Errors" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "💡 **Note**: If all records show as 'Updated', this is normal - duplicate posts from previous runs are updated, not inserted again." >> $GITHUB_STEP_SUMMARY
           else
             echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check workflow logs for error details." >> $GITHUB_STEP_SUMMARY
           fi
 
   # Job 4: Cleanup and verification

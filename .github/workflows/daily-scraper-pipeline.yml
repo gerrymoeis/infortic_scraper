@@ -229,9 +229,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: extracted-data-${{ github.run_number }}
-          path: |
-            data/processed/*.json
-            data/failed/*.json
+          path: data/processed/*.json
           retention-days: 7
       
       - name: Extraction summary

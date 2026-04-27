@@ -236,7 +236,8 @@ Processing posts:
         content_parts = [instruction]
         
         project_root = Path(__file__).parent.parent.parent
-        image_dir = project_root / 'data' / 'images'
+        # Images are downloaded to scraper/instagram_images/ by workflow
+        image_dir = project_root / 'scraper' / 'instagram_images'
         
         images_loaded = 0
         images_failed = 0

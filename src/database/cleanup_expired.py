@@ -27,6 +27,8 @@ def expire_past_deadlines():
     db = DatabaseClient(config.DATABASE_URL)
     
     try:
+        db.connect()  # Explicitly connect
+        
         current_date = date.today()
         logger.info(f"[CLEANUP] Starting auto-expiration check for date: {current_date}")
         
@@ -78,6 +80,8 @@ def get_expiration_stats():
     db = DatabaseClient(config.DATABASE_URL)
     
     try:
+        db.connect()  # Explicitly connect
+        
         query = """
             SELECT 
                 COUNT(CASE WHEN status = 'active' THEN 1 END) as active_count,
@@ -91,23 +95,29 @@ def get_expiration_stats():
             cursor.execute(query)
             result = cursor.fetchone()
             
-            stats = {
-                'active': result[0],
-                'expired': result[1],
-                'auto_expired': result[2],
-                'should_expire': result[3]
-            }
-            
-            logger.info(f"[STATS] Expiration Statistics:")
-            logger.info(f"  Active opportunities:     {stats['active']}")
-            logger.info(f"  Expired opportunities:    {stats['expired']}")
-            logger.info(f"  Auto-expired:             {stats['auto_expired']}")
-            logger.info(f"  Should be expired:        {stats['should_expire']}")
-            
-            return stats
+            if result:
+                stats = {
+                    'active': result[0] or 0,
+                    'expired': result[1] or 0,
+                    'auto_expired': result[2] or 0,
+                    'should_expire': result[3] or 0
+                }
+                
+                logger.info(f"[STATS] Expiration Statistics:")
+                logger.info(f"  Active opportunities:     {stats['active']}")
+                logger.info(f"  Expired opportunities:    {stats['expired']}")
+                logger.info(f"  Auto-expired:             {stats['auto_expired']}")
+                logger.info(f"  Should be expired:        {stats['should_expire']}")
+                
+                return stats
+            else:
+                logger.warning("[STATS] No results returned from query")
+                return {}
         
     except Exception as e:
         logger.error(f"[ERROR] Failed to get stats: {e}")
+        import traceback
+        logger.debug(traceback.format_exc())
         return {}
     finally:
         db.close()

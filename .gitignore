@@ -32,6 +32,7 @@ node_modules/
 scraper/node_modules/
 scraper/instagram_data.json
 scraper/session.json
+scraper/session*.json
 scraper/instagram_images/
 
 # IDE
@@ -46,6 +47,7 @@ scraper/instagram_images/
 logs/
 
 # Documentation with potential secrets
+infortic_scraper_backup/
 *SETUP*.md
 *SECRETS*.md
 *GUIDE*.md

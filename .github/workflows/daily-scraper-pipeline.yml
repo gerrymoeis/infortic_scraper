@@ -1,10 +1,10 @@
 name: Daily Scraper Pipeline
 
 # Complete automated workflow:
-# 1. Scrape Instagram posts from 10 accounts (configurable)
+# 1. Scrape Instagram posts from 20 accounts using 3 parallel sessions (configurable)
 # 2. Extract structured data using Gemini AI + OCR
 # 3. Insert/update data in PostgreSQL database
-# 4. Clean up expired opportunities
+# 4. Clean up expired opportunities and duplicates
 # 5. Verify and report results
 
 on:
@@ -31,9 +31,9 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  # Job 1: Scrape Instagram posts
+  # Job 1: Scrape Instagram posts (Multi-Session Parallel)
   scrape:
-    name: Scrape Instagram Posts
+    name: Scrape Instagram Posts (Multi-Session)
     runs-on: ubuntu-latest
     if: ${{ !inputs.skip_scraping }}
     
@@ -94,18 +94,23 @@ jobs:
           ACCOUNT_COUNT=$(jq -r '.accounts | length' config/scraper.config.json)
           echo "Will scrape $ACCOUNT_COUNT accounts: $ACCOUNT_LIST"
       
-      - name: Create session.json from secret
+      - name: Create session files from secrets
         run: |
           cd scraper
-          echo '${{ secrets.INSTAGRAM_SESSION }}' > session.json
-          echo "Session file created ($(wc -c < session.json) bytes)"
+          echo '${{ secrets.INSTAGRAM_SESSION_1 }}' > session1.json
+          echo '${{ secrets.INSTAGRAM_SESSION_2 }}' > session2.json
+          echo '${{ secrets.INSTAGRAM_SESSION_3 }}' > session3.json
+          echo "✓ Created 3 session files"
+          echo "Session 1: $(wc -c < session1.json) bytes"
+          echo "Session 2: $(wc -c < session2.json) bytes"
+          echo "Session 3: $(wc -c < session3.json) bytes"
       
-      - name: Run Instagram scraper
+      - name: Run Instagram scraper (Multi-Session Parallel)
         id: scrape
         run: |
           cd scraper
-          node scraper.js
-        timeout-minutes: 15
+          node scraper-parallel.js
+        timeout-minutes: 20
       
       - name: Check scraping results
         run: |

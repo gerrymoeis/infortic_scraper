@@ -396,27 +396,166 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
           echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
       
-      - name: Mark expired opportunities
-        id: cleanup
+      - name: 1️⃣ Mark expired opportunities
+        id: cleanup_expired
         run: |
-          python src/database/cleanup_expired.py
+          echo "=================================================="
+          echo "🕐 STEP 1: Marking Expired Opportunities"
+          echo "=================================================="
+          echo "⏱️  Start time: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo ""
+          
+          START_TIME=$(date +%s)
+          python src/database/cleanup_expired.py 2>&1 | tee cleanup_expired.log
+          EXIT_CODE=${PIPESTATUS[0]}
+          END_TIME=$(date +%s)
+          DURATION=$((END_TIME - START_TIME))
+          
+          echo ""
+          echo "⏱️  End time: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "⏱️  Duration: ${DURATION}s"
+          echo "📊 Exit code: $EXIT_CODE"
+          
+          # Extract metrics from log
+          EXPIRED_COUNT=$(grep -oP 'marked as expired: \K\d+' cleanup_expired.log || echo "0")
+          echo "expired_count=$EXPIRED_COUNT" >> $GITHUB_OUTPUT
+          echo "duration=$DURATION" >> $GITHUB_OUTPUT
+          
+          exit $EXIT_CODE
         continue-on-error: true
         timeout-minutes: 5
       
-      - name: Verify database
+      - name: 2️⃣ Cleanup URL duplicates
+        id: cleanup_duplicates
+        run: |
+          echo "=================================================="
+          echo "🔗 STEP 2: Cleaning Up URL Duplicates"
+          echo "=================================================="
+          echo "⏱️  Start time: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo ""
+          
+          START_TIME=$(date +%s)
+          python src/database/cleanup_duplicates.py 2>&1 | tee cleanup_duplicates.log
+          EXIT_CODE=${PIPESTATUS[0]}
+          END_TIME=$(date +%s)
+          DURATION=$((END_TIME - START_TIME))
+          
+          echo ""
+          echo "⏱️  End time: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "⏱️  Duration: ${DURATION}s"
+          echo "📊 Exit code: $EXIT_CODE"
+          
+          # Extract metrics from log
+          DUPLICATE_GROUPS=$(grep -oP 'Total duplicate groups: \K\d+' cleanup_duplicates.log || echo "0")
+          RECORDS_DELETED=$(grep -oP 'Total records deleted: \K\d+' cleanup_duplicates.log || echo "0")
+          SUCCESSFUL_MERGES=$(grep -oP 'Successful merges: \K\d+' cleanup_duplicates.log || echo "0")
+          FAILED_MERGES=$(grep -oP 'Failed merges: \K\d+' cleanup_duplicates.log || echo "0")
+          
+          echo "duplicate_groups=$DUPLICATE_GROUPS" >> $GITHUB_OUTPUT
+          echo "records_deleted=$RECORDS_DELETED" >> $GITHUB_OUTPUT
+          echo "successful_merges=$SUCCESSFUL_MERGES" >> $GITHUB_OUTPUT
+          echo "failed_merges=$FAILED_MERGES" >> $GITHUB_OUTPUT
+          echo "duration=$DURATION" >> $GITHUB_OUTPUT
+          
+          exit $EXIT_CODE
+        continue-on-error: true
+        timeout-minutes: 10
+      
+      - name: 3️⃣ Verify database integrity
         id: verify
         run: |
-          python scripts/verify.py
+          echo "=================================================="
+          echo "✅ STEP 3: Verifying Database Integrity"
+          echo "=================================================="
+          echo "⏱️  Start time: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo ""
+          
+          START_TIME=$(date +%s)
+          python scripts/verify.py 2>&1 | tee verify.log
+          EXIT_CODE=${PIPESTATUS[0]}
+          END_TIME=$(date +%s)
+          DURATION=$((END_TIME - START_TIME))
+          
+          echo ""
+          echo "⏱️  End time: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "⏱️  Duration: ${DURATION}s"
+          echo "📊 Exit code: $EXIT_CODE"
+          
+          # Extract metrics from log
+          TOTAL_OPPORTUNITIES=$(grep -oP 'Total opportunities: \K\d+' verify.log || echo "0")
+          ACTIVE_COUNT=$(grep -oP 'Active: \K\d+' verify.log || echo "0")
+          EXPIRED_COUNT=$(grep -oP 'Expired: \K\d+' verify.log || echo "0")
+          
+          echo "total_opportunities=$TOTAL_OPPORTUNITIES" >> $GITHUB_OUTPUT
+          echo "active_count=$ACTIVE_COUNT" >> $GITHUB_OUTPUT
+          echo "expired_count=$EXPIRED_COUNT" >> $GITHUB_OUTPUT
+          echo "duration=$DURATION" >> $GITHUB_OUTPUT
+          
+          exit $EXIT_CODE
         continue-on-error: true
         timeout-minutes: 5
       
-      - name: Cleanup summary
+      - name: 📊 Cleanup summary
         if: always()
         run: |
-          echo "## 🧹 Cleanup & Verification" >> $GITHUB_STEP_SUMMARY
+          echo "## 🧹 Cleanup & Verification Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Mark Expired**: ${{ steps.cleanup.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Verification**: ${{ steps.verify.outcome }}" >> $GITHUB_STEP_SUMMARY
+          
+          # Step 1: Mark Expired
+          echo "### 1️⃣ Mark Expired Opportunities" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ steps.cleanup_expired.outcome }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.cleanup_expired.outcome }}" == "success" ]; then
+            echo "- **Expired Count**: ${{ steps.cleanup_expired.outputs.expired_count }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Duration**: ${{ steps.cleanup_expired.outputs.duration }}s" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Step 2: Cleanup Duplicates
+          echo "### 2️⃣ Cleanup URL Duplicates" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ steps.cleanup_duplicates.outcome }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.cleanup_duplicates.outcome }}" == "success" ]; then
+            echo "- **Duplicate Groups Found**: ${{ steps.cleanup_duplicates.outputs.duplicate_groups }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Records Deleted**: ${{ steps.cleanup_duplicates.outputs.records_deleted }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Successful Merges**: ${{ steps.cleanup_duplicates.outputs.successful_merges }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Failed Merges**: ${{ steps.cleanup_duplicates.outputs.failed_merges }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Duration**: ${{ steps.cleanup_duplicates.outputs.duration }}s" >> $GITHUB_STEP_SUMMARY
+            
+            # Add interpretation
+            if [ "${{ steps.cleanup_duplicates.outputs.duplicate_groups }}" == "0" ]; then
+              echo "- ✅ **No duplicates found** - URL duplicate detection is working!" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- ⚠️ **Duplicates detected** - Check if prevention is working correctly" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Step 3: Verification
+          echo "### 3️⃣ Database Verification" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ steps.verify.outcome }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.verify.outcome }}" == "success" ]; then
+            echo "- **Total Opportunities**: ${{ steps.verify.outputs.total_opportunities }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Active**: ${{ steps.verify.outputs.active_count }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Expired**: ${{ steps.verify.outputs.expired_count }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Duration**: ${{ steps.verify.outputs.duration }}s" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Overall cleanup status
+          echo "### 📈 Overall Cleanup Status" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.cleanup_expired.outcome }}" == "success" ] && [ "${{ steps.cleanup_duplicates.outcome }}" == "success" ] && [ "${{ steps.verify.outcome }}" == "success" ]; then
+            echo "✅ **All cleanup tasks completed successfully**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Some cleanup tasks failed** - Check logs for details" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Performance summary
+          TOTAL_DURATION=$((
+            ${{ steps.cleanup_expired.outputs.duration || 0 }} + 
+            ${{ steps.cleanup_duplicates.outputs.duration || 0 }} + 
+            ${{ steps.verify.outputs.duration || 0 }}
+          ))
+          echo "**Total Cleanup Time**: ${TOTAL_DURATION}s" >> $GITHUB_STEP_SUMMARY
 
   # Job 5: Final report
   report:

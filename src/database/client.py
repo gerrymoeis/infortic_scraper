@@ -138,26 +138,35 @@ class DatabaseClient:
         results = self.execute_query(query)
         return {row['code']: row['id'] for row in results}
     
-    def check_duplicate_opportunity(self, post_id: Optional[str] = None, title: Optional[str] = None, organizer_name: Optional[str] = None) -> Optional[str]:
+    def check_duplicate_opportunity(self, post_id: Optional[str] = None, title: Optional[str] = None, organizer_name: Optional[str] = None, registration_url: Optional[str] = None) -> Optional[str]:
         """
-        Check if opportunity already exists (prioritize post_id for deduplication)
+        Check if opportunity already exists (multi-factor deduplication)
         
         Args:
             post_id: Instagram post ID (most reliable for deduplication)
             title: Opportunity title (fallback)
             organizer_name: Organizer name (optional, for title-based check)
+            registration_url: Registration URL (strong indicator of duplicate)
             
         Returns:
             Existing opportunity ID if found, None otherwise
         """
-        # Priority 1: Check by post_id (most reliable)
+        # Priority 1: Check by post_id (most reliable - 100% confidence)
         if post_id:
             query = "SELECT id FROM opportunities WHERE post_id = %s LIMIT 1"
             results = self.execute_query(query, (post_id,))
             if results:
                 return results[0]['id']
         
-        # Priority 2: Check by title + organizer
+        # Priority 2: Check by registration_url (strong indicator - 95% confidence)
+        # Same registration URL = same event, even if posted by different accounts
+        if registration_url:
+            query = "SELECT id FROM opportunities WHERE registration_url = %s LIMIT 1"
+            results = self.execute_query(query, (registration_url,))
+            if results:
+                return results[0]['id']
+        
+        # Priority 3: Check by title + organizer (fallback - 85% confidence)
         if title:
             if organizer_name:
                 query = """

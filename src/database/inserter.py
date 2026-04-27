@@ -465,7 +465,8 @@ class DataInserter:
             # Check if exists BEFORE processing
             was_existing = self.db.check_duplicate_opportunity(
                 post_id=data.get('post_id'),
-                title=data.get('title')
+                title=data.get('title'),
+                registration_url=data.get('registration_url')
             ) is not None
             
             result, status_reason = self.insert_opportunity(data)
@@ -642,7 +643,8 @@ class DataInserter:
                 # Get existing IDs for update records
                 for record in to_update:
                     existing_id = self.db.check_duplicate_opportunity(
-                        post_id=record.get('post_id')
+                        post_id=record.get('post_id'),
+                        registration_url=record.get('registration_url')
                     )
                     if existing_id:
                         record['id'] = existing_id

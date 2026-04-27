@@ -174,25 +174,57 @@ class GeminiClient:
         import base64
         import io
         
-        # Start with clean, optimized instruction prompt
+        # Start with clean, optimized instruction prompt - PHASE 2 ENHANCEMENT
         instruction = """
 Extract data from Indonesian competition/opportunity posts. You receive CAPTION + POSTER IMAGE for each post.
 
-EXTRACTION PRIORITY:
-- DATES, CONTACT, URLS: Check IMAGE first (usually in poster)
-- TITLE, ORGANIZER: Check caption first, then image
+🎯 CRITICAL PRIORITY: REGISTRATION DATES ARE MANDATORY!
+
+The most important field is REGISTRATION_DATE. Look VERY CAREFULLY in the IMAGE for date information.
+
+EXTRACTION STRATEGY FOR DATES:
+1. CHECK IMAGE FIRST - dates are usually in the poster/flyer
+2. Look for keywords: "Pendaftaran", "Registrasi", "Daftar", "Deadline", "DL", "Batas Akhir", "Tutup"
+3. Common formats:
+   - "1-14 April 2026" → "1 April 2026 - 14 April 2026"
+   - "Pendaftaran: 1 April - 14 April 2026" → "1 April 2026 - 14 April 2026"
+   - "DL: 15 April 2026" → use as end date
+   - "Deadline: 15 April 2026" → use as end date
+4. If you see a date range, extract BOTH start and end dates
+5. If you only see deadline/DL, use it as the end date
+
+EXTRACTION PRIORITY (IN ORDER):
+1. REGISTRATION_DATE: Check IMAGE first (usually in poster) - THIS IS CRITICAL!
+2. CONTACT: Check IMAGE first (phone numbers in poster)
+3. REGISTRATION_URL: Check IMAGE first (bit.ly, forms.gle, s.id links)
+4. TITLE: Check caption first, then image
+5. ORGANIZER: Check caption first, then image
 
 REQUIRED FIELDS:
 1. TITLE: Event title (original language, max 100 chars)
 2. DESCRIPTION: Brief summary in Bahasa Indonesia (max 200 chars)
 3. CATEGORY: competition|scholarship|internship|job|freelance|training|tryout|workshop|festival|hackathon
 4. AUDIENCES: ["sd","smp","sma","smk","d2","d3","d4","s1","umum"]
-5. REGISTRATION_DATE: "DD Month YYYY - DD Month YYYY" or null (CHECK IMAGE FIRST)
-6. CONTACT: Phone number only ("081234567890") or null (CHECK IMAGE FIRST)
+5. REGISTRATION_DATE: "DD Month YYYY - DD Month YYYY" or null ⚠️ CRITICAL - CHECK IMAGE CAREFULLY!
+6. CONTACT: Phone number only ("081234567890") or null
 7. EVENT_TYPE: online|offline|hybrid
 8. FEE_TYPE: gratis|berbayar
 9. ORGANIZER: Organization name or null
-10. REGISTRATION_URL: Main registration link or null (CHECK IMAGE FIRST)
+10. REGISTRATION_URL: Main registration link or null
+
+📝 DATE EXTRACTION EXAMPLES:
+✅ GOOD:
+- Image shows "Pendaftaran: 1-14 April 2026" → "1 April 2026 - 14 April 2026"
+- Image shows "DL: 15 April 2026" → "null - 15 April 2026" (use as end date)
+- Image shows "Open: 1 April, Close: 14 April 2026" → "1 April 2026 - 14 April 2026"
+- Image shows "1 April - 14 April 2026" → "1 April 2026 - 14 April 2026"
+
+❌ AVOID:
+- Don't confuse event execution dates with registration dates
+- Don't use "Pelaksanaan" or "Acara" dates (those are event dates, not registration)
+- Don't skip dates just because format is unusual
+
+⚠️ IMPORTANT: If you see ANY date in the image near registration keywords, extract it!
 
 Return JSON array only:
 [{"post_id":"string","title":"string","description":"string","category":"string","audiences":["string"],"registration_date":"string","contact":"string","event_type":"string","fee_type":"string","organizer":"string","registration_url":"string"}]

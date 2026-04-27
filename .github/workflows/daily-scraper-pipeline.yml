@@ -230,8 +230,7 @@ jobs:
         with:
           name: extracted-data-${{ github.run_number }}
           path: |
-            data/processed/extracted_data_*.json
-            data/processed/extraction_metrics_*.json
+            data/processed/*.json
             data/failed/*.json
           retention-days: 7
       
@@ -301,16 +300,6 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
           echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
       
-      - name: Debug downloaded files
-        run: |
-          echo "=== Debugging downloaded files ==="
-          echo "Current directory: $(pwd)"
-          echo "Contents of data/processed/:"
-          ls -la data/processed/ || echo "data/processed/ does not exist"
-          echo "All extracted_data files:"
-          find . -name "extracted_data_*.json" -type f || echo "No extracted_data files found"
-          echo "=================================="
-      
       - name: Run database insertion
         id: insert
         uses: nick-invision/retry@v3
@@ -319,33 +308,48 @@ jobs:
           max_attempts: 2
           retry_wait_seconds: 30
           command: |
-            # First try the expected location
+            # Verify file exists in correct location
+            echo "🔍 Checking for extracted data files..."
+            ls -la data/processed/ || echo "data/processed/ directory not found!"
+            
+            # Find the latest extracted data file
             LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
             
-            # If not found, search everywhere
             if [ -z "$LATEST_FILE" ]; then
-              echo "File not found in data/processed/, searching everywhere..."
-              LATEST_FILE=$(find . -name "extracted_data_*.json" -type f | head -1)
-            fi
-            
-            if [ -n "$LATEST_FILE" ]; then
-              echo "✓ Found extracted data file: $LATEST_FILE"
-              echo "File size: $(wc -c < "$LATEST_FILE") bytes"
-              RECORD_COUNT=$(jq 'length' "$LATEST_FILE")
-              echo "Record count: $RECORD_COUNT"
-              echo "Inserting data from: $LATEST_FILE"
+              echo "❌ ERROR: No extracted data file found in data/processed/"
+              echo "Expected: data/processed/extracted_data_*.json"
               echo ""
-              echo "⏱️  Starting database insertion (timeout: 20 minutes)..."
-              echo "📊 Progress will be logged every 10 records"
-              echo "🔄 Retry enabled: 2 attempts with 30s wait between retries"
+              echo "Available files in data/processed/:"
+              find data/processed -type f 2>/dev/null || echo "No files found"
               echo ""
-              python src/database/main.py "$LATEST_FILE"
-            else
-              echo "✗ No extracted data file found anywhere"
-              echo "Available files:"
-              find . -name "*.json" -type f | head -10
+              echo "Searching entire workspace:"
+              find . -name "extracted_data_*.json" -type f 2>/dev/null || echo "No extracted_data files found anywhere"
               exit 1
             fi
+            
+            echo "✓ Found extracted data file: $LATEST_FILE"
+            echo "📊 File size: $(wc -c < "$LATEST_FILE") bytes"
+            
+            RECORD_COUNT=$(jq 'length' "$LATEST_FILE" 2>/dev/null || echo "unknown")
+            echo "📊 Record count: $RECORD_COUNT"
+            echo ""
+            echo "⏱️  Starting database insertion (timeout: 20 minutes)..."
+            echo "🔄 Retry enabled: 2 attempts with 30s wait between retries"
+            echo ""
+            
+            # Run insertion
+            python src/database/main.py "$LATEST_FILE"
+            
+            # Check exit code
+            EXIT_CODE=$?
+            if [ $EXIT_CODE -ne 0 ]; then
+              echo ""
+              echo "❌ ERROR: Database insertion failed with exit code $EXIT_CODE"
+              exit $EXIT_CODE
+            fi
+            
+            echo ""
+            echo "✅ Database insertion completed successfully"
       
       - name: Database summary
         if: always()

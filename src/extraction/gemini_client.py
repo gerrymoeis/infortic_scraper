@@ -171,7 +171,6 @@ class GeminiClient:
         """
         from PIL import Image
         from pathlib import Path
-        import base64
         import io
         
         # Start with clean, optimized instruction prompt - PHASE 2 ENHANCEMENT
@@ -275,11 +274,13 @@ Processing posts:
                         img.save(img_byte_arr, format='JPEG', quality=85)
                         img_bytes = img_byte_arr.getvalue()
                         
-                        # Add image to content
-                        content_parts.append({
-                            'mime_type': 'image/jpeg',
-                            'data': base64.b64encode(img_bytes).decode('utf-8')
-                        })
+                        # Add image to content using types.Part.from_bytes
+                        content_parts.append(
+                            types.Part.from_bytes(
+                                data=img_bytes,
+                                mime_type='image/jpeg'
+                            )
+                        )
                         
                         images_loaded += 1
                         logger.debug(f"[IMAGE] Loaded {image_filename} ({img.width}x{img.height})")

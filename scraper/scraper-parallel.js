@@ -29,7 +29,7 @@ chromium.use(stealth());
 // Configuration
 const config = require('../config/scraper.config.json');
 const OUTPUT_FILE = path.join(__dirname, 'instagram_data.json');
-const IMAGES_FOLDER = path.join(__dirname, '..', 'data', 'images');
+const IMAGES_FOLDER = path.join(__dirname, 'instagram_images');  // Save to scraper/instagram_images/
 
 // Helper functions
 const sleep = (min, max) => new Promise(resolve => 

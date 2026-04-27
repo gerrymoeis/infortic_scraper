@@ -8,7 +8,7 @@ chromium.use(stealth());
 
 const SESSION_FILE = 'session.json';
 const OUTPUT_FILE = path.join(__dirname, 'instagram_data.json');  // Absolute path in scraper folder
-const IMAGES_FOLDER = path.join(__dirname, '..', 'data', 'images');  // Absolute path to data/images
+const IMAGES_FOLDER = path.join(__dirname, 'instagram_images');  // Save to scraper/instagram_images/
 
 const sleep = (min, max) => new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (max - min + 1) + min)));
 

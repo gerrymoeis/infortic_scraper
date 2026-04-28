@@ -407,6 +407,25 @@ class DatabaseClient:
                 event_type, fee_type, image_url, downloaded_image, view_count,
                 is_featured, tags, status, published_at
             ) VALUES %s
+            ON CONFLICT (slug) DO UPDATE SET
+                post_id = EXCLUDED.post_id,
+                title = EXCLUDED.title,
+                description = EXCLUDED.description,
+                raw_caption = EXCLUDED.raw_caption,
+                registration_url = EXCLUDED.registration_url,
+                source_url = EXCLUDED.source_url,
+                source_account = EXCLUDED.source_account,
+                contact = EXCLUDED.contact,
+                registration_date = EXCLUDED.registration_date,
+                start_date = EXCLUDED.start_date,
+                end_date = EXCLUDED.end_date,
+                deadline_date = EXCLUDED.deadline_date,
+                event_type = EXCLUDED.event_type,
+                fee_type = EXCLUDED.fee_type,
+                image_url = EXCLUDED.image_url,
+                downloaded_image = EXCLUDED.downloaded_image,
+                tags = EXCLUDED.tags,
+                updated_at = NOW()
             RETURNING id
         """
         
@@ -465,8 +484,8 @@ class DatabaseClient:
         # Use temporary table approach for bulk update
         query = """
             UPDATE opportunities AS o SET
-                type_id = v.type_id,
-                organizer_id = v.organizer_id,
+                type_id = v.type_id::uuid,
+                organizer_id = v.organizer_id::uuid,
                 title = v.title,
                 description = v.description,
                 raw_caption = v.raw_caption,

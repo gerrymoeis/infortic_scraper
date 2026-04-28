@@ -15,9 +15,10 @@ logger = setup_logger('validator')
 class DataValidator:
     """Validates extracted opportunity data"""
     
-    VALID_TYPES = ['competition', 'scholarship', 'internship', 'job', 'freelance', 'training', 'tryout', 'workshop', 'festival', 'hackathon']
+    VALID_TYPES = ['competition', 'scholarship', 'internship', 'job', 'freelance', 'training', 'tryout', 'workshop', 'festival', 'hackathon', 'volunteer']
     # PHASE C FIX: Added 'smk' (Vocational High School), 'sd' (Elementary School), 'd2' (Diploma 2)
-    VALID_AUDIENCES = ['sd', 'smp', 'sma', 'smk', 'd2', 'd3', 'd4', 's1', 'umum']
+    # Added 'd1' (Diploma 1), 's2' (Master's), 's3' (Doctoral)
+    VALID_AUDIENCES = ['sd', 'smp', 'sma', 'smk', 'd1', 'd2', 'd3', 'd4', 's1', 's2', 's3', 'umum']
     VALID_EVENT_TYPES = ['online', 'offline', 'hybrid']  # Changed from VALID_LOCATION_TYPES
     VALID_FEE_TYPES = ['gratis', 'berbayar']  # Simplified from ['gratis', 'htm', 'range']
     

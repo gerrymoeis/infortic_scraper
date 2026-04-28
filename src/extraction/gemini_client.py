@@ -453,7 +453,7 @@ Return JSON array only:
                     # Log error details
                     if is_server_error:
                         # Server overload - wait and retry with exponential backoff
-                        wait_time = min(2 ** attempt, 60)  # Max 60 seconds
+                        wait_time = min(2 ** attempt, 30)  # Max 30 seconds (optimized for faster recovery)
                         logger.warning(f"[WARNING] Server error (503/500) - waiting {wait_time}s before retry...")
                         time.sleep(wait_time)
                         logger.info(f"[RETRY] Retrying with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL} (attempt {attempt}/{max_attempts})")

@@ -442,7 +442,7 @@ class DataExtractor:
         return all_results
     
     def process_all_accounts(self, instagram_data: Dict) -> List[Dict]:
-        """Process all accounts in the Instagram data"""
+        """Process all accounts in the Instagram data with progressive checkpointing"""
         
         # Detect all accounts
         accounts = {k: v for k, v in instagram_data.items() if isinstance(v, list) and len(v) > 0}
@@ -463,15 +463,38 @@ class DataExtractor:
         
         all_results = []
         
-        # Process each account
+        # Process each account with checkpointing
         for account_index, (account_name, captions) in enumerate(accounts.items(), 1):
-            account_results = self.process_account(account_name, captions)
-            all_results.extend(account_results)
-            
-            # Small delay between accounts
-            if account_index < len(accounts):
-                logger.info(f"[WAIT] Pausing 2s before next account...")
-                time.sleep(2)
+            try:
+                account_results = self.process_account(account_name, captions)
+                all_results.extend(account_results)
+                
+                # CHECKPOINT: Save progress after each account
+                if account_results:
+                    checkpoint_file = config.PROCESSED_DIR / f'checkpoint_account_{account_index}_of_{len(accounts)}.json'
+                    try:
+                        with open(checkpoint_file, 'w', encoding='utf-8') as f:
+                            json.dump({
+                                'account_index': account_index,
+                                'account_name': account_name,
+                                'total_accounts': len(accounts),
+                                'results_count': len(all_results),
+                                'timestamp': get_timestamp(),
+                                'results': all_results
+                            }, f, indent=2, ensure_ascii=False)
+                        logger.info(f"[CHECKPOINT] Progress saved: {len(all_results)} results ({account_index}/{len(accounts)} accounts)")
+                    except Exception as e:
+                        logger.warning(f"[CHECKPOINT] Failed to save checkpoint: {e}")
+                
+                # Small delay between accounts
+                if account_index < len(accounts):
+                    logger.info(f"[WAIT] Pausing 2s before next account...")
+                    time.sleep(2)
+                    
+            except Exception as e:
+                logger.error(f"[ERROR] Failed to process account @{account_name}: {e}")
+                logger.info(f"[CONTINUE] Continuing with next account...")
+                continue
         
         success_rate = len(all_results)/total_posts*100 if total_posts > 0 else 0
         logger.info(f"\n{'='*60}")
@@ -592,6 +615,16 @@ def main():
         # Save results
         output_file, metrics_file = save_results(results, metrics, partial=False)
         
+        # Cleanup checkpoint files
+        try:
+            checkpoint_files = list(config.PROCESSED_DIR.glob('checkpoint_account_*.json'))
+            if checkpoint_files:
+                for checkpoint_file in checkpoint_files:
+                    checkpoint_file.unlink()
+                logger.info(f"[CLEANUP] Removed {len(checkpoint_files)} checkpoint files")
+        except Exception as e:
+            logger.warning(f"[CLEANUP] Failed to remove checkpoint files: {e}")
+        
         logger.info(f"\n{'='*60}")
         logger.info("[COMPLETE] Extraction Complete!")
         logger.info('='*60)
@@ -608,6 +641,20 @@ def main():
         logger.warning(f"\n\n{'='*60}")
         logger.warning("[INTERRUPT] Extraction interrupted by user")
         logger.warning('='*60)
+        
+        # Try to load from latest checkpoint if no results in memory
+        if not results:
+            try:
+                checkpoint_files = sorted(config.PROCESSED_DIR.glob('checkpoint_account_*.json'))
+                if checkpoint_files:
+                    latest_checkpoint = checkpoint_files[-1]
+                    logger.info(f"[RECOVERY] Loading from checkpoint: {latest_checkpoint.name}")
+                    with open(latest_checkpoint, 'r', encoding='utf-8') as f:
+                        checkpoint_data = json.load(f)
+                        results = checkpoint_data.get('results', [])
+                    logger.info(f"[RECOVERY] Loaded {len(results)} results from checkpoint")
+            except Exception as e:
+                logger.warning(f"[RECOVERY] Failed to load checkpoint: {e}")
         
         if results:
             logger.info(f"\n[SAVE] Saving {len(results)} partial results...")
@@ -628,6 +675,20 @@ def main():
         logger.error('='*60)
         import traceback
         logger.debug(traceback.format_exc())
+        
+        # Try to load from latest checkpoint if no results in memory
+        if not results:
+            try:
+                checkpoint_files = sorted(config.PROCESSED_DIR.glob('checkpoint_account_*.json'))
+                if checkpoint_files:
+                    latest_checkpoint = checkpoint_files[-1]
+                    logger.info(f"[RECOVERY] Loading from checkpoint: {latest_checkpoint.name}")
+                    with open(latest_checkpoint, 'r', encoding='utf-8') as f:
+                        checkpoint_data = json.load(f)
+                        results = checkpoint_data.get('results', [])
+                    logger.info(f"[RECOVERY] Loaded {len(results)} results from checkpoint")
+            except Exception as recovery_error:
+                logger.warning(f"[RECOVERY] Failed to load checkpoint: {recovery_error}")
         
         if results:
             logger.info(f"\n[SAVE] Attempting to save {len(results)} partial results...")

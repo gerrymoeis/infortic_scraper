@@ -9,8 +9,9 @@ name: Daily Scraper Pipeline
 
 on:
   schedule:
-    # Run daily at 13:00 WIB (06:00 UTC)
-    # WIB = UTC+7, so 13:00 WIB = 06:00 UTC
+    # Run daily at 10:00 WIB (03:00 UTC) - Optimal time to avoid Gemini API peak traffic
+    # WIB = UTC+7, so 10:00 WIB = 03:00 UTC
+    # Peak hours to avoid: 11:00-15:00 UTC (US East Coast morning, 40-45% error rate)
     - cron: '0 3 * * *'
   
   workflow_dispatch:  # Allow manual trigger for testing
@@ -210,7 +211,7 @@ jobs:
         id: extract
         run: |
           python src/extraction/main.py scraper/instagram_data.json
-        timeout-minutes: 20
+        timeout-minutes: 30
       
       - name: Check extraction results
         run: |

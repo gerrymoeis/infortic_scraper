@@ -619,6 +619,34 @@ class DataInserter:
         # PHASE 4: Bulk insert new records (1 query)
         if to_insert:
             logger.info(f"[PHASE 4/6] Bulk inserting {len(to_insert)} new records...")
+            
+            # De-duplicate by slug (keep first occurrence)
+            seen_slugs = set()
+            unique_records = []
+            duplicate_count = 0
+            
+            for record in to_insert:
+                slug = record.get('slug')
+                if slug not in seen_slugs:
+                    seen_slugs.add(slug)
+                    unique_records.append(record)
+                else:
+                    duplicate_count += 1
+                    logger.warning(
+                        f"[DUPLICATE SLUG] Skipping duplicate: {record.get('title')} "
+                        f"(slug: {slug}, post_id: {record.get('post_id')})"
+                    )
+            
+            if duplicate_count > 0:
+                logger.warning(
+                    f"[PHASE 4/6] Removed {duplicate_count} duplicate slugs "
+                    f"({len(unique_records)}/{len(to_insert)} unique)"
+                )
+                # Track duplicates as errors
+                stats['database_errors'] += duplicate_count
+            
+            to_insert = unique_records
+            
             try:
                 inserted_ids = self.db.bulk_insert_opportunities(to_insert)
                 stats['newly_inserted'] = len(inserted_ids)

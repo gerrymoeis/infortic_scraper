@@ -177,12 +177,24 @@ class DataNormalizer:
         if not audience_codes:
             return []
         
+        # Mapping for unknown codes to existing database codes
+        AUDIENCE_MAPPING = {
+            'd1': 'd2',  # Diploma 1 → Diploma 2 (similar level)
+            's2': 'umum',  # S2/Master → General (broader audience)
+            's3': 'umum',  # S3/PhD → General (broader audience)
+        }
+        
         audience_ids = []
         
         for code in audience_codes:
-            audience_id = self.audience_mapping.get(code)
+            # Map unknown codes to known codes
+            mapped_code = AUDIENCE_MAPPING.get(code, code)
+            
+            audience_id = self.audience_mapping.get(mapped_code)
             if audience_id:
                 audience_ids.append(audience_id)
+                if mapped_code != code:
+                    logger.info(f"Mapped audience code: {code} → {mapped_code}")
             else:
                 logger.warning(f"Unknown audience code: {code}")
         

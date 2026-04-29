@@ -385,7 +385,7 @@ class DatabaseClient:
                 record.get('source_url'),
                 record.get('source_account'),
                 record.get('contact'),
-                record.get('registration_date'),
+                dates.get('start_date'),  # Use parsed date instead of string
                 dates.get('start_date'),
                 dates.get('end_date'),
                 dates.get('deadline_date'),
@@ -469,7 +469,7 @@ class DatabaseClient:
                 record.get('source_url'),
                 record.get('source_account'),
                 record.get('contact'),
-                record.get('registration_date'),
+                dates.get('start_date'),  # Use parsed date instead of string
                 dates.get('start_date'),
                 dates.get('end_date'),
                 dates.get('deadline_date'),

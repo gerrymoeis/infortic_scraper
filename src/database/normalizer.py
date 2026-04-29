@@ -157,10 +157,23 @@ class DataNormalizer:
             logger.warning("No opportunity type provided")
             return None
         
-        type_id = self.type_mapping.get(type_code)
+        # Mapping for types not in database
+        TYPE_MAPPING = {
+            'volunteer': 'training',  # Volunteer programs → Training (closest match)
+        }
+        
+        # Map to existing type if needed
+        mapped_type = TYPE_MAPPING.get(type_code, type_code)
+        
+        type_id = self.type_mapping.get(mapped_type)
         
         if not type_id:
             logger.warning(f"Unknown opportunity type: {type_code}")
+            if mapped_type != type_code:
+                logger.info(f"Mapped type: {type_code} → {mapped_type} (but still not found in database)")
+        else:
+            if mapped_type != type_code:
+                logger.info(f"Mapped opportunity type: {type_code} → {mapped_type}")
         
         return type_id
     

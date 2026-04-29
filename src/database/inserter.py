@@ -543,6 +543,7 @@ class DataInserter:
             'updated_existing': 0,
             'skipped_expired': 0,
             'skipped_no_dates': 0,
+            'skipped_duplicate_slugs': 0,  # NEW: Track duplicate slugs separately
             'database_errors': 0,
         }
         
@@ -642,8 +643,8 @@ class DataInserter:
                     f"[PHASE 4/6] Removed {duplicate_count} duplicate slugs "
                     f"({len(unique_records)}/{len(to_insert)} unique)"
                 )
-                # Track duplicates as errors
-                stats['database_errors'] += duplicate_count
+                # Track duplicate slugs separately (not as database errors)
+                stats['skipped_duplicate_slugs'] += duplicate_count
             
             to_insert = unique_records
             
@@ -726,6 +727,7 @@ class DataInserter:
         logger.info(f"  Skipped (Expected):")
         logger.info(f"    - Expired:            {stats['skipped_expired']} records ({stats['skipped_expired']/stats['total_processed']*100:.1f}%)")
         logger.info(f"    - No Dates:           {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - Duplicate Slugs:    {stats['skipped_duplicate_slugs']} records ({stats['skipped_duplicate_slugs']/stats['total_processed']*100:.1f}%)")
         logger.info(f"")
         logger.info(f"  Errors (Unexpected):")
         logger.info(f"    - Database Errors:    {stats['database_errors']} records ({stats['database_errors']/stats['total_processed']*100:.1f}%)")
@@ -759,6 +761,7 @@ class DataInserter:
             'updated_existing': 0,
             'skipped_expired': 0,
             'skipped_no_dates': 0,
+            'skipped_duplicate_slugs': 0,  # NEW: Track duplicate slugs separately
             'database_errors': 0,
         }
         
@@ -785,6 +788,7 @@ class DataInserter:
                 stats['updated_existing'] += chunk_stats['updated_existing']
                 stats['skipped_expired'] += chunk_stats['skipped_expired']
                 stats['skipped_no_dates'] += chunk_stats['skipped_no_dates']
+                stats['skipped_duplicate_slugs'] += chunk_stats['skipped_duplicate_slugs']
                 stats['database_errors'] += chunk_stats['database_errors']
                 
                 logger.info(f"[CHUNK {i}/{len(chunks)}] ✓ Complete")
@@ -817,6 +821,7 @@ class DataInserter:
         logger.info(f"  Skipped (Expected):")
         logger.info(f"    - Expired:            {stats['skipped_expired']} records ({stats['skipped_expired']/stats['total_processed']*100:.1f}%)")
         logger.info(f"    - No Dates:           {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - Duplicate Slugs:    {stats['skipped_duplicate_slugs']} records ({stats['skipped_duplicate_slugs']/stats['total_processed']*100:.1f}%)")
         logger.info(f"")
         logger.info(f"  Errors (Unexpected):")
         logger.info(f"    - Database Errors:    {stats['database_errors']} records ({stats['database_errors']/stats['total_processed']*100:.1f}%)")

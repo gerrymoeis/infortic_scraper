@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from src.extraction.gemini_client import GeminiClient
 from src.extraction.ocr_extractor import OCRExtractor
 from src.extraction.organizer_validator import OrganizerValidator
+from src.extraction.checkpoint_manager import CheckpointManager
 from src.extraction.utils.config import config
 from src.extraction.utils.logger import setup_logger
 from src.extraction.utils.helpers import extract_urls, extract_phone_numbers, get_timestamp, extract_registration_date_fallback, extract_organizer_fallback
@@ -27,6 +28,7 @@ class DataExtractor:
         self.gemini_client = GeminiClient()
         self.ocr_extractor = OCRExtractor()
         self.organizer_validator = OrganizerValidator()
+        self.checkpoint_manager = CheckpointManager(config.PROCESSED_DIR)
         
         # Track OCR usage
         self.ocr_attempts = 0
@@ -442,7 +444,7 @@ class DataExtractor:
         return all_results
     
     def process_all_accounts(self, instagram_data: Dict) -> List[Dict]:
-        """Process all accounts in the Instagram data with progressive checkpointing"""
+        """Process all accounts in the Instagram data with checkpoint/resume support"""
         
         # Detect all accounts
         accounts = {k: v for k, v in instagram_data.items() if isinstance(v, list) and len(v) > 0}
@@ -451,43 +453,64 @@ class DataExtractor:
             logger.error("[ERROR] No accounts found in instagram_data!")
             return []
         
+        accounts_list = list(accounts.keys())
+        total_accounts = len(accounts_list)
         total_posts = sum(len(posts) for posts in accounts.values())
         
-        logger.info(f"\n{'='*60}")
-        logger.info(f"[EXTRACTION] AI Extraction Pipeline Starting...")
-        logger.info('='*60)
-        logger.info(f"[INPUT] Detected {len(accounts)} account(s), {total_posts} total posts")
-        for account_name, posts in accounts.items():
-            logger.info(f"  - @{account_name}: {len(posts)} posts")
-        logger.info(f"[CONFIG] Model: {config.GEMINI_MODEL} | Batch size: {config.BATCH_SIZE} | Rate limit: {config.DELAY_BETWEEN_REQUESTS}s")
+        # Try to load checkpoint
+        checkpoint, existing_results = self.checkpoint_manager.load_checkpoint()
         
-        all_results = []
+        if checkpoint:
+            start_index = self.checkpoint_manager.get_resume_index(checkpoint)
+            all_results = existing_results
+            
+            logger.info(f"\n{'='*60}")
+            logger.info(f"[RESUME] Checkpoint Found!")
+            logger.info('='*60)
+            logger.info(f"[RESUME] Last completed: {checkpoint['last_completed_account']}")
+            logger.info(f"[RESUME] Progress: {checkpoint['last_completed_index']+1}/{total_accounts} accounts")
+            logger.info(f"[RESUME] Results so far: {len(existing_results)} posts")
+            logger.info(f"[RESUME] Resuming from account {start_index+1}/{total_accounts}")
+            logger.info(f"[RESUME] Accounts remaining: {total_accounts - start_index}")
+            logger.info(f"{'='*60}\n")
+        else:
+            start_index = 0
+            all_results = []
+            
+            logger.info(f"\n{'='*60}")
+            logger.info(f"[EXTRACTION] AI Extraction Pipeline Starting...")
+            logger.info('='*60)
+            logger.info(f"[INPUT] Detected {total_accounts} account(s), {total_posts} total posts")
+            for account_name, posts in accounts.items():
+                logger.info(f"  - @{account_name}: {len(posts)} posts")
+            logger.info(f"[CONFIG] Model: {config.GEMINI_MODEL} | Batch size: {config.BATCH_SIZE} | Rate limit: {config.DELAY_BETWEEN_REQUESTS}s")
+            logger.info(f"{'='*60}\n")
         
-        # Process each account with checkpointing
-        for account_index, (account_name, captions) in enumerate(accounts.items(), 1):
+        # Process accounts from start_index
+        for account_index in range(start_index, total_accounts):
+            account_name = accounts_list[account_index]
+            captions = accounts[account_name]
+            
             try:
                 account_results = self.process_account(account_name, captions)
                 all_results.extend(account_results)
                 
-                # CHECKPOINT: Save progress after each account
-                if account_results:
-                    checkpoint_file = config.PROCESSED_DIR / f'checkpoint_account_{account_index}_of_{len(accounts)}.json'
-                    try:
-                        with open(checkpoint_file, 'w', encoding='utf-8') as f:
-                            json.dump({
-                                'account_index': account_index,
-                                'account_name': account_name,
-                                'total_accounts': len(accounts),
-                                'results_count': len(all_results),
-                                'timestamp': get_timestamp(),
-                                'results': all_results
-                            }, f, indent=2, ensure_ascii=False)
-                        logger.info(f"[CHECKPOINT] Progress saved: {len(all_results)} results ({account_index}/{len(accounts)} accounts)")
-                    except Exception as e:
-                        logger.warning(f"[CHECKPOINT] Failed to save checkpoint: {e}")
+                # Save checkpoint after each account
+                success = self.checkpoint_manager.save_checkpoint(
+                    account_index=account_index,
+                    account_name=account_name,
+                    results=all_results,
+                    total_accounts=total_accounts,
+                    accounts_list=accounts_list
+                )
+                
+                if success:
+                    logger.info(f"[CHECKPOINT] Progress saved: {len(all_results)} results ({account_index+1}/{total_accounts} accounts)")
+                else:
+                    logger.warning(f"[CHECKPOINT] Failed to save (continuing anyway)")
                 
                 # Small delay between accounts
-                if account_index < len(accounts):
+                if account_index < total_accounts - 1:
                     logger.info(f"[WAIT] Pausing 2s before next account...")
                     time.sleep(2)
                     
@@ -495,6 +518,9 @@ class DataExtractor:
                 logger.error(f"[ERROR] Failed to process account @{account_name}: {e}")
                 logger.info(f"[CONTINUE] Continuing with next account...")
                 continue
+        
+        # Cleanup checkpoint on successful completion
+        self.checkpoint_manager.cleanup_checkpoint()
         
         success_rate = len(all_results)/total_posts*100 if total_posts > 0 else 0
         logger.info(f"\n{'='*60}")
@@ -614,16 +640,6 @@ def main():
         
         # Save results
         output_file, metrics_file = save_results(results, metrics, partial=False)
-        
-        # Cleanup checkpoint files
-        try:
-            checkpoint_files = list(config.PROCESSED_DIR.glob('checkpoint_account_*.json'))
-            if checkpoint_files:
-                for checkpoint_file in checkpoint_files:
-                    checkpoint_file.unlink()
-                logger.info(f"[CLEANUP] Removed {len(checkpoint_files)} checkpoint files")
-        except Exception as e:
-            logger.warning(f"[CLEANUP] Failed to remove checkpoint files: {e}")
         
         logger.info(f"\n{'='*60}")
         logger.info("[COMPLETE] Extraction Complete!")

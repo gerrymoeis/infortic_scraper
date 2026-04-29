@@ -190,6 +190,55 @@ jobs:
           name: scraped-data-${{ github.run_number }}
           path: scraper/
       
+      - name: Download previous checkpoint
+        id: download-checkpoint
+        uses: actions/download-artifact@v4
+        with:
+          name: extraction-checkpoint-${{ github.repository_owner }}
+          path: data/processed/
+        continue-on-error: true
+      
+      - name: Check for checkpoint
+        id: check-checkpoint
+        run: |
+          echo "🔍 Checking for previous checkpoint..."
+          
+          if [ -f "data/processed/checkpoint_state.json" ]; then
+            echo "checkpoint_found=true" >> $GITHUB_OUTPUT
+            
+            # Parse checkpoint info
+            LAST_INDEX=$(jq -r '.last_completed_index' data/processed/checkpoint_state.json)
+            TOTAL=$(jq -r '.total_accounts' data/processed/checkpoint_state.json)
+            LAST_ACCOUNT=$(jq -r '.last_completed_account' data/processed/checkpoint_state.json)
+            RESULTS_COUNT=$(jq -r '.results_count' data/processed/checkpoint_state.json)
+            CREATED_AT=$(jq -r '.created_at' data/processed/checkpoint_state.json)
+            
+            echo "📍 Checkpoint found!"
+            echo "  - Last completed: @$LAST_ACCOUNT"
+            echo "  - Progress: $((LAST_INDEX + 1))/$TOTAL accounts"
+            echo "  - Results so far: $RESULTS_COUNT posts"
+            echo "  - Created at: $CREATED_AT"
+            echo "  - Will resume from account $((LAST_INDEX + 2))/$TOTAL"
+            
+            # Add to job summary
+            echo "## 📍 Resuming from Checkpoint" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Last completed**: @$LAST_ACCOUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- **Progress**: $((LAST_INDEX + 1))/$TOTAL accounts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Results so far**: $RESULTS_COUNT posts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Resuming from**: Account $((LAST_INDEX + 2))/$TOTAL" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "checkpoint_found=false" >> $GITHUB_OUTPUT
+            echo "🆕 No checkpoint found: Starting from beginning"
+            
+            # Add to job summary
+            echo "## 🆕 Starting Fresh" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "No previous checkpoint found. Processing all accounts from the beginning." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+      
       - name: Create .env file
         run: |
           cat > config/.env << EOF
@@ -212,6 +261,43 @@ jobs:
         run: |
           python src/extraction/main.py scraper/instagram_data.json
         timeout-minutes: 30
+      
+      - name: Upload checkpoint on failure
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-checkpoint-${{ github.repository_owner }}
+          path: |
+            data/processed/checkpoint_state.json
+            data/processed/checkpoint_results.json
+          retention-days: 7
+          if-no-files-found: warn
+      
+      - name: Log checkpoint upload
+        if: failure() || cancelled()
+        run: |
+          if [ -f "data/processed/checkpoint_state.json" ]; then
+            LAST_INDEX=$(jq -r '.last_completed_index' data/processed/checkpoint_state.json)
+            TOTAL=$(jq -r '.total_accounts' data/processed/checkpoint_state.json)
+            RESULTS_COUNT=$(jq -r '.results_count' data/processed/checkpoint_state.json)
+            
+            echo "💾 Checkpoint uploaded for resume"
+            echo "  - Progress saved: $((LAST_INDEX + 1))/$TOTAL accounts"
+            echo "  - Results saved: $RESULTS_COUNT posts"
+            echo "  - To resume: Re-run this workflow"
+            
+            # Add to job summary
+            echo "## 💾 Checkpoint Saved" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Workflow failed/timed out, but progress has been saved:" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Progress saved**: $((LAST_INDEX + 1))/$TOTAL accounts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Results saved**: $RESULTS_COUNT posts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Next step**: Re-run this workflow to resume" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No checkpoint file found to upload"
+          fi
       
       - name: Check extraction results
         run: |
@@ -239,31 +325,74 @@ jobs:
           echo "## 🧠 Extraction Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
-          if [ -n "$LATEST_FILE" ]; then
-            EXTRACTED_COUNT=$(jq 'length' "$LATEST_FILE")
-            
-            # Calculate success rate
-            if [ -f "scraper/instagram_data.json" ]; then
-              SCRAPED_COUNT=$(jq 'length' scraper/instagram_data.json)
-              SUCCESS_RATE=$(echo "scale=1; $EXTRACTED_COUNT * 100 / $SCRAPED_COUNT" | bc)
-              echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
-              echo "**Success Rate**: ${SUCCESS_RATE}%" >> $GITHUB_STEP_SUMMARY
-              echo "**Extracted**: $EXTRACTED_COUNT / $SCRAPED_COUNT posts" >> $GITHUB_STEP_SUMMARY
+          # Check if extraction step succeeded
+          if [ "${{ steps.extract.outcome }}" == "success" ]; then
+            LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+            if [ -n "$LATEST_FILE" ]; then
+              EXTRACTED_COUNT=$(jq 'length' "$LATEST_FILE")
+              
+              # Calculate success rate
+              if [ -f "scraper/instagram_data.json" ]; then
+                SCRAPED_COUNT=$(jq 'length' scraper/instagram_data.json)
+                SUCCESS_RATE=$(echo "scale=1; $EXTRACTED_COUNT * 100 / $SCRAPED_COUNT" | bc)
+                echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+                echo "**Success Rate**: ${SUCCESS_RATE}%" >> $GITHUB_STEP_SUMMARY
+                echo "**Extracted**: $EXTRACTED_COUNT / $SCRAPED_COUNT posts" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+                echo "**Extracted**: $EXTRACTED_COUNT posts" >> $GITHUB_STEP_SUMMARY
+              fi
+              
+              # Show metrics if available
+              METRICS_FILE=$(ls -t data/processed/extraction_metrics_*.json 2>/dev/null | head -1)
+              if [ -n "$METRICS_FILE" ]; then
+                echo "" >> $GITHUB_STEP_SUMMARY
+                echo "### Metrics" >> $GITHUB_STEP_SUMMARY
+                jq -r '"- **API Requests**: \(.total_api_requests // 0)\n- **Processing Time**: \(.total_duration_seconds // 0)s\n- **Avg Response Time**: \(.avg_response_time_seconds // 0)s"' "$METRICS_FILE" >> $GITHUB_STEP_SUMMARY
+              fi
             else
-              echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
-              echo "**Extracted**: $EXTRACTED_COUNT posts" >> $GITHUB_STEP_SUMMARY
+              echo "**Status**: ⚠️ Completed but no output file" >> $GITHUB_STEP_SUMMARY
             fi
-            
-            # Show metrics if available
-            METRICS_FILE=$(ls -t data/processed/extraction_metrics_*.json 2>/dev/null | head -1)
-            if [ -n "$METRICS_FILE" ]; then
-              echo "" >> $GITHUB_STEP_SUMMARY
-              echo "### Metrics" >> $GITHUB_STEP_SUMMARY
-              jq -r '"- **API Requests**: \(.total_api_requests // 0)\n- **Processing Time**: \(.total_duration_seconds // 0)s\n- **Avg Response Time**: \(.avg_response_time_seconds // 0)s"' "$METRICS_FILE" >> $GITHUB_STEP_SUMMARY
-            fi
-          else
+          elif [ "${{ steps.extract.outcome }}" == "failure" ]; then
             echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Error Details" >> $GITHUB_STEP_SUMMARY
+            echo "The extraction process failed. Common causes:" >> $GITHUB_STEP_SUMMARY
+            echo "- **Gemini API errors**: Check if API keys are valid and have quota" >> $GITHUB_STEP_SUMMARY
+            echo "- **Network issues**: Temporary connectivity problems" >> $GITHUB_STEP_SUMMARY
+            echo "- **Data format issues**: Invalid input data structure" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Action Required**: Check workflow logs above for specific error messages" >> $GITHUB_STEP_SUMMARY
+            
+            # Check if checkpoint was saved
+            if [ -f "data/processed/checkpoint_state.json" ]; then
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "### 💾 Checkpoint Available" >> $GITHUB_STEP_SUMMARY
+              echo "Progress was saved. You can re-run this workflow to resume." >> $GITHUB_STEP_SUMMARY
+            fi
+          elif [ "${{ steps.extract.outcome }}" == "cancelled" ]; then
+            echo "**Status**: ⏸️ Cancelled (Timeout)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Timeout Details" >> $GITHUB_STEP_SUMMARY
+            echo "The extraction exceeded the 30-minute timeout limit." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Possible causes**:" >> $GITHUB_STEP_SUMMARY
+            echo "- Gemini API experiencing high demand (503 errors)" >> $GITHUB_STEP_SUMMARY
+            echo "- Too many accounts to process in 30 minutes" >> $GITHUB_STEP_SUMMARY
+            echo "- Network latency issues" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # Check if checkpoint was saved
+            if [ -f "data/processed/checkpoint_state.json" ]; then
+              LAST_INDEX=$(jq -r '.last_completed_index' data/processed/checkpoint_state.json)
+              TOTAL=$(jq -r '.total_accounts' data/processed/checkpoint_state.json)
+              RESULTS_COUNT=$(jq -r '.results_count' data/processed/checkpoint_state.json)
+              
+              echo "### 💾 Checkpoint Saved" >> $GITHUB_STEP_SUMMARY
+              echo "- **Progress**: $((LAST_INDEX + 1))/$TOTAL accounts completed" >> $GITHUB_STEP_SUMMARY
+              echo "- **Results**: $RESULTS_COUNT posts extracted" >> $GITHUB_STEP_SUMMARY
+              echo "- **Action**: Re-run this workflow to resume from checkpoint" >> $GITHUB_STEP_SUMMARY
+            fi
           fi
 
   # Job 3: Insert/update database

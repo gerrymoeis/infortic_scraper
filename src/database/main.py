@@ -160,13 +160,24 @@ def main():
         logger.info(f"   - 🔄 Updated Existing: {stats['updated_existing']} records")
         logger.info(f"   - ⏭️  Skipped (Expired): {stats['skipped_expired']} records")
         logger.info(f"   - ⏭️  Skipped (No Dates): {stats['skipped_no_dates']} records")
+        logger.info(f"   - ⏭️  Skipped (Duplicate Slugs): {stats.get('skipped_duplicate_slugs', 0)} records")
         logger.info(f"   - ❌ Database Errors: {stats['database_errors']} records")
         logger.info(f"")
         
-        # Calculate success rate
+        # Calculate success rate and verify totals
         total_saved = stats['newly_inserted'] + stats['updated_existing']
+        total_skipped = stats['skipped_expired'] + stats['skipped_no_dates'] + stats.get('skipped_duplicate_slugs', 0)
+        total_accounted = total_saved + total_skipped + stats['database_errors']
+        
         success_rate = (total_saved / len(valid_records) * 100) if valid_records else 0
         logger.info(f"   📈 SUCCESS RATE: {success_rate:.1f}% ({total_saved}/{len(valid_records)} saved to database)")
+        logger.info(f"   📊 TOTAL ACCOUNTED: {total_accounted}/{len(valid_records)} records")
+        
+        # Warn if there's a discrepancy
+        if total_accounted != len(valid_records):
+            missing = len(valid_records) - total_accounted
+            logger.warning(f"   ⚠️  DISCREPANCY: {missing} records unaccounted for!")
+        
         logger.info('='*60)
         
         if stats['newly_inserted'] > 0 or stats['updated_existing'] > 0:

@@ -194,15 +194,14 @@ class DataInserter:
             status_reason: 'inserted', 'updated', 'expired', 'no_dates', 'error'
         """
         try:
-            # STEP 0: Validate date fields (MANDATORY)
-            # Registration date is REQUIRED to determine if post is expired
+            # STEP 0: Validate date fields (MANDATORY - FIX 1: 2026-05-01)
+            # Registration date is NOW REQUIRED (not optional anymore)
             dates = data.get('dates', {})
-            has_registration_date = bool(dates.get('registration_date'))
-            has_deadline_date = bool(dates.get('deadline_date'))
+            has_registration_date = bool(dates.get('registration_date') or dates.get('deadline_date'))
             
-            if not has_registration_date and not has_deadline_date:
-                logger.info(f"[SKIP] No registration_date or deadline_date: {data['title']} (post_id: {data.get('post_id')})")
-                return None, 'no_dates'
+            if not has_registration_date:
+                logger.warning(f"[INVALID] Missing REQUIRED registration dates: {data['title']} (post_id: {data.get('post_id')})")
+                return None, 'invalid_no_registration_date'
             
             # STEP 1: Check Expiration (Phase 1 - Task 1.2)
             if self._check_expiration(data):
@@ -448,7 +447,8 @@ class DataInserter:
             'newly_inserted': 0,
             'updated_existing': 0,
             'skipped_expired': 0,
-            'skipped_no_dates': 0,
+            'skipped_no_dates': 0,  # DEPRECATED: Should be 0 after FIX 1
+            'invalid_no_registration_date': 0,  # NEW (FIX 1): Invalid records without registration_date
             'database_errors': 0,
         }
         
@@ -480,6 +480,8 @@ class DataInserter:
                 stats['skipped_expired'] += 1
             elif status_reason == 'no_dates':
                 stats['skipped_no_dates'] += 1
+            elif status_reason == 'invalid_no_registration_date':  # NEW (FIX 1)
+                stats['invalid_no_registration_date'] += 1
             elif status_reason == 'error':
                 stats['database_errors'] += 1
         
@@ -498,7 +500,8 @@ class DataInserter:
         logger.info(f"")
         logger.info(f"  Skipped (Expected):")
         logger.info(f"    - Expired:            {stats['skipped_expired']} records ({stats['skipped_expired']/stats['total_processed']*100:.1f}%) - deadline passed")
-        logger.info(f"    - No Dates:           {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%) - missing registration_date AND deadline_date")
+        logger.info(f"    - No Dates (Legacy):  {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%) - DEPRECATED after FIX 1")
+        logger.info(f"    - Invalid (No Reg Date): {stats.get('invalid_no_registration_date', 0)} records ({stats.get('invalid_no_registration_date', 0)/stats['total_processed']*100:.1f}%) - missing required registration_date")
         logger.info(f"")
         logger.info(f"  Errors (Unexpected):")
         logger.info(f"    - Database Errors:    {stats['database_errors']} records ({stats['database_errors']/stats['total_processed']*100:.1f}%)")
@@ -542,8 +545,9 @@ class DataInserter:
             'newly_inserted': 0,
             'updated_existing': 0,
             'skipped_expired': 0,
-            'skipped_no_dates': 0,
+            'skipped_no_dates': 0,  # DEPRECATED: Should be 0 after FIX 1
             'skipped_duplicate_slugs': 0,  # NEW: Track duplicate slugs separately
+            'invalid_no_registration_date': 0,  # NEW (FIX 1): Invalid records without registration_date
             'database_errors': 0,
         }
         
@@ -557,14 +561,13 @@ class DataInserter:
         valid_records = []
         
         for data in data_list:
-            # Check dates (MANDATORY)
+            # Check dates (MANDATORY - FIX 1: 2026-05-01)
             dates = data.get('dates', {})
-            has_registration_date = bool(dates.get('registration_date'))
-            has_deadline_date = bool(dates.get('deadline_date'))
+            has_registration_date = bool(dates.get('registration_date') or dates.get('deadline_date'))
             
-            if not has_registration_date and not has_deadline_date:
-                stats['skipped_no_dates'] += 1
-                logger.debug(f"[SKIP] No dates: {data.get('title')}")
+            if not has_registration_date:
+                stats['invalid_no_registration_date'] += 1
+                logger.debug(f"[INVALID] No registration dates: {data.get('title')}")
                 continue
             
             # Check expiration
@@ -726,8 +729,9 @@ class DataInserter:
         logger.info(f"")
         logger.info(f"  Skipped (Expected):")
         logger.info(f"    - Expired:            {stats['skipped_expired']} records ({stats['skipped_expired']/stats['total_processed']*100:.1f}%)")
-        logger.info(f"    - No Dates:           {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - No Dates (Legacy):  {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%) - DEPRECATED after FIX 1")
         logger.info(f"    - Duplicate Slugs:    {stats['skipped_duplicate_slugs']} records ({stats['skipped_duplicate_slugs']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - Invalid (No Reg Date): {stats.get('invalid_no_registration_date', 0)} records ({stats.get('invalid_no_registration_date', 0)/stats['total_processed']*100:.1f}%) - missing required registration_date")
         logger.info(f"")
         logger.info(f"  Errors (Unexpected):")
         logger.info(f"    - Database Errors:    {stats['database_errors']} records ({stats['database_errors']/stats['total_processed']*100:.1f}%)")
@@ -760,8 +764,9 @@ class DataInserter:
             'newly_inserted': 0,
             'updated_existing': 0,
             'skipped_expired': 0,
-            'skipped_no_dates': 0,
+            'skipped_no_dates': 0,  # DEPRECATED: Should be 0 after FIX 1
             'skipped_duplicate_slugs': 0,  # NEW: Track duplicate slugs separately
+            'invalid_no_registration_date': 0,  # NEW (FIX 1): Invalid records without registration_date
             'database_errors': 0,
         }
         
@@ -789,6 +794,7 @@ class DataInserter:
                 stats['skipped_expired'] += chunk_stats['skipped_expired']
                 stats['skipped_no_dates'] += chunk_stats['skipped_no_dates']
                 stats['skipped_duplicate_slugs'] += chunk_stats['skipped_duplicate_slugs']
+                stats['invalid_no_registration_date'] += chunk_stats.get('invalid_no_registration_date', 0)  # NEW (FIX 1)
                 stats['database_errors'] += chunk_stats['database_errors']
                 
                 logger.info(f"[CHUNK {i}/{len(chunks)}] ✓ Complete")
@@ -820,8 +826,9 @@ class DataInserter:
         logger.info(f"")
         logger.info(f"  Skipped (Expected):")
         logger.info(f"    - Expired:            {stats['skipped_expired']} records ({stats['skipped_expired']/stats['total_processed']*100:.1f}%)")
-        logger.info(f"    - No Dates:           {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - No Dates (Legacy):  {stats['skipped_no_dates']} records ({stats['skipped_no_dates']/stats['total_processed']*100:.1f}%) - DEPRECATED after FIX 1")
         logger.info(f"    - Duplicate Slugs:    {stats['skipped_duplicate_slugs']} records ({stats['skipped_duplicate_slugs']/stats['total_processed']*100:.1f}%)")
+        logger.info(f"    - Invalid (No Reg Date): {stats.get('invalid_no_registration_date', 0)} records ({stats.get('invalid_no_registration_date', 0)/stats['total_processed']*100:.1f}%) - missing required registration_date")
         logger.info(f"")
         logger.info(f"  Errors (Unexpected):")
         logger.info(f"    - Database Errors:    {stats['database_errors']} records ({stats['database_errors']/stats['total_processed']*100:.1f}%)")

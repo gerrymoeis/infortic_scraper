@@ -1227,3 +1227,181 @@ def get_timestamp() -> str:
 def sanitize_filename(filename: str) -> str:
     """Sanitize filename"""
     return re.sub(r'[^a-z0-9_-]', '_', filename.lower())
+
+
+# ============================================================================
+# SMART DATE FALLBACK HELPERS (FIX 1: Required Dates)
+# Added: 2026-05-01
+# ============================================================================
+
+def extract_deadline_from_registration(registration_date: str) -> Optional[str]:
+    """
+    Extract deadline date from registration date string
+    
+    This function parses various registration date formats to extract the deadline:
+    - Date ranges: "1 April 2026 - 14 April 2026" → "14 April 2026"
+    - "Hingga" format: "Hingga 5 Mei 2026" → "5 Mei 2026"
+    - Single dates: "14 April 2026" → "14 April 2026" (assume single date is deadline)
+    
+    Args:
+        registration_date: Registration date string in various formats
+        
+    Returns:
+        Deadline date string or None if cannot be extracted
+        
+    Examples:
+        >>> extract_deadline_from_registration("1 April 2026 - 14 April 2026")
+        "14 April 2026"
+        >>> extract_deadline_from_registration("Hingga 5 Mei 2026")
+        "5 Mei 2026"
+        >>> extract_deadline_from_registration("14 April 2026")
+        "14 April 2026"
+    """
+    if not registration_date:
+        return None
+    
+    # Pattern 1: Date range "1 April 2026 - 14 April 2026" or "1-14 April 2026"
+    # Match: DD Month YYYY - DD Month YYYY
+    range_pattern_full = r'(\d{1,2}\s+\w+\s+\d{4})\s*[-–]\s*(\d{1,2}\s+\w+\s+\d{4})'
+    match = re.search(range_pattern_full, registration_date)
+    if match:
+        return match.group(2).strip()  # Return end date
+    
+    # Pattern 2: Date range "1-14 April 2026" (same month)
+    # Match: DD-DD Month YYYY
+    range_pattern_same_month = r'(\d{1,2})\s*[-–]\s*(\d{1,2})\s+(\w+)\s+(\d{4})'
+    match = re.search(range_pattern_same_month, registration_date)
+    if match:
+        day2, month, year = match.group(2), match.group(3), match.group(4)
+        return f"{day2} {month} {year}"
+    
+    # Pattern 3: "Hingga X" format
+    # Match: Hingga DD Month YYYY
+    hingga_pattern = r'Hingga\s+(.+)'
+    match = re.search(hingga_pattern, registration_date, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    
+    # Pattern 4: "s.d." or "s/d" format (sampai dengan)
+    # Match: s.d. DD Month YYYY or s/d DD Month YYYY
+    sd_pattern = r's[./]d[.]?\s+(.+)'
+    match = re.search(sd_pattern, registration_date, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    
+    # Pattern 5: Single date (assume it's the deadline)
+    # Match: DD Month YYYY
+    single_pattern = r'(\d{1,2}\s+\w+\s+\d{4})'
+    match = re.search(single_pattern, registration_date)
+    if match:
+        return match.group(1).strip()
+    
+    return None
+
+
+def generate_registration_date_from_deadline(deadline_date: str) -> str:
+    """
+    Generate registration_date string from deadline_date
+    
+    This creates a user-friendly registration date string in "Hingga X" format,
+    which clearly indicates the deadline for registration.
+    
+    Args:
+        deadline_date: Deadline date string (e.g., "14 April 2026")
+        
+    Returns:
+        Registration date string in "Hingga X" format (e.g., "Hingga 14 April 2026")
+        
+    Examples:
+        >>> generate_registration_date_from_deadline("14 April 2026")
+        "Hingga 14 April 2026"
+        >>> generate_registration_date_from_deadline("5 Mei 2026")
+        "Hingga 5 Mei 2026"
+    """
+    if not deadline_date:
+        return ""
+    
+    # Clean up deadline date (remove extra whitespace)
+    deadline_clean = deadline_date.strip()
+    
+    # Check if already has "Hingga" prefix
+    if deadline_clean.lower().startswith('hingga'):
+        return deadline_clean
+    
+    # Generate "Hingga X" format
+    return f"Hingga {deadline_clean}"
+
+
+def parse_registration_date_to_dates(registration_date: str) -> dict:
+    """
+    Parse registration_date string into structured start and end dates
+    
+    This function converts human-readable registration date strings into
+    structured date objects for database storage.
+    
+    Args:
+        registration_date: Registration date string in various formats
+        
+    Returns:
+        Dictionary with 'start_date' and 'end_date' keys (ISO format strings or None)
+        
+    Examples:
+        >>> parse_registration_date_to_dates("1 April 2026 - 14 April 2026")
+        {'start_date': '2026-04-01', 'end_date': '2026-04-14'}
+        >>> parse_registration_date_to_dates("Hingga 5 Mei 2026")
+        {'start_date': None, 'end_date': '2026-05-05'}
+        >>> parse_registration_date_to_dates("14 April 2026")
+        {'start_date': None, 'end_date': '2026-04-14'}
+    """
+    result = {
+        'start_date': None,
+        'end_date': None
+    }
+    
+    if not registration_date:
+        return result
+    
+    # Pattern 1: Date range "1 April 2026 - 14 April 2026"
+    range_pattern_full = r'(\d{1,2}\s+\w+\s+\d{4})\s*[-–]\s*(\d{1,2}\s+\w+\s+\d{4})'
+    match = re.search(range_pattern_full, registration_date)
+    if match:
+        start_str, end_str = match.group(1), match.group(2)
+        
+        # Parse dates
+        start_parsed = dateparser.parse(start_str, languages=['id', 'en'])
+        end_parsed = dateparser.parse(end_str, languages=['id', 'en'])
+        
+        if start_parsed:
+            result['start_date'] = start_parsed.date().isoformat()
+        if end_parsed:
+            result['end_date'] = end_parsed.date().isoformat()
+        
+        return result
+    
+    # Pattern 2: Date range "1-14 April 2026" (same month)
+    range_pattern_same_month = r'(\d{1,2})\s*[-–]\s*(\d{1,2})\s+(\w+)\s+(\d{4})'
+    match = re.search(range_pattern_same_month, registration_date)
+    if match:
+        day1, day2, month, year = match.groups()
+        start_str = f"{day1} {month} {year}"
+        end_str = f"{day2} {month} {year}"
+        
+        # Parse dates
+        start_parsed = dateparser.parse(start_str, languages=['id', 'en'])
+        end_parsed = dateparser.parse(end_str, languages=['id', 'en'])
+        
+        if start_parsed:
+            result['start_date'] = start_parsed.date().isoformat()
+        if end_parsed:
+            result['end_date'] = end_parsed.date().isoformat()
+        
+        return result
+    
+    # Pattern 3: "Hingga X" or single date (only end date)
+    deadline = extract_deadline_from_registration(registration_date)
+    if deadline:
+        deadline_parsed = dateparser.parse(deadline, languages=['id', 'en'])
+        if deadline_parsed:
+            result['end_date'] = deadline_parsed.date().isoformat()
+    
+    return result

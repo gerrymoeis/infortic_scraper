@@ -65,10 +65,13 @@ class DataValidator:
         if data.get('fee_type') and data['fee_type'] not in DataValidator.VALID_FEE_TYPES:
             errors.append(f"Invalid fee_type: {data['fee_type']}")
         
-        # Validate registration_date (string format)
-        if data.get('registration_date'):
-            if not isinstance(data['registration_date'], str):
-                errors.append("registration_date must be a string")
+        # Validate registration_date (REQUIRED - FIX 1: 2026-05-01)
+        if not data.get('registration_date'):
+            errors.append("Missing REQUIRED field: registration_date")
+        elif not isinstance(data['registration_date'], str):
+            errors.append("registration_date must be a string")
+        elif not data['registration_date'].strip():
+            errors.append("registration_date cannot be empty")
         
         # Validate contact (single phone number)
         if data.get('contact'):

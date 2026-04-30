@@ -230,6 +230,13 @@ class DataNormalizer:
     def _parse_registration_date(self, date_string: Optional[str]) -> Dict[str, Optional[str]]:
         """
         Parse human-readable registration date string to database format
+        WITH SMART FALLBACK (FIX 1: Required Dates - 2026-05-01)
+        
+        Smart Fallback Rules:
+        1. If date_string is a range → Parse both start and end dates
+        2. If date_string is "Hingga X" → Only end date (deadline)
+        3. If date_string is single date → Use as deadline
+        4. If date_string is None → Return all None (will be rejected by validator)
         
         Args:
             date_string: Registration date in format "DD Month YYYY - DD Month YYYY" or "DD Month YYYY"
@@ -246,12 +253,29 @@ class DataNormalizer:
         
         try:
             import dateparser
+            from extraction.utils.helpers import extract_deadline_from_registration
+            
+            # SMART FALLBACK: Check for "Hingga X" format first
+            if date_string.strip().lower().startswith('hingga'):
+                # "Hingga 5 Mei 2026" → Only deadline, no start date
+                deadline_str = extract_deadline_from_registration(date_string)
+                if deadline_str:
+                    deadline_date = dateparser.parse(deadline_str, languages=['id', 'en'])
+                    if deadline_date:
+                        deadline_formatted = deadline_date.strftime('%Y-%m-%d')
+                        logger.debug(f"[SMART FALLBACK] Parsed 'Hingga' format: deadline={deadline_formatted}")
+                        return {
+                            'start_date': None,
+                            'end_date': deadline_formatted,
+                            'deadline_date': deadline_formatted,
+                        }
             
             # Check if it's a date range
-            if ' - ' in date_string:
-                parts = date_string.split(' - ')
+            if ' - ' in date_string or '–' in date_string:
+                # Split by dash (handle both - and –)
+                parts = date_string.replace('–', '-').split(' - ')
                 start_str = parts[0].strip()
-                end_str = parts[1].strip()
+                end_str = parts[1].strip() if len(parts) > 1 else parts[0].strip()
                 
                 # Parse both dates
                 start_date = dateparser.parse(start_str, languages=['id', 'en'])
@@ -263,13 +287,14 @@ class DataNormalizer:
                     'deadline_date': end_date.strftime('%Y-%m-%d') if end_date else None,  # Deadline is end of registration
                 }
             else:
-                # Single date
+                # Single date → Use as deadline
                 parsed_date = dateparser.parse(date_string, languages=['id', 'en'])
                 
                 if parsed_date:
                     date_str = parsed_date.strftime('%Y-%m-%d')
+                    logger.debug(f"[SMART FALLBACK] Parsed single date as deadline: {date_str}")
                     return {
-                        'start_date': date_str,
+                        'start_date': None,  # No start date for single date
                         'end_date': date_str,
                         'deadline_date': date_str,
                     }

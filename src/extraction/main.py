@@ -355,6 +355,23 @@ class DataExtractor:
                                         fallback_stats['ocr_urls'] += 1
                                         logger.debug(f"[FALLBACK-OCR] Extracted registration_url: {best_url}")
                         
+                        # SMART DATE FALLBACK (FIX 1: Required Dates - 2026-05-01)
+                        # Apply smart fallback to ensure registration_date is always present
+                        registration_date = result.get('registration_date')
+                        
+                        if not registration_date or not registration_date.strip():
+                            # No registration_date found, try to generate from deadline if available
+                            # This will be handled by normalizer, just log for now
+                            logger.debug(f"[SMART FALLBACK] No registration_date for: {result.get('title', 'Unknown')[:50]}")
+                            fallback_stats['no_registration_date'] = fallback_stats.get('no_registration_date', 0) + 1
+                        else:
+                            # Registration date exists, validate it has proper format
+                            # Extract deadline to ensure we have structured dates
+                            from extraction.utils.helpers import extract_deadline_from_registration
+                            deadline = extract_deadline_from_registration(registration_date)
+                            if deadline:
+                                logger.debug(f"[DATE VALIDATION] registration_date: {registration_date}, deadline: {deadline}")
+                        
                         # Add source metadata
                         result['source_url'] = batch[j]['url']
                         result['source_account'] = account_name

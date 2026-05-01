@@ -8,8 +8,23 @@ import sys
 from pathlib import Path
 from typing import List, Dict
 
+# DEBUG: Print Python path and file location
+print(f"[DEBUG] Python executable: {sys.executable}")
+print(f"[DEBUG] Python version: {sys.version}")
+print(f"[DEBUG] Current file: {__file__}")
+print(f"[DEBUG] File parent: {Path(__file__).parent}")
+print(f"[DEBUG] File parent.parent: {Path(__file__).parent.parent}")
+print(f"[DEBUG] sys.path BEFORE modification:")
+for i, p in enumerate(sys.path):
+    print(f"  [{i}] {p}")
+
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
+
+print(f"[DEBUG] sys.path AFTER modification:")
+for i, p in enumerate(sys.path):
+    print(f"  [{i}] {p}")
+print(f"[DEBUG] Attempting to import from extraction.utils.config...")
 
 from extraction.utils.config import config
 from extraction.utils.logger import setup_logger

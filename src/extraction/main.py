@@ -367,7 +367,7 @@ class DataExtractor:
                         else:
                             # Registration date exists, validate it has proper format
                             # Extract deadline to ensure we have structured dates
-                            from extraction.utils.helpers import extract_deadline_from_registration
+                            from src.extraction.utils.helpers import extract_deadline_from_registration
                             deadline = extract_deadline_from_registration(registration_date)
                             if deadline:
                                 logger.debug(f"[DATE VALIDATION] registration_date: {registration_date}, deadline: {deadline}")

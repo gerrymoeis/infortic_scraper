@@ -1,0 +1,121 @@
+name: Test Database Insertion
+
+# Manual trigger only - for testing database insertion with existing data
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_run_number:
+        description: 'Run number of the extraction artifact to use (leave empty for latest)'
+        required: false
+        type: string
+        default: ''
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  test-database:
+    name: Test Database Insertion
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Determine artifact run number
+        id: artifact
+        run: |
+          if [ -n "${{ inputs.artifact_run_number }}" ]; then
+            RUN_NUMBER="${{ inputs.artifact_run_number }}"
+            echo "Using specified run number: $RUN_NUMBER"
+          else
+            RUN_NUMBER="${{ github.run_number }}"
+            echo "Using current run number: $RUN_NUMBER"
+          fi
+          echo "run_number=$RUN_NUMBER" >> $GITHUB_OUTPUT
+      
+      - name: Download extracted data
+        uses: actions/download-artifact@v4
+        with:
+          name: extracted-data-${{ steps.artifact.outputs.run_number }}
+          path: data/processed/
+        continue-on-error: true
+      
+      - name: Check if artifact exists
+        id: check
+        run: |
+          if [ -f "data/processed/extracted_data_"*.json ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+            echo "file=$LATEST_FILE" >> $GITHUB_OUTPUT
+            RECORD_COUNT=$(jq 'length' "$LATEST_FILE" 2>/dev/null || echo "0")
+            echo "count=$RECORD_COUNT" >> $GITHUB_OUTPUT
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create .env file
+        if: steps.check.outputs.found == 'true'
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > config/.env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> config/.env
+      
+      - name: Run database insertion
+        if: steps.check.outputs.found == 'true'
+        id: insert
+        run: |
+          echo "🔍 Found extracted data file: ${{ steps.check.outputs.file }}"
+          echo "📊 Record count: ${{ steps.check.outputs.count }}"
+          echo ""
+          echo "⏱️  Starting database insertion..."
+          echo ""
+          
+          python src/database/main.py "${{ steps.check.outputs.file }}"
+          
+          echo ""
+          echo "✅ Database insertion completed successfully"
+        timeout-minutes: 10
+      
+      - name: No artifact found
+        if: steps.check.outputs.found == 'false'
+        run: |
+          echo "❌ ERROR: No extracted data artifact found!"
+          echo ""
+          echo "Please specify a valid run number that has extraction artifacts."
+          echo "You can find run numbers in the Actions tab."
+          exit 1
+      
+      - name: Test summary
+        if: always()
+        run: |
+          echo "## 🧪 Database Insertion Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.check.outputs.found }}" == "true" ]; then
+            echo "**Artifact**: Run #${{ steps.artifact.outputs.run_number }}" >> $GITHUB_STEP_SUMMARY
+            echo "**Records**: ${{ steps.check.outputs.count }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "${{ steps.insert.outcome }}" == "success" ]; then
+              echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "Check workflow logs for error details." >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "**Status**: ❌ No artifact found" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Specify a valid run number with extraction artifacts." >> $GITHUB_STEP_SUMMARY
+          fi

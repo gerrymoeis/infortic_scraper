@@ -3,6 +3,11 @@ Database Insertion Pipeline
 Main entry point for inserting extracted data into PostgreSQL
 """
 
+# VERIFICATION: This should appear in logs if using commit 85ad3d8 or later
+print("=" * 80)
+print("DATABASE MAIN.PY - COMMIT 85ad3d8 OR LATER")
+print("=" * 80)
+
 import json
 import sys
 from pathlib import Path

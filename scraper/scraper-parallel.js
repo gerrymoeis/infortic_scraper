@@ -38,6 +38,73 @@ const sleep = (min, max) => new Promise(resolve =>
 );
 
 /**
+ * Detect and dismiss Instagram anti-bot popup
+ * Handles "We suspect automated behavior" warning
+ */
+async function dismissAutomatedBehaviorPopup(page, sessionName) {
+    try {
+        // Check for automated behavior popup
+        const popupSelectors = [
+            'button[aria-label="Dismiss"]',
+            'div[role="button"][aria-label="Dismiss"]',
+            'div[role="button"]:has-text("Dismiss")',
+            'button:has-text("Dismiss")'
+        ];
+        
+        for (const selector of popupSelectors) {
+            const dismissButton = page.locator(selector).first();
+            const count = await dismissButton.count();
+            
+            if (count > 0) {
+                console.log(`[${sessionName}] ⚠️  Automated behavior popup detected`);
+                
+                // Natural delay before clicking (human-like)
+                await sleep(1500, 2500);
+                
+                // Click dismiss button
+                await dismissButton.click();
+                console.log(`[${sessionName}] ✓ Popup dismissed`);
+                
+                // Wait for popup to close
+                await sleep(2000, 3000);
+                
+                return true;
+            }
+        }
+        
+        return false;
+    } catch (error) {
+        console.log(`[${sessionName}] Note: Popup check failed (${error.message})`);
+        return false;
+    }
+}
+
+/**
+ * Take screenshot for debugging (on error)
+ */
+async function takeDebugScreenshot(page, sessionName, context) {
+    try {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `debug_${sessionName}_${context}_${timestamp}.png`;
+        const filepath = path.join(__dirname, 'debug_screenshots', filename);
+        
+        // Create debug folder if not exists
+        const debugFolder = path.join(__dirname, 'debug_screenshots');
+        if (!fs.existsSync(debugFolder)) {
+            fs.mkdirSync(debugFolder, { recursive: true });
+        }
+        
+        await page.screenshot({ path: filepath, fullPage: true });
+        console.log(`[${sessionName}] 📸 Debug screenshot saved: ${filename}`);
+        
+        return filename;
+    } catch (error) {
+        console.log(`[${sessionName}] Warning: Could not take screenshot: ${error.message}`);
+        return null;
+    }
+}
+
+/**
  * Shuffle array using Fisher-Yates algorithm (anti-detection)
  * Randomizes account order to avoid predictable patterns
  */
@@ -115,10 +182,14 @@ async function scrapeWithContext(context, accounts, sessionName) {
         });
         await sleep(3000, 4000);
 
+        // Check and dismiss automated behavior popup (after login)
+        await dismissAutomatedBehaviorPopup(page, sessionName);
+
         const isLoggedIn = await page.locator('svg[aria-label*="Search"], svg[aria-label*="Home"]').count() > 0;
 
         if (!isLoggedIn) {
             console.log(`[${sessionName}] ERROR: Not logged in!`);
+            await takeDebugScreenshot(page, sessionName, 'not_logged_in');
             throw new Error(`Session ${sessionName} is not authenticated`);
         }
 
@@ -137,11 +208,15 @@ async function scrapeWithContext(context, accounts, sessionName) {
             });
             await sleep(2000, 3000);
             
+            // Check and dismiss automated behavior popup (after profile navigation)
+            await dismissAutomatedBehaviorPopup(page, sessionName);
+            
             try {
                 await page.waitForSelector('a[href*="/p/"], a[href*="/reel/"]', { timeout: 15000 });
                 console.log(`[${sessionName}] Post grid detected`);
             } catch (e) {
                 console.log(`[${sessionName}] WARNING: Could not detect post grid`);
+                await takeDebugScreenshot(page, sessionName, `no_grid_${username}`);
                 continue;
             }
 

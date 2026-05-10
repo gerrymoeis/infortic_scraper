@@ -249,6 +249,15 @@ jobs:
             scraper/instagram_images/
           retention-days: 7
       
+      - name: Upload debug screenshots (if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-screenshots-${{ github.run_number }}
+          path: scraper/debug_screenshots/
+          retention-days: 7
+          if-no-files-found: ignore
+      
       - name: Upload scraper checkpoint on failure
         if: failure() || cancelled()
         uses: actions/upload-artifact@v4

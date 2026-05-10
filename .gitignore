@@ -34,6 +34,8 @@ scraper/instagram_data.json
 scraper/session.json
 scraper/session*.json
 scraper/instagram_images/
+scraper/debug_screenshots/
+scraper/scraper_checkpoint.json
 
 # IDE
 .vscode/

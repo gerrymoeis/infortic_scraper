@@ -95,16 +95,45 @@ jobs:
           ACCOUNT_COUNT=$(jq -r '.accounts | length' config/scraper.config.json)
           echo "Will scrape $ACCOUNT_COUNT accounts: $ACCOUNT_LIST"
       
-      - name: Create session files from secrets
+      - name: Create session files from secrets (dynamic)
         run: |
           cd scraper
-          echo '${{ secrets.INSTAGRAM_SESSION_1 }}' > session1.json
-          echo '${{ secrets.INSTAGRAM_SESSION_2 }}' > session2.json
-          echo '${{ secrets.INSTAGRAM_SESSION_3 }}' > session3.json
-          echo "✓ Created 3 session files"
-          echo "Session 1: $(wc -c < session1.json) bytes"
-          echo "Session 2: $(wc -c < session2.json) bytes"
-          echo "Session 3: $(wc -c < session3.json) bytes"
+          
+          # Auto-detect and create all available session secrets (scalable)
+          SESSION_COUNT=0
+          
+          for i in {1..10}; do
+            SECRET_NAME="INSTAGRAM_SESSION_$i"
+            SECRET_VALUE="${!SECRET_NAME}"
+            
+            # Check if secret exists and is not empty
+            if [ ! -z "$SECRET_VALUE" ] && [ "$SECRET_VALUE" != "null" ]; then
+              echo "$SECRET_VALUE" > "session$i.json"
+              FILE_SIZE=$(wc -c < "session$i.json")
+              echo "✓ Session $i created ($FILE_SIZE bytes)"
+              SESSION_COUNT=$((SESSION_COUNT + 1))
+            fi
+          done
+          
+          if [ $SESSION_COUNT -eq 0 ]; then
+            echo "❌ ERROR: No Instagram sessions found!"
+            echo "Please add INSTAGRAM_SESSION_1, INSTAGRAM_SESSION_2, etc. to GitHub Secrets"
+            exit 1
+          fi
+          
+          echo "✓ Created $SESSION_COUNT session files"
+          echo "session_count=$SESSION_COUNT" >> $GITHUB_OUTPUT
+        env:
+          INSTAGRAM_SESSION_1: ${{ secrets.INSTAGRAM_SESSION_1 }}
+          INSTAGRAM_SESSION_2: ${{ secrets.INSTAGRAM_SESSION_2 }}
+          INSTAGRAM_SESSION_3: ${{ secrets.INSTAGRAM_SESSION_3 }}
+          INSTAGRAM_SESSION_4: ${{ secrets.INSTAGRAM_SESSION_4 }}
+          INSTAGRAM_SESSION_5: ${{ secrets.INSTAGRAM_SESSION_5 }}
+          INSTAGRAM_SESSION_6: ${{ secrets.INSTAGRAM_SESSION_6 }}
+          INSTAGRAM_SESSION_7: ${{ secrets.INSTAGRAM_SESSION_7 }}
+          INSTAGRAM_SESSION_8: ${{ secrets.INSTAGRAM_SESSION_8 }}
+          INSTAGRAM_SESSION_9: ${{ secrets.INSTAGRAM_SESSION_9 }}
+          INSTAGRAM_SESSION_10: ${{ secrets.INSTAGRAM_SESSION_10 }}
       
       - name: Run Instagram scraper (Multi-Session Parallel)
         id: scrape

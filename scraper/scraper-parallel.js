@@ -344,20 +344,6 @@ async function main() {
     
     // Split accounts into 3 groups
     const allAccounts = config.accounts;
-    const accountsPerSession = Math.ceil(allAccounts.length / 3);
-    
-    const session1Accounts = allAccounts.slice(0, accountsPerSession);
-    const session2Accounts = allAccounts.slice(accountsPerSession, accountsPerSession * 2);
-    const session3Accounts = allAccounts.slice(accountsPerSession * 2);
-    
-    console.log(`[CONFIG] Total accounts: ${allAccounts.length}`);
-    console.log(`[CONFIG] Session 1: ${session1Accounts.length} accounts`);
-    console.log(`[CONFIG] Session 2: ${session2Accounts.length} accounts`);
-    console.log(`[CONFIG] Session 3: ${session3Accounts.length} accounts`);
-    console.log(`[CONFIG] Scroll count: ${config.scrollCount} per account`);
-    console.log(`[CONFIG] Deep scrape: ${config.deepScrapeMode ? 'enabled' : 'disabled'}`);
-    console.log(`[CONFIG] Download images: ${config.downloadImages ? 'enabled' : 'disabled'}`);
-    console.log("=".repeat(70));
 
     // Create images folder
     if (config.downloadImages && !fs.existsSync(IMAGES_FOLDER)) {
@@ -378,78 +364,123 @@ async function main() {
     });
 
     try {
-        // Load sessions
-        console.log("[SETUP] Loading sessions...");
-        const session1Manager = new SessionManager('session1.json');
-        const session2Manager = new SessionManager('session2.json');
-        const session3Manager = new SessionManager('session3.json');
-
-        // Create 3 browser contexts with sessions
-        console.log("[SETUP] Creating browser contexts...");
+        // Auto-detect available sessions (dynamic, scalable)
+        console.log("[SETUP] Auto-detecting available sessions...");
+        const availableSessions = [];
         
-        const context1 = await browser.newContext({
-            viewport: { width: 1280, height: 900 },
-            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        for (let i = 1; i <= 10; i++) {  // Support up to 10 sessions
+            const sessionFile = `session${i}.json`;
+            const sessionPath = path.join(__dirname, sessionFile);
+            
+            if (fs.existsSync(sessionPath)) {
+                try {
+                    const sessionManager = new SessionManager(sessionFile);
+                    const cookies = sessionManager.loadSession();
+                    
+                    // Validate session has cookies
+                    if (cookies && cookies.length > 0) {
+                        availableSessions.push({
+                            id: i,
+                            file: sessionFile,
+                            manager: sessionManager,
+                            cookies: cookies
+                        });
+                        console.log(`[SETUP] ✓ Session ${i} detected (${cookies.length} cookies)`);
+                    } else {
+                        console.log(`[SETUP] ⚠️  Session ${i} file exists but empty, skipping`);
+                    }
+                } catch (error) {
+                    console.log(`[SETUP] ⚠️  Session ${i} invalid, skipping: ${error.message}`);
+                }
+            }
+        }
+        
+        if (availableSessions.length === 0) {
+            console.error("[ERROR] No valid sessions found! Please generate sessions first.");
+            console.error("[ERROR] Run: node generate-sessions.js");
+            process.exit(1);
+        }
+        
+        console.log(`[SETUP] Found ${availableSessions.length} valid sessions`);
+        
+        // Split accounts dynamically based on available sessions
+        const accountsPerSession = Math.ceil(allAccounts.length / availableSessions.length);
+        const sessionAccountGroups = [];
+        
+        for (let i = 0; i < availableSessions.length; i++) {
+            const start = i * accountsPerSession;
+            const end = Math.min(start + accountsPerSession, allAccounts.length);
+            sessionAccountGroups.push(allAccounts.slice(start, end));
+        }
+        
+        console.log(`[SETUP] Accounts distribution:`);
+        sessionAccountGroups.forEach((group, i) => {
+            console.log(`[SETUP]   Session ${i + 1}: ${group.length} accounts`);
         });
-        await context1.addCookies(session1Manager.loadSession());
-        console.log("[SETUP] ✓ Context 1 created (Session 1)");
 
-        const context2 = await browser.newContext({
-            viewport: { width: 1280, height: 900 },
-            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        });
-        await context2.addCookies(session2Manager.loadSession());
-        console.log("[SETUP] ✓ Context 2 created (Session 2)");
+        // Create browser contexts dynamically
+        console.log("[SETUP] Creating browser contexts...");
+        const contexts = [];
+        
+        for (let i = 0; i < availableSessions.length; i++) {
+            const session = availableSessions[i];
+            const context = await browser.newContext({
+                viewport: { width: 1280, height: 900 },
+                userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            });
+            await context.addCookies(session.cookies);
+            contexts.push(context);
+            console.log(`[SETUP] ✓ Context ${i + 1} created (Session ${session.id})`);
+        }
 
-        const context3 = await browser.newContext({
-            viewport: { width: 1280, height: 900 },
-            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        });
-        await context3.addCookies(session3Manager.loadSession());
-        console.log("[SETUP] ✓ Context 3 created (Session 3)");
-
-        console.log("\n[PARALLEL] Starting parallel scraping with staggered delays...");
-        console.log("[PARALLEL] Session 1: Starting immediately");
-        console.log("[PARALLEL] Session 2: Starting after 15-30 seconds");
-        console.log("[PARALLEL] Session 3: Starting after 30-60 seconds");
+        console.log(`\n[PARALLEL] Starting ${availableSessions.length} parallel sessions with staggered delays...`);
+        for (let i = 0; i < availableSessions.length; i++) {
+            const delayMin = i * 15;  // 0s, 15s, 30s, 45s, 60s...
+            const delayMax = delayMin + 15;
+            console.log(`[PARALLEL] Session ${i + 1}: Starting after ${delayMin}-${delayMax} seconds`);
+        }
         console.log("=".repeat(70));
 
-        // Run all 3 sessions in parallel with staggered starts
-        const [result1, result2, result3] = await Promise.all([
-            scrapeWithContext(context1, session1Accounts, 'SESSION-1'),
-            (async () => {
-                const delay = Math.floor(Math.random() * 15000 + 15000); // 15-30 sec
-                console.log(`\n[SESSION-2] Waiting ${Math.floor(delay/1000)}s before starting...`);
-                await sleep(delay, delay);
-                return scrapeWithContext(context2, session2Accounts, 'SESSION-2');
-            })(),
-            (async () => {
-                const delay = Math.floor(Math.random() * 30000 + 30000); // 30-60 sec
-                console.log(`\n[SESSION-3] Waiting ${Math.floor(delay/1000)}s before starting...`);
-                await sleep(delay, delay);
-                return scrapeWithContext(context3, session3Accounts, 'SESSION-3');
-            })()
-        ]);
+        // Run all sessions in parallel with staggered starts (dynamic)
+        const scrapePromises = contexts.map((context, i) => {
+            return (async () => {
+                const delayMin = i * 15000;  // 0ms, 15s, 30s, 45s, 60s...
+                const delayMax = delayMin + 15000;
+                const delay = Math.floor(Math.random() * (delayMax - delayMin) + delayMin);
+                
+                if (delay > 0) {
+                    console.log(`\n[SESSION-${i + 1}] Waiting ${Math.floor(delay/1000)}s before starting...`);
+                    await sleep(delay, delay);
+                }
+                
+                return scrapeWithContext(context, sessionAccountGroups[i], `SESSION-${i + 1}`);
+            })();
+        });
+        
+        const results = await Promise.all(scrapePromises);
 
         const endTime = Date.now();
         const totalDuration = Math.round((endTime - startTime) / 1000);
 
-        // Merge results
+        // Merge results dynamically
         console.log("\n" + "=".repeat(70));
         console.log("[MERGE] Merging results from all sessions...");
         
-        const allResults = {
-            ...result1.results,
-            ...result2.results,
-            ...result3.results
-        };
-
+        const allResults = {};
         const totalStats = {
-            totalPosts: result1.stats.totalPosts + result2.stats.totalPosts + result3.stats.totalPosts,
-            totalCaptions: result1.stats.totalCaptions + result2.stats.totalCaptions + result3.stats.totalCaptions,
-            totalImages: result1.stats.totalImages + result2.stats.totalImages + result3.stats.totalImages,
-            totalDeepScraped: result1.stats.totalDeepScraped + result2.stats.totalDeepScraped + result3.stats.totalDeepScraped
+            totalPosts: 0,
+            totalCaptions: 0,
+            totalImages: 0,
+            totalDeepScraped: 0
         };
+        
+        results.forEach(result => {
+            Object.assign(allResults, result.results);
+            totalStats.totalPosts += result.stats.totalPosts;
+            totalStats.totalCaptions += result.stats.totalCaptions;
+            totalStats.totalImages += result.stats.totalImages;
+            totalStats.totalDeepScraped += result.stats.totalDeepScraped;
+        });
 
         // Save merged results
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(allResults, null, 2));
@@ -459,7 +490,7 @@ async function main() {
         console.log("[COMPLETE] Multi-Session Scraping Complete!");
         console.log("=".repeat(70));
         console.log("[SUMMARY] Overall Statistics:");
-        console.log(`  Sessions Used:      3`);
+        console.log(`  Sessions Used:      ${availableSessions.length}`);
         console.log(`  Accounts Processed: ${allAccounts.length}`);
         console.log(`  Total Posts:        ${totalStats.totalPosts}`);
         console.log(`  Captions Extracted: ${totalStats.totalCaptions}/${totalStats.totalPosts} (${(totalStats.totalCaptions/totalStats.totalPosts*100).toFixed(1)}%)`);

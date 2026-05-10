@@ -395,9 +395,9 @@ jobs:
             fi
           fi
 
-  # Job 3: Insert/update database
-  database:
-    name: Update Database
+  # Job 3: Upload to R2 (NEW - BEFORE database)
+  upload-to-r2:
+    name: Upload Images to R2
     runs-on: ubuntu-latest
     needs: extract
     if: ${{ !cancelled() && needs.extract.result == 'success' }}
@@ -415,12 +415,110 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install Pillow boto3
       
       - name: Download extracted data
         uses: actions/download-artifact@v4
         with:
           name: extracted-data-${{ github.run_number }}
+          path: data/processed/
+      
+      - name: Download scraped images
+        uses: actions/download-artifact@v4
+        with:
+          name: scraped-data-${{ github.run_number }}
+          path: scraper/
+      
+      - name: Create .env file
+        run: |
+          cat > config/.env << EOF
+          R2_ACCOUNT_ID=${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME=${{ secrets.R2_BUCKET_NAME }}
+          R2_PUBLIC_URL=${{ secrets.R2_PUBLIC_URL }}
+          EOF
+          
+          echo "✓ R2 configuration created"
+      
+      - name: Upload images to R2 and modify JSON
+        id: upload
+        run: |
+          # Find latest extracted data file
+          LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | grep -v '_r2.json' | head -1)
+          
+          if [ -z "$LATEST_FILE" ]; then
+            echo "❌ No extracted data file found"
+            exit 1
+          fi
+          
+          echo "📂 Input file: $LATEST_FILE"
+          
+          # Run R2 upload script
+          python scripts/upload_to_r2_before_db.py "$LATEST_FILE"
+          
+          # Check output
+          OUTPUT_FILE="${LATEST_FILE%.json}_r2.json"
+          
+          if [ ! -f "$OUTPUT_FILE" ]; then
+            echo "❌ Output file not created: $OUTPUT_FILE"
+            exit 1
+          fi
+          
+          echo "✅ Modified JSON created: $OUTPUT_FILE"
+          echo "output_file=$OUTPUT_FILE" >> $GITHUB_OUTPUT
+        timeout-minutes: 15
+      
+      - name: Upload modified data
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-data-r2-${{ github.run_number }}
+          path: data/processed/*_r2.json
+          retention-days: 7
+      
+      - name: R2 upload summary
+        if: always()
+        run: |
+          echo "## 📤 R2 Upload Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.upload.outcome }}" == "success" ]; then
+            echo "**Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Images uploaded to R2 and JSON modified with R2 URLs." >> $GITHUB_STEP_SUMMARY
+            echo "Database will be populated with R2 URLs directly." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "R2 upload failed. Database insertion will be skipped." >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # Job 4: Insert/update database (MODIFIED - use R2 JSON)
+  database:
+    name: Update Database
+    runs-on: ubuntu-latest
+    needs: upload-to-r2
+    if: ${{ !cancelled() && needs.upload-to-r2.result == 'success' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Download modified data (R2 URLs)
+        uses: actions/download-artifact@v4
+        with:
+          name: extracted-data-r2-${{ github.run_number }}
           path: data/processed/
       
       - name: Create .env file
@@ -437,15 +535,15 @@ jobs:
           retry_wait_seconds: 30
           command: |
             # Verify file exists in correct location
-            echo "🔍 Checking for extracted data files..."
+            echo "🔍 Checking for R2-modified data files..."
             ls -la data/processed/ || echo "data/processed/ directory not found!"
             
-            # Find the latest extracted data file
-            LATEST_FILE=$(ls -t data/processed/extracted_data_*.json 2>/dev/null | head -1)
+            # Find the latest R2-modified data file
+            LATEST_FILE=$(ls -t data/processed/extracted_data_*_r2.json 2>/dev/null | head -1)
             
             if [ -z "$LATEST_FILE" ]; then
-              echo "❌ ERROR: No extracted data file found in data/processed/"
-              echo "Expected: data/processed/extracted_data_*.json"
+              echo "❌ ERROR: No R2-modified data file found in data/processed/"
+              echo "Expected: data/processed/extracted_data_*_r2.json"
               echo ""
               echo "Available files in data/processed/:"
               find data/processed -type f 2>/dev/null || echo "No files found"
@@ -506,7 +604,7 @@ jobs:
             echo "Check workflow logs for error details." >> $GITHUB_STEP_SUMMARY
           fi
 
-  # Job 4: Cleanup and verification
+  # Job 5: Cleanup and verification
   cleanup:
     name: Cleanup & Verify
     runs-on: ubuntu-latest

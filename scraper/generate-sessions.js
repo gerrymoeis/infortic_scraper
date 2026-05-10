@@ -1,14 +1,18 @@
 /**
- * Instagram Session Generator
+ * Instagram Session Generator (Configurable)
  * 
  * This script helps generate session files for multiple Instagram accounts
  * with proper browser fingerprint isolation and best practices.
  * 
  * Features:
+ * - Configurable session count (2, 3, or 5 sessions)
  * - Different browser fingerprints per session (viewport, user agent)
  * - Manual login with visual feedback
  * - Automatic session detection and saving
  * - Proper cleanup between sessions
+ * 
+ * Configuration:
+ *   Change SESSION_COUNT below to generate 2, 3, or 5 sessions
  * 
  * Usage:
  *   node generate-sessions.js
@@ -19,7 +23,7 @@
  * 3. Detect successful login
  * 4. Save session1.json
  * 5. Close browser
- * 6. Repeat for Account 2 and 3
+ * 6. Repeat for remaining accounts
  */
 
 const { chromium } = require('playwright-extra');
@@ -29,33 +33,76 @@ const path = require('path');
 
 chromium.use(stealth());
 
-// Different browser configurations for each session (fingerprint variation)
-const BROWSER_CONFIGS = [
-    {
-        name: 'Session 1',
-        outputFile: 'session1.json',
-        viewport: { width: 1920, height: 1080 },
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-        locale: 'en-US',
-        timezone: 'America/New_York'
-    },
-    {
-        name: 'Session 2',
-        outputFile: 'session2.json',
-        viewport: { width: 1366, height: 768 },
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
-        locale: 'en-US',
-        timezone: 'America/Los_Angeles'
-    },
-    {
-        name: 'Session 3',
-        outputFile: 'session3.json',
-        viewport: { width: 1440, height: 900 },
-        userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-        locale: 'en-US',
-        timezone: 'America/Chicago'
+// ============================================
+// CONFIGURATION
+// ============================================
+// Change this to generate 2, 3, or 5 sessions
+// Recommended: Start with 2-3 to avoid Instagram blocking
+const SESSION_COUNT = 3;  // Default: 3 sessions
+
+// ============================================
+// BROWSER CONFIGURATIONS (Dynamic)
+// ============================================
+/**
+ * Generate browser configurations based on SESSION_COUNT
+ * Each session gets unique fingerprint to avoid detection
+ */
+function generateBrowserConfigs(count) {
+    // Base configurations for up to 5 sessions
+    const baseConfigs = [
+        {
+            viewport: { width: 1920, height: 1080 },
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            timezone: 'America/New_York'
+        },
+        {
+            viewport: { width: 1366, height: 768 },
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
+            timezone: 'America/Los_Angeles'
+        },
+        {
+            viewport: { width: 1440, height: 900 },
+            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            timezone: 'America/Chicago'
+        },
+        {
+            viewport: { width: 1536, height: 864 },
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            timezone: 'America/Denver'
+        },
+        {
+            viewport: { width: 1280, height: 720 },
+            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            timezone: 'America/Phoenix'
+        }
+    ];
+    
+    // Validate count
+    if (count < 2 || count > 5) {
+        console.error(`\n✗ ERROR: SESSION_COUNT must be between 2 and 5 (got ${count})`);
+        console.error('Please update SESSION_COUNT in the script and try again.');
+        process.exit(1);
     }
-];
+    
+    // Generate configs
+    const configs = [];
+    for (let i = 0; i < count; i++) {
+        const base = baseConfigs[i];
+        configs.push({
+            name: `Session ${i + 1}`,
+            outputFile: `session${i + 1}.json`,
+            viewport: base.viewport,
+            userAgent: base.userAgent,
+            locale: 'en-US',
+            timezone: base.timezone
+        });
+    }
+    
+    return configs;
+}
+
+// Generate browser configs based on SESSION_COUNT
+const BROWSER_CONFIGS = generateBrowserConfigs(SESSION_COUNT);
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -235,15 +282,15 @@ async function generateSession(config) {
 }
 
 /**
- * Main function - generate all 3 sessions
+ * Main function - generate sessions based on SESSION_COUNT
  */
 async function main() {
     console.log("\n" + "=".repeat(70));
-    console.log("Instagram Multi-Session Generator");
+    console.log("Instagram Multi-Session Generator (Configurable)");
     console.log("=".repeat(70));
-    console.log("\nThis script will help you generate 3 session files for parallel scraping.");
+    console.log(`\nThis script will help you generate ${SESSION_COUNT} session files for parallel scraping.`);
     console.log("\nIMPORTANT:");
-    console.log("  - Use 3 DIFFERENT Instagram accounts");
+    console.log(`  - Use ${SESSION_COUNT} DIFFERENT Instagram accounts`);
     console.log("  - Each account should be aged (not brand new)");
     console.log("  - Each account should have access to target profiles");
     console.log("  - You will login MANUALLY for each account");
@@ -256,6 +303,9 @@ async function main() {
     console.log("  6. Close browser");
     console.log("  7. Repeat for next account");
     console.log("\n" + "=".repeat(70));
+    console.log(`\n📝 Configuration: SESSION_COUNT = ${SESSION_COUNT}`);
+    console.log(`   To change: Edit SESSION_COUNT constant in this file`);
+    console.log("=".repeat(70));
 
     // Ask for confirmation
     console.log("\nPress Ctrl+C to cancel, or wait 5 seconds to continue...");
@@ -268,7 +318,7 @@ async function main() {
         const config = BROWSER_CONFIGS[i];
         
         console.log(`\n\n${"#".repeat(70)}`);
-        console.log(`# ACCOUNT ${i + 1} of 3`);
+        console.log(`# ACCOUNT ${i + 1} of ${SESSION_COUNT}`);
         console.log(`${"#".repeat(70)}`);
 
         const success = await generateSession(config);
@@ -293,19 +343,19 @@ async function main() {
     });
 
     const successCount = results.filter(r => r.success).length;
-    console.log(`\nTotal: ${successCount}/${results.length} sessions generated successfully`);
+    console.log(`\nTotal: ${successCount}/${SESSION_COUNT} sessions generated successfully`);
 
-    if (successCount === 3) {
+    if (successCount === SESSION_COUNT) {
         console.log("\n✓ All sessions generated successfully!");
         console.log("\nNext steps:");
-        console.log("  1. Verify all 3 session files exist:");
-        console.log("     - session1.json");
-        console.log("     - session2.json");
-        console.log("     - session3.json");
+        console.log(`  1. Verify all ${SESSION_COUNT} session files exist:`);
+        for (let i = 1; i <= SESSION_COUNT; i++) {
+            console.log(`     - session${i}.json`);
+        }
         console.log("\n  2. Add to GitHub Secrets:");
-        console.log("     - INSTAGRAM_SESSION_1 = <content of session1.json>");
-        console.log("     - INSTAGRAM_SESSION_2 = <content of session2.json>");
-        console.log("     - INSTAGRAM_SESSION_3 = <content of session3.json>");
+        for (let i = 1; i <= SESSION_COUNT; i++) {
+            console.log(`     - INSTAGRAM_SESSION_${i} = <content of session${i}.json>`);
+        }
         console.log("\n  3. Test locally:");
         console.log("     node scraper-parallel.js");
     } else {

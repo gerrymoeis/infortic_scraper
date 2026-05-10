@@ -23,6 +23,7 @@ const stealth = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 const path = require('path');
 const SessionManager = require('./session-manager');
+const ScraperCheckpoint = require('./checkpoint-manager');
 
 chromium.use(stealth());
 
@@ -35,6 +36,19 @@ const IMAGES_FOLDER = path.join(__dirname, 'instagram_images');  // Save to scra
 const sleep = (min, max) => new Promise(resolve => 
     setTimeout(resolve, Math.floor(Math.random() * (max - min + 1) + min))
 );
+
+/**
+ * Shuffle array using Fisher-Yates algorithm (anti-detection)
+ * Randomizes account order to avoid predictable patterns
+ */
+function shuffleArray(array) {
+    const shuffled = [...array];  // Create copy to avoid mutating original
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
 
 async function downloadImage(imageUrl, postId, retries = 3) {
     if (!imageUrl || !postId) return null;
@@ -84,6 +98,7 @@ async function scrapeWithContext(context, accounts, sessionName) {
     
     const page = await context.newPage();
     const results = {};
+    const completedAccounts = [];  // Track successfully completed accounts
     let stats = {
         totalPosts: 0,
         totalCaptions: 0,
@@ -310,6 +325,7 @@ async function scrapeWithContext(context, accounts, sessionName) {
             }
 
             results[username] = Array.from(scrapedPosts.values());
+            completedAccounts.push(username);  // Mark account as completed
             
             stats.totalPosts += scrapedPosts.size;
             stats.totalCaptions += finalCaptionCount;
@@ -321,14 +337,16 @@ async function scrapeWithContext(context, accounts, sessionName) {
         
         console.log(`\n[${sessionName}] ✓ Completed: ${stats.totalPosts} posts from ${accounts.length} accounts`);
         
-        return { results, stats };
+        return { results, stats, completedAccounts };
 
     } catch (error) {
         console.error(`\n[${sessionName}] ✗ Error:`, error.message);
         try {
             await page.close();
         } catch (e) {}
-        throw error;
+        
+        // Return partial results with completed accounts
+        return { results, stats, completedAccounts };
     }
 }
 
@@ -342,8 +360,23 @@ async function main() {
     console.log("[PARALLEL SCRAPER] Instagram Multi-Session Scraper Starting...");
     console.log("=".repeat(70));
     
-    // Split accounts into 3 groups
-    const allAccounts = config.accounts;
+    // Initialize checkpoint manager
+    const checkpoint = new ScraperCheckpoint();
+    
+    // Check for existing checkpoint and get accounts to process
+    const configAccounts = config.accounts;
+    let accountsToProcess = checkpoint.getRemainingAccounts(configAccounts);
+    
+    // If no accounts to process (all completed), clear checkpoint and use all accounts
+    if (accountsToProcess.length === 0) {
+        accountsToProcess = configAccounts;
+    }
+    
+    // Shuffle accounts for anti-detection (randomize order)
+    const allAccounts = shuffleArray(accountsToProcess);
+    console.log(`[ANTI-DETECTION] Accounts shuffled randomly`);
+    console.log(`[ANTI-DETECTION] Order changes each run to avoid patterns`);
+    console.log(`[CONFIG] Processing ${allAccounts.length} accounts`);
 
     // Create images folder
     if (config.downloadImages && !fs.existsSync(IMAGES_FOLDER)) {
@@ -467,6 +500,7 @@ async function main() {
         console.log("[MERGE] Merging results from all sessions...");
         
         const allResults = {};
+        const allCompletedAccounts = [];  // Track all completed accounts
         const totalStats = {
             totalPosts: 0,
             totalCaptions: 0,
@@ -476,6 +510,7 @@ async function main() {
         
         results.forEach(result => {
             Object.assign(allResults, result.results);
+            allCompletedAccounts.push(...result.completedAccounts);
             totalStats.totalPosts += result.stats.totalPosts;
             totalStats.totalCaptions += result.stats.totalCaptions;
             totalStats.totalImages += result.stats.totalImages;
@@ -484,6 +519,27 @@ async function main() {
 
         // Save merged results
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(allResults, null, 2));
+
+        // Update checkpoint with completed accounts
+        if (allCompletedAccounts.length > 0) {
+            const remainingAccounts = configAccounts.filter(
+                account => !allCompletedAccounts.includes(account)
+            );
+            
+            if (remainingAccounts.length === 0) {
+                // All accounts completed - clear checkpoint
+                console.log("[CHECKPOINT] All accounts processed successfully");
+                checkpoint.clear();
+            } else {
+                // Save progress for resume
+                checkpoint.save(
+                    allCompletedAccounts,
+                    remainingAccounts,
+                    configAccounts.length,
+                    totalStats
+                );
+            }
+        }
 
         console.log("[MERGE] ✓ Results merged successfully");
         console.log("=".repeat(70));
@@ -511,5 +567,6 @@ async function main() {
 
 main().catch(error => {
     console.error("\n✗ Fatal error:", error);
+    console.error("[ERROR] Scraping failed - checkpoint may have been saved for resume");
     process.exit(1);
 });

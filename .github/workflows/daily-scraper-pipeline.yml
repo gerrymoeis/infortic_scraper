@@ -9,10 +9,15 @@ name: Daily Scraper Pipeline
 
 on:
   schedule:
-    # Run daily at 10:00 WIB (03:00 UTC) - Optimal time to avoid Gemini API peak traffic
-    # WIB = UTC+7, so 10:00 WIB = 03:00 UTC
-    # Peak hours to avoid: 11:00-15:00 UTC (US East Coast morning, 40-45% error rate)
-    - cron: '0 3 * * *'
+    # Random schedule across the week (anti-detection)
+    # Different time each day to avoid predictable patterns
+    - cron: '0 6 * * 1'   # Monday 06:00 UTC (13:00 WIB)
+    - cron: '0 13 * * 2'  # Tuesday 13:00 UTC (20:00 WIB)
+    - cron: '0 21 * * 3'  # Wednesday 21:00 UTC (04:00 WIB next day)
+    - cron: '0 9 * * 4'   # Thursday 09:00 UTC (16:00 WIB)
+    - cron: '0 15 * * 5'  # Friday 15:00 UTC (22:00 WIB)
+    - cron: '0 2 * * 6'   # Saturday 02:00 UTC (09:00 WIB)
+    - cron: '0 11 * * 0'  # Sunday 11:00 UTC (18:00 WIB)
   
   workflow_dispatch:  # Allow manual trigger for testing
     inputs:
@@ -41,6 +46,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Random startup delay (anti-detection)
+        run: |
+          # Random delay between 10-40 minutes to avoid predictable patterns
+          DELAY=$((RANDOM % 1800 + 600))
+          MINUTES=$((DELAY / 60))
+          SECONDS=$((DELAY % 60))
+          
+          echo "⏰ Anti-detection: Random startup delay"
+          echo "   Waiting: ${MINUTES}m ${SECONDS}s"
+          echo "   This makes scraping time unpredictable"
+          
+          sleep $DELAY
+          
+          echo "✅ Delay complete - starting scraper"
       
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -135,6 +155,55 @@ jobs:
           INSTAGRAM_SESSION_9: ${{ secrets.INSTAGRAM_SESSION_9 }}
           INSTAGRAM_SESSION_10: ${{ secrets.INSTAGRAM_SESSION_10 }}
       
+      - name: Download previous scraper checkpoint
+        id: download-scraper-checkpoint
+        uses: actions/download-artifact@v4
+        with:
+          name: scraper-checkpoint-${{ github.repository_owner }}
+          path: scraper/
+        continue-on-error: true
+      
+      - name: Check for scraper checkpoint
+        id: check-scraper-checkpoint
+        run: |
+          echo "🔍 Checking for previous scraper checkpoint..."
+          
+          if [ -f "scraper/scraper_checkpoint.json" ]; then
+            echo "checkpoint_found=true" >> $GITHUB_OUTPUT
+            
+            # Parse checkpoint info
+            COMPLETED=$(jq -r '.completed_accounts | length' scraper/scraper_checkpoint.json)
+            REMAINING=$(jq -r '.remaining_accounts | length' scraper/scraper_checkpoint.json)
+            TOTAL=$(jq -r '.total_accounts' scraper/scraper_checkpoint.json)
+            PROGRESS=$(jq -r '.progress_percentage' scraper/scraper_checkpoint.json)
+            CREATED_AT=$(jq -r '.created_at' scraper/scraper_checkpoint.json)
+            
+            echo "📍 Checkpoint found!"
+            echo "  - Completed: $COMPLETED accounts"
+            echo "  - Remaining: $REMAINING accounts"
+            echo "  - Progress: $PROGRESS%"
+            echo "  - Created at: $CREATED_AT"
+            echo "  - Will resume from remaining accounts"
+            
+            # Add to job summary
+            echo "## 📍 Resuming Scraper from Checkpoint" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Completed**: $COMPLETED accounts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Remaining**: $REMAINING accounts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Progress**: $PROGRESS%" >> $GITHUB_STEP_SUMMARY
+            echo "- **Created**: $CREATED_AT" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "checkpoint_found=false" >> $GITHUB_OUTPUT
+            echo "🆕 No checkpoint found: Starting from beginning"
+            
+            # Add to job summary
+            echo "## 🆕 Starting Fresh Scrape" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "No previous checkpoint found. Processing all accounts from the beginning." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+      
       - name: Run Instagram scraper (Multi-Session Parallel)
         id: scrape
         run: |
@@ -154,6 +223,23 @@ jobs:
             exit 1
           fi
       
+      - name: Clear scraper checkpoint on success
+        if: success()
+        run: |
+          echo "🧹 Clearing scraper checkpoint (scraping completed successfully)"
+          
+          # Note: Checkpoint file is already cleared by scraper-parallel.js
+          # This step is for logging and documentation purposes
+          
+          if [ ! -f "scraper/scraper_checkpoint.json" ]; then
+            echo "✓ Checkpoint cleared successfully"
+            echo "✓ All accounts processed - no resume needed"
+          else
+            echo "⚠️ Checkpoint file still exists (partial completion)"
+            REMAINING=$(jq -r '.remaining_accounts | length' scraper/scraper_checkpoint.json)
+            echo "⚠️ $REMAINING accounts still remaining"
+          fi
+      
       - name: Upload scraped data
         uses: actions/upload-artifact@v4
         with:
@@ -162,6 +248,44 @@ jobs:
             scraper/instagram_data.json
             scraper/instagram_images/
           retention-days: 7
+      
+      - name: Upload scraper checkpoint on failure
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-checkpoint-${{ github.repository_owner }}
+          path: scraper/scraper_checkpoint.json
+          retention-days: 7
+          if-no-files-found: warn
+      
+      - name: Log scraper checkpoint upload
+        if: failure() || cancelled()
+        run: |
+          if [ -f "scraper/scraper_checkpoint.json" ]; then
+            COMPLETED=$(jq -r '.completed_accounts | length' scraper/scraper_checkpoint.json)
+            REMAINING=$(jq -r '.remaining_accounts | length' scraper/scraper_checkpoint.json)
+            TOTAL=$(jq -r '.total_accounts' scraper/scraper_checkpoint.json)
+            PROGRESS=$(jq -r '.progress_percentage' scraper/scraper_checkpoint.json)
+            
+            echo "💾 Scraper checkpoint uploaded for resume"
+            echo "  - Completed: $COMPLETED accounts"
+            echo "  - Remaining: $REMAINING accounts"
+            echo "  - Progress: $PROGRESS%"
+            echo "  - To resume: Re-run this workflow"
+            
+            # Add to job summary
+            echo "## 💾 Scraper Checkpoint Saved" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Scraping failed/timed out, but progress has been saved:" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Completed**: $COMPLETED accounts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Remaining**: $REMAINING accounts" >> $GITHUB_STEP_SUMMARY
+            echo "- **Progress**: $PROGRESS%" >> $GITHUB_STEP_SUMMARY
+            echo "- **Next step**: Re-run this workflow to resume" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No checkpoint file found to upload"
+          fi
       
       - name: Scraping summary
         if: always()

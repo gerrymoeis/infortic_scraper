@@ -80,6 +80,57 @@ async function dismissAutomatedBehaviorPopup(page, sessionName) {
 }
 
 /**
+ * Handle Instagram account selection/confirmation screen
+ * Detects and clicks "Continue" button when Instagram asks to confirm account
+ */
+async function handleAccountSelectionScreen(page, sessionName) {
+    try {
+        // Multiple selectors for "Continue" button (robustness)
+        const continueSelectors = [
+            'button:has-text("Continue")',
+            'button:text("Continue")',
+            'div[role="button"]:has-text("Continue")',
+            'a:has-text("Continue")',
+            'button[type="button"]:has-text("Continue")'
+        ];
+        
+        for (const selector of continueSelectors) {
+            const continueButton = page.locator(selector).first();
+            const count = await continueButton.count();
+            
+            if (count > 0) {
+                // Check if this is account selection screen (not other Continue buttons)
+                const pageText = await page.textContent('body').catch(() => '');
+                const isAccountSelection = pageText.includes('close friends') || 
+                                          pageText.includes('everyday moments') ||
+                                          pageText.includes('Use another profile');
+                
+                if (isAccountSelection) {
+                    console.log(`[${sessionName}] 🔄 Account selection screen detected`);
+                    
+                    // Natural delay before clicking (human-like)
+                    await sleep(1500, 2500);
+                    
+                    // Click Continue button
+                    await continueButton.click();
+                    console.log(`[${sessionName}] ✓ Clicked Continue button`);
+                    
+                    // Wait for navigation/redirect to homepage
+                    await sleep(3000, 4000);
+                    
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    } catch (error) {
+        console.log(`[${sessionName}] Note: Account selection check failed (${error.message})`);
+        return false;
+    }
+}
+
+/**
  * Take screenshot for debugging (on error)
  */
 async function takeDebugScreenshot(page, sessionName, context) {
@@ -184,6 +235,9 @@ async function scrapeWithContext(context, accounts, sessionName) {
 
         // Check and dismiss automated behavior popup (after login)
         await dismissAutomatedBehaviorPopup(page, sessionName);
+
+        // Handle account selection screen (Continue button)
+        await handleAccountSelectionScreen(page, sessionName);
 
         const isLoggedIn = await page.locator('svg[aria-label*="Search"], svg[aria-label*="Home"]').count() > 0;
 

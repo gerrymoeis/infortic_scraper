@@ -2,14 +2,16 @@
 
 Production-ready Instagram opportunity scraper with AI-powered extraction, automated database management, and Cloudflare R2 CDN integration.
 
-**Latest Update (May 2026)**: Added R2 CDN integration for image optimization and configurable multi-session scraping (2-5 sessions).
+**Latest Update (May 2026)**: Added anti-detection features (random scheduling, checkpoint system, popup handlers) and R2 CDN integration.
 
 ## Features
 
-- 🤖 Instagram post scraping with Playwright (configurable 2-5 sessions)
+- 🤖 Instagram post scraping with Playwright (dynamic 1-10 sessions)
+- 🛡️ Anti-detection: random scheduling, account shuffling, popup handlers
+- 🔄 Checkpoint system: resume capability on failures
 - 🧠 AI-powered data extraction using Google Gemini 3.1 Flash-Lite
 - 📸 OCR fallback for date extraction (Tesseract)
-- 🔄 Proactive API key rotation (5 keys, round-robin)
+- 🔑 Proactive API key rotation (5 keys, round-robin)
 - 🖼️ Cloudflare R2 CDN integration (WebP optimization, Q70)
 - 🔍 Intelligent duplicate detection and merging
 - ⏰ Automatic expiration filtering
@@ -71,18 +73,26 @@ The system follows clean architecture with four distinct layers:
 
 ## Key Features
 
-### Cloudflare R2 CDN Integration (New!)
+### Anti-Detection System (New!)
+- **Random Scheduling**: 7 different cron schedules (different time each day)
+- **Random Startup Delay**: 10-40 minutes delay to avoid predictable patterns
+- **Account Shuffling**: Fisher-Yates algorithm randomizes account order each run
+- **Popup Handlers**: Auto-dismiss Instagram warnings and account selection screens
+- **Checkpoint System**: Resume from last successful point on failures
+- **Debug Screenshots**: Automatic screenshots on errors for diagnosis
+
+### Cloudflare R2 CDN Integration
 - **WebP Optimization**: Images converted to WebP Q70 (~60% size reduction)
 - **Fast CDN Delivery**: Images served via Cloudflare Workers
 - **R2-First Architecture**: Images uploaded to R2 before database insertion
 - **No Instagram URL Expiration**: All images permanently stored in R2
 - **Automatic Upload**: GitHub Actions workflow handles R2 upload automatically
 
-### Configurable Multi-Session Scraping (New!)
-- **2-5 Sessions**: Easy scaling by changing single constant
-- **Dynamic Configuration**: Automatic browser fingerprint generation
-- **Gradual Scaling**: Start with 2-3 sessions to avoid Instagram blocking
+### Dynamic Multi-Session Scraping
+- **1-10 Sessions**: Auto-detect available sessions dynamically
+- **No Hardcoded Limits**: Easy scaling by adding session secrets
 - **Independent Rate Limits**: Each session has isolated rate limiting
+- **Staggered Starts**: 15-second intervals between sessions (human-like)
 
 ### Proactive API Key Rotation
 - **5 API Keys**: Supports multiple Google Cloud projects
@@ -195,10 +205,11 @@ Add the following secrets:
    - Get them from: https://aistudio.google.com/app/apikey
    - Format: `AIzaSy...,AIzaSy...,AIzaSy...` (5 keys recommended)
 
-3. **INSTAGRAM_SESSION_1, INSTAGRAM_SESSION_2, INSTAGRAM_SESSION_3**
-   - Instagram session cookies for authentication (3 different accounts)
+3. **INSTAGRAM_SESSION_1, INSTAGRAM_SESSION_2, ..., INSTAGRAM_SESSION_10**
+   - Instagram session cookies for authentication (up to 10 sessions)
    - Generate using: `cd scraper && node generate-sessions.js`
-   - Copy entire content of `session1.json`, `session2.json`, `session3.json`
+   - Copy entire content of `session1.json`, `session2.json`, etc.
+   - System auto-detects available sessions (1-10)
 
 4. **R2_ACCOUNT_ID**
    - Your Cloudflare R2 account ID
@@ -302,13 +313,16 @@ This is a production system. For development:
 
 ## Recent Updates
 
-### May 2026 - R2 CDN Integration & Configurable Sessions
-- ✅ Cloudflare R2 CDN integration for image optimization
-- ✅ WebP Q70 conversion (~60% size reduction)
-- ✅ R2-first architecture (upload before database)
-- ✅ Configurable multi-session scraping (2-5 sessions)
-- ✅ Dynamic browser fingerprint generation
-- ✅ Automated R2 upload in GitHub Actions workflow
+### May 2026 - Anti-Detection & Reliability
+- ✅ Random scheduling (7 different times per week)
+- ✅ Random startup delay (10-40 minutes)
+- ✅ Account shuffling (Fisher-Yates algorithm)
+- ✅ Checkpoint system (resume on failures)
+- ✅ Instagram popup handlers (automated behavior & account selection)
+- ✅ Debug screenshots (automatic error diagnosis)
+- ✅ Dynamic session detection (1-10 sessions)
+- ✅ R2 CDN integration & WebP optimization
+- ✅ Fixed R2 upload job dependencies
 
 ### April 2026 - System Optimization
 - ✅ Achieved 100% success rate (up from 85.7%)

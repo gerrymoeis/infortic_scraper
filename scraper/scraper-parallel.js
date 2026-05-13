@@ -38,6 +38,62 @@ const sleep = (min, max) => new Promise(resolve =>
 );
 
 /**
+ * Load Instagram passwords from environment
+ * Maps session number to password
+ */
+function loadInstagramPasswords() {
+    const passwords = {};
+    for (let i = 1; i <= 10; i++) {
+        const password = process.env[`INSTAGRAM_PASSWORD_${i}`];
+        if (password) {
+            passwords[i] = password;
+        }
+    }
+    return passwords;
+}
+
+/**
+ * Type text with human-like delays
+ * Simulates natural typing patterns with variation
+ */
+async function typeHumanLike(page, selector, text, sessionName) {
+    try {
+        const input = page.locator(selector).first();
+        
+        // Focus on input field
+        await input.click();
+        await sleep(200, 400);
+        
+        // Type each character with human-like delays
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            
+            // Base delay: 80-150ms
+            let delay = Math.floor(Math.random() * 70 + 80);
+            
+            // Longer pause every 3-4 characters (150-200ms)
+            if (i > 0 && i % 3 === 0) {
+                delay = Math.floor(Math.random() * 50 + 150);
+            }
+            
+            // Type character
+            await input.pressSequentially(char, { delay: 0 });
+            
+            // Wait with variation
+            await sleep(delay, delay + 20);
+        }
+        
+        // Small pause after typing
+        await sleep(300, 500);
+        
+        return true;
+    } catch (error) {
+        console.log(`[${sessionName}] Error typing: ${error.message}`);
+        return false;
+    }
+}
+
+/**
  * Detect and dismiss Instagram anti-bot popup
  * Handles "We suspect automated behavior" warning
  */
@@ -131,6 +187,95 @@ async function handleAccountSelectionScreen(page, sessionName) {
 }
 
 /**
+ * Handle Instagram password challenge modal
+ * Detects password prompt and enters password with human-like typing
+ */
+async function handlePasswordChallenge(page, sessionName, sessionNumber, passwords) {
+    try {
+        // Check for password modal
+        const passwordModalSelectors = [
+            'input[name="password"]',
+            'input[type="password"]',
+            'input[aria-label="Password"]'
+        ];
+        
+        let passwordInput = null;
+        for (const selector of passwordModalSelectors) {
+            const input = page.locator(selector).first();
+            const count = await input.count();
+            if (count > 0) {
+                passwordInput = input;
+                break;
+            }
+        }
+        
+        if (!passwordInput) {
+            return false; // No password challenge
+        }
+        
+        console.log(`[${sessionName}] 🔐 Password challenge detected`);
+        
+        // Take screenshot before entering password
+        await takeDebugScreenshot(page, sessionName, 'password_prompt');
+        
+        // Get password for this session
+        const password = passwords[sessionNumber];
+        if (!password) {
+            console.log(`[${sessionName}] ❌ No password configured for session ${sessionNumber}`);
+            return false;
+        }
+        
+        // Type password with human-like delays
+        console.log(`[${sessionName}] ⌨️  Typing password...`);
+        const typed = await typeHumanLike(page, passwordModalSelectors[0], password, sessionName);
+        
+        if (!typed) {
+            console.log(`[${sessionName}] ❌ Failed to type password`);
+            return false;
+        }
+        
+        console.log(`[${sessionName}] ✓ Password entered`);
+        
+        // Find and click Log in button
+        const loginButtonSelectors = [
+            'button[type="submit"]',
+            'button:has-text("Log in")',
+            'div[role="button"]:has-text("Log in")'
+        ];
+        
+        let loginClicked = false;
+        for (const selector of loginButtonSelectors) {
+            const button = page.locator(selector).first();
+            const count = await button.count();
+            if (count > 0) {
+                await sleep(500, 800); // Natural delay before clicking
+                await button.click();
+                console.log(`[${sessionName}] ✓ Clicked Log in button`);
+                loginClicked = true;
+                break;
+            }
+        }
+        
+        if (!loginClicked) {
+            console.log(`[${sessionName}] ⚠️  Could not find Log in button`);
+            return false;
+        }
+        
+        // Wait for authentication (modal should close)
+        await sleep(3000, 4000);
+        
+        // Take screenshot after login attempt
+        await takeDebugScreenshot(page, sessionName, 'after_password_login');
+        
+        return true;
+        
+    } catch (error) {
+        console.log(`[${sessionName}] Note: Password challenge check failed (${error.message})`);
+        return false;
+    }
+}
+
+/**
  * Take screenshot for debugging (on error)
  */
 async function takeDebugScreenshot(page, sessionName, context) {
@@ -210,7 +355,7 @@ async function downloadImage(imageUrl, postId, retries = 3) {
 /**
  * Scrape accounts using a single session/context
  */
-async function scrapeWithContext(context, accounts, sessionName) {
+async function scrapeWithContext(context, accounts, sessionName, sessionNumber, passwords) {
     console.log(`\n[${sessionName}] Starting scraper for ${accounts.length} accounts`);
     console.log(`[${sessionName}] Accounts: ${accounts.map(a => '@' + a).join(', ')}`);
     
@@ -238,6 +383,9 @@ async function scrapeWithContext(context, accounts, sessionName) {
 
         // Handle account selection screen (Continue button)
         await handleAccountSelectionScreen(page, sessionName);
+
+        // Handle password challenge (if prompted)
+        await handlePasswordChallenge(page, sessionName, sessionNumber, passwords);
 
         const isLoggedIn = await page.locator('svg[aria-label*="Search"], svg[aria-label*="Home"]').count() > 0;
 
@@ -489,6 +637,10 @@ async function main() {
     console.log("[PARALLEL SCRAPER] Instagram Multi-Session Scraper Starting...");
     console.log("=".repeat(70));
     
+    // Load Instagram passwords
+    const passwords = loadInstagramPasswords();
+    console.log(`[SETUP] Loaded passwords for ${Object.keys(passwords).length} sessions`);
+    
     // Initialize checkpoint manager
     const checkpoint = new ScraperCheckpoint();
     
@@ -615,7 +767,13 @@ async function main() {
                     await sleep(delay, delay);
                 }
                 
-                return scrapeWithContext(context, sessionAccountGroups[i], `SESSION-${i + 1}`);
+                return scrapeWithContext(
+                    context, 
+                    sessionAccountGroups[i], 
+                    `SESSION-${i + 1}`,
+                    availableSessions[i].id,  // Pass session number
+                    passwords  // Pass passwords map
+                );
             })();
         });
         

@@ -78,6 +78,7 @@ The system follows clean architecture with four distinct layers:
 - **Random Startup Delay**: 10-40 minutes delay to avoid predictable patterns
 - **Account Shuffling**: Fisher-Yates algorithm randomizes account order each run
 - **Popup Handlers**: Auto-dismiss Instagram warnings and account selection screens
+- **Password Challenge Handler**: Automatic re-authentication with human-like typing
 - **Checkpoint System**: Resume from last successful point on failures
 - **Debug Screenshots**: Automatic screenshots on errors for diagnosis
 
@@ -211,22 +212,28 @@ Add the following secrets:
    - Copy entire content of `session1.json`, `session2.json`, etc.
    - System auto-detects available sessions (1-10)
 
-4. **R2_ACCOUNT_ID**
+4. **INSTAGRAM_PASSWORD_1, INSTAGRAM_PASSWORD_2, ..., INSTAGRAM_PASSWORD_10**
+   - Instagram account passwords for re-authentication challenges
+   - Required when Instagram prompts for password after session login
+   - One password per session (matches session number)
+   - Used for automatic password challenge handling
+
+5. **R2_ACCOUNT_ID**
    - Your Cloudflare R2 account ID
    - Get from: Cloudflare Dashboard → R2 → Overview
 
-5. **R2_ACCESS_KEY_ID**
+6. **R2_ACCESS_KEY_ID**
    - Your R2 access key ID
    - Generate from: Cloudflare Dashboard → R2 → Manage R2 API Tokens
 
-6. **R2_SECRET_ACCESS_KEY**
+7. **R2_SECRET_ACCESS_KEY**
    - Your R2 secret access key
    - Generated together with access key ID
 
-7. **R2_BUCKET_NAME**
+8. **R2_BUCKET_NAME**
    - Your R2 bucket name (e.g., `infortic-images`)
 
-8. **R2_PUBLIC_URL**
+9. **R2_PUBLIC_URL**
    - Your Cloudflare Worker URL for R2 bucket
    - Format: `https://your-bucket.your-domain.workers.dev`
 

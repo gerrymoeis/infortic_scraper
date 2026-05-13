@@ -154,6 +154,16 @@ jobs:
           INSTAGRAM_SESSION_8: ${{ secrets.INSTAGRAM_SESSION_8 }}
           INSTAGRAM_SESSION_9: ${{ secrets.INSTAGRAM_SESSION_9 }}
           INSTAGRAM_SESSION_10: ${{ secrets.INSTAGRAM_SESSION_10 }}
+          INSTAGRAM_PASSWORD_1: ${{ secrets.INSTAGRAM_PASSWORD_1 }}
+          INSTAGRAM_PASSWORD_2: ${{ secrets.INSTAGRAM_PASSWORD_2 }}
+          INSTAGRAM_PASSWORD_3: ${{ secrets.INSTAGRAM_PASSWORD_3 }}
+          INSTAGRAM_PASSWORD_4: ${{ secrets.INSTAGRAM_PASSWORD_4 }}
+          INSTAGRAM_PASSWORD_5: ${{ secrets.INSTAGRAM_PASSWORD_5 }}
+          INSTAGRAM_PASSWORD_6: ${{ secrets.INSTAGRAM_PASSWORD_6 }}
+          INSTAGRAM_PASSWORD_7: ${{ secrets.INSTAGRAM_PASSWORD_7 }}
+          INSTAGRAM_PASSWORD_8: ${{ secrets.INSTAGRAM_PASSWORD_8 }}
+          INSTAGRAM_PASSWORD_9: ${{ secrets.INSTAGRAM_PASSWORD_9 }}
+          INSTAGRAM_PASSWORD_10: ${{ secrets.INSTAGRAM_PASSWORD_10 }}
       
       - name: Download previous scraper checkpoint
         id: download-scraper-checkpoint

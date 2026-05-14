@@ -115,7 +115,7 @@ def get_expiration_stats():
                 return {}
         
     except Exception as e:
-        logger.error(f"[ERROR] Failed to get stats: {e}")
+        logger.error(f"[ERROR] Failed to get stats: {type(e).__name__}: {str(e)}")
         import traceback
         logger.debug(traceback.format_exc())
         return {}

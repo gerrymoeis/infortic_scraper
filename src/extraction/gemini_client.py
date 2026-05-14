@@ -406,8 +406,8 @@ Return JSON array only:
             tried_combinations = set()
             tried_combinations.add((config.CURRENT_KEY_INDEX, config.CURRENT_MODEL_INDEX))
             
-            # Maximum attempts: all keys (no model rotation since we only have 1 model)
-            max_attempts = len(config.GEMINI_API_KEYS) * 2  # 2 attempts per key
+            # Maximum attempts: optimized for faster failover (3 attempts per key)
+            max_attempts = config.MAX_RETRY_ATTEMPTS
             
             for attempt in range(1, max_attempts + 1):
                 try:
@@ -452,8 +452,8 @@ Return JSON array only:
                     
                     # Log error details
                     if is_server_error:
-                        # Server overload - wait and retry with exponential backoff
-                        wait_time = min(2 ** attempt, 30)  # Max 30 seconds (optimized for faster recovery)
+                        # Server overload - wait and retry with optimized backoff
+                        wait_time = min(2 ** attempt, config.MAX_BACKOFF_SECONDS)  # Optimized: max 10s
                         logger.warning(f"[WARNING] Server error (503/500) - waiting {wait_time}s before retry...")
                         time.sleep(wait_time)
                         logger.info(f"[RETRY] Retrying with key #{config.CURRENT_KEY_INDEX + 1}, model: {config.GEMINI_MODEL} (attempt {attempt}/{max_attempts})")
@@ -489,9 +489,9 @@ Return JSON array only:
                         logger.error(f"[ERROR] All {len(config.GEMINI_API_KEYS)} API keys exhausted")
                         return []
                     
-                    # For other errors, use exponential backoff
+                    # For other errors, use optimized exponential backoff
                     if attempt < max_attempts:
-                        wait_time = min(2 ** attempt, 30)  # Cap at 30 seconds
+                        wait_time = min(2 ** attempt, config.MAX_BACKOFF_SECONDS)  # Optimized: max 10s
                         logger.warning(f"Retrying in {wait_time}s...")
                         time.sleep(wait_time)
                     else:

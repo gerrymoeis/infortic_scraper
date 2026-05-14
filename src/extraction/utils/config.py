@@ -30,6 +30,9 @@ class Config:
     OPENROUTER_API_KEY = OPENROUTER_API_KEYS[0] if OPENROUTER_API_KEYS else None
     CURRENT_OPENROUTER_KEY_INDEX = 0
     
+    # Primary service selection (NEW: OpenRouter PRIMARY, Gemini FALLBACK)
+    PRIMARY_SERVICE = os.getenv('PRIMARY_SERVICE', 'openrouter')  # 'openrouter' or 'gemini'
+    
     # Fallback settings
     USE_OPENROUTER_FALLBACK = os.getenv('USE_OPENROUTER_FALLBACK', 'true').lower() == 'true'
     
@@ -47,6 +50,10 @@ class Config:
     DELAY_BETWEEN_REQUESTS = int(os.getenv('DELAY_BETWEEN_REQUESTS', json_config.get('delayBetweenRequests', 4)))
     TEMPERATURE = 0.1
     MAX_RETRIES = 3
+    
+    # Retry optimization (NEW: Reduced from 10 to 3 attempts, faster backoff)
+    MAX_RETRY_ATTEMPTS = int(os.getenv('MAX_RETRY_ATTEMPTS', '3'))  # Reduced from 10
+    MAX_BACKOFF_SECONDS = int(os.getenv('MAX_BACKOFF_SECONDS', '10'))  # Reduced from 30
     
     # Paths
     OUTPUT_DIR = Path(os.getenv('OUTPUT_DIR', 'data/raw'))

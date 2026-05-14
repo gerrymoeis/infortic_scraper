@@ -327,8 +327,8 @@ Return JSON array only:
             tried_keys = set()
             tried_keys.add(config.CURRENT_OPENROUTER_KEY_INDEX)
             
-            # Maximum attempts: all keys * 2
-            max_attempts = len(config.OPENROUTER_API_KEYS) * 2
+            # Maximum attempts: optimized for faster failover (3 attempts)
+            max_attempts = config.MAX_RETRY_ATTEMPTS
             
             for attempt in range(1, max_attempts + 1):
                 try:
@@ -376,8 +376,8 @@ Return JSON array only:
                     
                     # Log error details
                     if is_server_error:
-                        # Server overload - wait and retry with exponential backoff
-                        wait_time = min(2 ** attempt, 30)
+                        # Server overload - wait and retry with optimized backoff
+                        wait_time = min(2 ** attempt, config.MAX_BACKOFF_SECONDS)  # Optimized: max 10s
                         logger.warning(f"[WARNING] Server error (503/500) - waiting {wait_time}s before retry...")
                         time.sleep(wait_time)
                         continue
@@ -406,9 +406,9 @@ Return JSON array only:
                         logger.error(f"[ERROR] All {len(config.OPENROUTER_API_KEYS)} API keys exhausted")
                         return []
                     
-                    # For other errors, use exponential backoff
+                    # For other errors, use optimized exponential backoff
                     if attempt < max_attempts:
-                        wait_time = min(2 ** attempt, 30)
+                        wait_time = min(2 ** attempt, config.MAX_BACKOFF_SECONDS)  # Optimized: max 10s
                         logger.warning(f"Retrying in {wait_time}s...")
                         time.sleep(wait_time)
                     else:

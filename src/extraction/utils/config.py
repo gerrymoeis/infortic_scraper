@@ -24,6 +24,15 @@ class Config:
     GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else None  # Default to first key
     CURRENT_KEY_INDEX = 0  # Track which key we're using
     
+    # OpenRouter API - Support multiple keys for rotation (FALLBACK)
+    _openrouter_keys_str = os.getenv('OPENROUTER_API_KEY', '')
+    OPENROUTER_API_KEYS = [key.strip() for key in _openrouter_keys_str.split(',') if key.strip()]
+    OPENROUTER_API_KEY = OPENROUTER_API_KEYS[0] if OPENROUTER_API_KEYS else None
+    CURRENT_OPENROUTER_KEY_INDEX = 0
+    
+    # Fallback settings
+    USE_OPENROUTER_FALLBACK = os.getenv('USE_OPENROUTER_FALLBACK', 'true').lower() == 'true'
+    
     # Model configuration - Use only gemini-3.1-flash-lite-preview
     # This model has the BEST free tier limits: 15 RPM, 500 RPD, 250K TPM
     # Other models have LOWER limits (5 RPM, 20 RPD) and should NOT be used as fallbacks
@@ -56,6 +65,16 @@ class Config:
         cls.CURRENT_KEY_INDEX = (cls.CURRENT_KEY_INDEX + 1) % len(cls.GEMINI_API_KEYS)
         cls.GEMINI_API_KEY = cls.GEMINI_API_KEYS[cls.CURRENT_KEY_INDEX]
         return cls.GEMINI_API_KEY
+    
+    @classmethod
+    def get_next_openrouter_key(cls):
+        """Rotate to next OpenRouter API key"""
+        if len(cls.OPENROUTER_API_KEYS) <= 1:
+            return cls.OPENROUTER_API_KEY
+        
+        cls.CURRENT_OPENROUTER_KEY_INDEX = (cls.CURRENT_OPENROUTER_KEY_INDEX + 1) % len(cls.OPENROUTER_API_KEYS)
+        cls.OPENROUTER_API_KEY = cls.OPENROUTER_API_KEYS[cls.CURRENT_OPENROUTER_KEY_INDEX]
+        return cls.OPENROUTER_API_KEY
     
     @classmethod
     def get_next_model(cls):

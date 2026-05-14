@@ -417,6 +417,9 @@ jobs:
           # Gemini API Keys (5 keys for proactive rotation)
           GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           
+          # OpenRouter API Keys (FALLBACK - 5 keys)
+          OPENROUTER_API_KEY=${{ secrets.OPENROUTER_API_KEY }}
+          
           # Database
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           
@@ -424,6 +427,9 @@ jobs:
           BATCH_SIZE=25
           DELAY_BETWEEN_REQUESTS=5
           GEMINI_MODEL=gemini-3.1-flash-lite-preview
+          
+          # Fallback Settings
+          USE_OPENROUTER_FALLBACK=true
           EOF
           
           echo "✓ Configuration created"

@@ -11,7 +11,7 @@ from typing import Dict, List
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.extraction.gemini_client import GeminiClient
+from src.extraction.ai_client import AIClient
 from src.extraction.ocr_extractor import OCRExtractor
 from src.extraction.organizer_validator import OrganizerValidator
 from src.extraction.checkpoint_manager import CheckpointManager
@@ -25,7 +25,7 @@ class DataExtractor:
     def __init__(self):
         """Initialize data extractor"""
         config.validate()
-        self.gemini_client = GeminiClient()
+        self.ai_client = AIClient()  # Unified client with Gemini + OpenRouter fallback
         self.ocr_extractor = OCRExtractor()
         self.organizer_validator = OrganizerValidator()
         self.checkpoint_manager = CheckpointManager(config.PROCESSED_DIR)
@@ -146,8 +146,8 @@ class DataExtractor:
             logger.info(f"  [BATCH {batch_num}/{total_batches}] Posts {i+1}-{min(i+config.BATCH_SIZE, total_captions)}")
             
             try:
-                # Process batch with Gemini (SEND IMAGES for better accuracy!)
-                batch_results = self.gemini_client.process_batch(batch, ocr_texts, send_images=True)
+                # Process batch with AI (Gemini + OpenRouter fallback)
+                batch_results = self.ai_client.process_batch(batch, ocr_texts, send_images=True)
                 
                 # Add delay between batches to avoid overwhelming API (except for last batch)
                 if batch_num < total_batches:
@@ -382,7 +382,7 @@ class DataExtractor:
                             result['downloaded_image'] = batch[j]['downloaded_image']
                     
                     all_results.extend(batch_results)
-                    logger.info(f"    [GEMINI] Response received: {len(batch_results)}/{len(batch)} items extracted")
+                    logger.info(f"    [AI] Response received: {len(batch_results)}/{len(batch)} items extracted")
                 else:
                     logger.warning(f"    [WARNING] Batch returned no results")
                     failed_batches.append({

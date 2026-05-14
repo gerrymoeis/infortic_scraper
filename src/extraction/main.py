@@ -665,7 +665,7 @@ def main():
         logger.info(f"  Total Posts:        {total_posts}")
         logger.info(f"  Successfully Extracted: {len(results)}/{total_posts} ({len(results)/total_posts*100:.1f}%)")
         logger.info(f"  Output File:        {output_file.name}")
-        logger.info(f"  Duration:           {extractor.gemini_client.total_time:.1f}s" if hasattr(extractor.gemini_client, 'total_time') else "")
+        logger.info(f"  Duration:           {extractor.ai_client.gemini_client.total_time:.1f}s" if hasattr(extractor.ai_client.gemini_client, 'total_time') else "")
         logger.info('='*60)
         logger.info(f"\n[NEXT] Database Insertion:")
         logger.info(f"  python src/database/main.py {output_file}\n")

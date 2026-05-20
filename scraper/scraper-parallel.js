@@ -301,6 +301,164 @@ async function takeDebugScreenshot(page, sessionName, context) {
 }
 
 /**
+ * Detect Instagram error pages
+ * Returns: { hasError: boolean, errorType: string, canRetry: boolean, hasReloadButton: boolean }
+ */
+async function detectInstagramErrorPage(page, sessionName) {
+    try {
+        const pageState = await page.evaluate(() => {
+            const bodyText = document.body.innerText || '';
+            const bodyHTML = document.body.innerHTML || '';
+            
+            // Error Type 1: "Something went wrong"
+            if (bodyText.includes('Something went wrong') && 
+                bodyText.includes('page could not be loaded')) {
+                return { 
+                    hasError: true, 
+                    errorType: 'something_went_wrong',
+                    canRetry: true,
+                    hasReloadButton: bodyText.includes('Reload page')
+                };
+            }
+            
+            // Error Type 2: "Sorry, this page isn't available"
+            if (bodyText.includes("Sorry, this page isn't available") ||
+                bodyText.includes("The link you followed may be broken")) {
+                return { 
+                    hasError: true, 
+                    errorType: 'page_not_available',
+                    canRetry: false,
+                    hasReloadButton: false
+                };
+            }
+            
+            // Error Type 3: Rate limit / Try again later
+            if (bodyText.includes('Try Again Later') ||
+                bodyText.includes('Please wait a few minutes')) {
+                return { 
+                    hasError: true, 
+                    errorType: 'rate_limit',
+                    canRetry: true,
+                    hasReloadButton: false
+                };
+            }
+            
+            // Error Type 4: Challenge required
+            if (bodyText.includes('Challenge Required') ||
+                bodyHTML.includes('challenge_required')) {
+                return { 
+                    hasError: true, 
+                    errorType: 'challenge_required',
+                    canRetry: false,
+                    hasReloadButton: false
+                };
+            }
+            
+            // Error Type 5: Login required (session expired)
+            if (bodyText.includes('Log in to continue') ||
+                bodyHTML.includes('loginForm')) {
+                return { 
+                    hasError: true, 
+                    errorType: 'session_expired',
+                    canRetry: false,
+                    hasReloadButton: false
+                };
+            }
+            
+            return { hasError: false, errorType: null, canRetry: false, hasReloadButton: false };
+        });
+        
+        return pageState;
+        
+    } catch (error) {
+        console.log(`[${sessionName}] Error detection failed: ${error.message}`);
+        return { hasError: false, errorType: null, canRetry: false, hasReloadButton: false };
+    }
+}
+
+/**
+ * Handle error page with smart retry
+ * Max 2 retries with progressive backoff (5s, 15s)
+ * Returns: { success: boolean, skipped: boolean, reason: string }
+ */
+async function handleErrorPageWithRetry(page, sessionName, username, maxRetries = 2) {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        // Detect error
+        const errorState = await detectInstagramErrorPage(page, sessionName);
+        
+        if (!errorState.hasError) {
+            return { success: true, skipped: false, reason: null };
+        }
+        
+        console.log(`[${sessionName}] ⚠️  Error detected: ${errorState.errorType} (Attempt ${attempt}/${maxRetries})`);
+        
+        // Take screenshot for debugging
+        await takeDebugScreenshot(page, sessionName, `error_${errorState.errorType}_${username}_attempt_${attempt}`);
+        
+        // Check if retry is possible
+        if (!errorState.canRetry) {
+            console.log(`[${sessionName}] ❌ Error type '${errorState.errorType}' cannot be retried, skipping account`);
+            return { success: false, skipped: true, reason: errorState.errorType };
+        }
+        
+        // Progressive backoff: 5s, 15s (GitHub Actions friendly)
+        const backoffTime = attempt === 1 ? 5000 : 15000;
+        console.log(`[${sessionName}] ⏳ Waiting ${backoffTime/1000}s before retry...`);
+        await sleep(backoffTime, backoffTime + 2000);
+        
+        // Try to reload
+        if (errorState.hasReloadButton) {
+            // Click "Reload page" button
+            const reloadButtonSelectors = [
+                'button:has-text("Reload page")',
+                'button:text("Reload page")',
+                'div[role="button"]:has-text("Reload page")'
+            ];
+            
+            let clicked = false;
+            for (const selector of reloadButtonSelectors) {
+                const button = page.locator(selector).first();
+                if (await button.count() > 0) {
+                    await button.click();
+                    console.log(`[${sessionName}] 🔄 Clicked "Reload page" button`);
+                    clicked = true;
+                    break;
+                }
+            }
+            
+            if (!clicked) {
+                // Fallback: page.reload()
+                await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
+                console.log(`[${sessionName}] 🔄 Page reloaded (fallback)`);
+            }
+        } else {
+            // No reload button, just reload page
+            await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 });
+            console.log(`[${sessionName}] 🔄 Page reloaded`);
+        }
+        
+        // Wait for page to settle
+        await sleep(3000, 4000);
+        
+        // Take screenshot after reload
+        await takeDebugScreenshot(page, sessionName, `after_reload_${username}_attempt_${attempt}`);
+        
+        // Check if error resolved
+        const recheckState = await detectInstagramErrorPage(page, sessionName);
+        if (!recheckState.hasError) {
+            console.log(`[${sessionName}] ✅ Error resolved after retry ${attempt}`);
+            return { success: true, skipped: false, reason: null };
+        }
+        
+        console.log(`[${sessionName}] ⚠️  Error persists after retry ${attempt}`);
+    }
+    
+    // Max retries reached
+    console.log(`[${sessionName}] ❌ Max retries (${maxRetries}) reached, skipping account`);
+    return { success: false, skipped: true, reason: 'max_retries_exceeded' };
+}
+
+/**
  * Shuffle array using Fisher-Yates algorithm (anti-detection)
  * Randomizes account order to avoid predictable patterns
  */
@@ -398,6 +556,8 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
         console.log(`[${sessionName}] ✓ Authenticated successfully`);
 
         // Scrape each account
+        const failedAccounts = [];  // Track failed accounts with reasons
+        
         for (let i = 0; i < accounts.length; i++) {
             const username = accounts[i];
             console.log(`\n[${sessionName}] ${"=".repeat(50)}`);
@@ -413,12 +573,21 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
             // Check and dismiss automated behavior popup (after profile navigation)
             await dismissAutomatedBehaviorPopup(page, sessionName);
             
+            // NEW: Check for error page and retry if needed
+            const errorHandleResult = await handleErrorPageWithRetry(page, sessionName, username);
+            if (!errorHandleResult.success) {
+                console.log(`[${sessionName}] ⚠️  Skipping @${username} due to error: ${errorHandleResult.reason}`);
+                failedAccounts.push({ username, reason: errorHandleResult.reason });
+                continue; // Skip to next account
+            }
+            
             try {
                 await page.waitForSelector('a[href*="/p/"], a[href*="/reel/"]', { timeout: 15000 });
                 console.log(`[${sessionName}] Post grid detected`);
             } catch (e) {
                 console.log(`[${sessionName}] WARNING: Could not detect post grid`);
                 await takeDebugScreenshot(page, sessionName, `no_grid_${username}`);
+                failedAccounts.push({ username, reason: 'no_post_grid' });
                 continue;
             }
 
@@ -612,9 +781,17 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
 
         await page.close();
         
-        console.log(`\n[${sessionName}] ✓ Completed: ${stats.totalPosts} posts from ${accounts.length} accounts`);
+        // Enhanced logging with failed accounts summary
+        console.log(`\n[${sessionName}] ✓ Completed: ${stats.totalPosts} posts from ${completedAccounts.length}/${accounts.length} accounts`);
         
-        return { results, stats, completedAccounts };
+        if (failedAccounts.length > 0) {
+            console.log(`[${sessionName}] ⚠️  Failed accounts: ${failedAccounts.length}`);
+            failedAccounts.forEach(({ username, reason }) => {
+                console.log(`[${sessionName}]   - @${username}: ${reason}`);
+            });
+        }
+        
+        return { results, stats, completedAccounts, failedAccounts };
 
     } catch (error) {
         console.error(`\n[${sessionName}] ✗ Error:`, error.message);
@@ -622,8 +799,8 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
             await page.close();
         } catch (e) {}
         
-        // Return partial results with completed accounts
-        return { results, stats, completedAccounts };
+        // Return partial results with completed and failed accounts
+        return { results, stats, completedAccounts, failedAccounts: [] };
     }
 }
 
@@ -788,6 +965,7 @@ async function main() {
         
         const allResults = {};
         const allCompletedAccounts = [];  // Track all completed accounts
+        const allFailedAccounts = [];  // Track all failed accounts
         const totalStats = {
             totalPosts: 0,
             totalCaptions: 0,
@@ -798,6 +976,9 @@ async function main() {
         results.forEach(result => {
             Object.assign(allResults, result.results);
             allCompletedAccounts.push(...result.completedAccounts);
+            if (result.failedAccounts && result.failedAccounts.length > 0) {
+                allFailedAccounts.push(...result.failedAccounts);
+            }
             totalStats.totalPosts += result.stats.totalPosts;
             totalStats.totalCaptions += result.stats.totalCaptions;
             totalStats.totalImages += result.stats.totalImages;
@@ -806,6 +987,18 @@ async function main() {
 
         // Save merged results
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(allResults, null, 2));
+
+        // Save failed accounts to separate file for review
+        if (allFailedAccounts.length > 0) {
+            const failedAccountsFile = path.join(__dirname, 'failed_accounts.json');
+            const failedAccountsData = {
+                timestamp: new Date().toISOString(),
+                total_failed: allFailedAccounts.length,
+                failed_accounts: allFailedAccounts
+            };
+            fs.writeFileSync(failedAccountsFile, JSON.stringify(failedAccountsData, null, 2));
+            console.log(`[MERGE] ⚠️  Saved ${allFailedAccounts.length} failed accounts to failed_accounts.json`);
+        }
 
         // Update checkpoint with completed accounts
         if (allCompletedAccounts.length > 0) {
@@ -834,7 +1027,7 @@ async function main() {
         console.log("=".repeat(70));
         console.log("[SUMMARY] Overall Statistics:");
         console.log(`  Sessions Used:      ${availableSessions.length}`);
-        console.log(`  Accounts Processed: ${allAccounts.length}`);
+        console.log(`  Accounts Processed: ${allCompletedAccounts.length}/${allAccounts.length}`);
         console.log(`  Total Posts:        ${totalStats.totalPosts}`);
         console.log(`  Captions Extracted: ${totalStats.totalCaptions}/${totalStats.totalPosts} (${(totalStats.totalCaptions/totalStats.totalPosts*100).toFixed(1)}%)`);
         if (config.downloadImages) {
@@ -843,6 +1036,30 @@ async function main() {
         if (config.deepScrapeMode && totalStats.totalDeepScraped > 0) {
             console.log(`  Deep Scraped:       ${totalStats.totalDeepScraped} captions recovered`);
         }
+        
+        // Enhanced logging for failed accounts
+        if (allFailedAccounts.length > 0) {
+            console.log(`  Failed Accounts:    ${allFailedAccounts.length}`);
+            console.log(`\n[FAILED ACCOUNTS] Summary:`);
+            
+            // Group by error type
+            const errorGroups = {};
+            allFailedAccounts.forEach(({ username, reason }) => {
+                if (!errorGroups[reason]) {
+                    errorGroups[reason] = [];
+                }
+                errorGroups[reason].push(username);
+            });
+            
+            // Display grouped errors
+            Object.entries(errorGroups).forEach(([reason, accounts]) => {
+                console.log(`  ${reason}: ${accounts.length} accounts`);
+                accounts.forEach(username => {
+                    console.log(`    - @${username}`);
+                });
+            });
+        }
+        
         console.log(`  Total Duration:     ${totalDuration}s (~${Math.round(totalDuration/60)} minutes)`);
         console.log(`  Output File:        ${OUTPUT_FILE}`);
         console.log("=".repeat(70) + "\n");

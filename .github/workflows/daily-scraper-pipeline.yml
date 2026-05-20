@@ -418,7 +418,7 @@ jobs:
           GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           
           # OpenRouter API Keys (5 keys for rotation)
-          OPENROUTER_API_KEY=${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_API_KEYS=${{ secrets.OPENROUTER_API_KEYS }}
           
           # Database
           DATABASE_URL=${{ secrets.DATABASE_URL }}
@@ -428,10 +428,10 @@ jobs:
           DELAY_BETWEEN_REQUESTS=5
           GEMINI_MODEL=gemini-3.1-flash-lite-preview
           
-          # AI Service Configuration (NEW - Optimized for GitHub Actions)
-          PRIMARY_SERVICE=openrouter
-          MAX_RETRY_ATTEMPTS=3
-          MAX_BACKOFF_SECONDS=10
+          # AI Service Configuration (Optimized for GitHub Actions)
+          PRIMARY_SERVICE=${{ secrets.PRIMARY_SERVICE }}
+          MAX_RETRY_ATTEMPTS=${{ secrets.MAX_RETRY_ATTEMPTS }}
+          MAX_BACKOFF_SECONDS=${{ secrets.MAX_BACKOFF_SECONDS }}
           EOF
           
           echo "✓ Configuration created"

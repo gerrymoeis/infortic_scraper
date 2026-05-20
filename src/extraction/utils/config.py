@@ -25,13 +25,13 @@ class Config:
     CURRENT_KEY_INDEX = 0  # Track which key we're using
     
     # OpenRouter API - Support multiple keys for rotation (FALLBACK)
-    _openrouter_keys_str = os.getenv('OPENROUTER_API_KEY', '')
+    _openrouter_keys_str = os.getenv('OPENROUTER_API_KEYS', '')
     OPENROUTER_API_KEYS = [key.strip() for key in _openrouter_keys_str.split(',') if key.strip()]
     OPENROUTER_API_KEY = OPENROUTER_API_KEYS[0] if OPENROUTER_API_KEYS else None
     CURRENT_OPENROUTER_KEY_INDEX = 0
     
-    # Primary service selection (NEW: OpenRouter PRIMARY, Gemini FALLBACK)
-    PRIMARY_SERVICE = os.getenv('PRIMARY_SERVICE', 'openrouter')  # 'openrouter' or 'gemini'
+    # Primary service selection
+    PRIMARY_SERVICE = os.getenv('PRIMARY_SERVICE', 'gemini')  # 'gemini' or 'openrouter'
     
     # Fallback settings
     USE_OPENROUTER_FALLBACK = os.getenv('USE_OPENROUTER_FALLBACK', 'true').lower() == 'true'

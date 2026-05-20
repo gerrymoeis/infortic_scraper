@@ -22,7 +22,7 @@ class OpenRouterClient:
     def __init__(self):
         """Initialize OpenRouter client with API key rotation support"""
         self.api_endpoint = "https://openrouter.ai/api/v1/chat/completions"
-        self.model = "openrouter/free"  # Smart free model router
+        self.model = "openrouter/auto"  # Smart auto routing - picks best model for task
         self._initialize_client(config.OPENROUTER_API_KEY)
     
     def _initialize_client(self, api_key: str):

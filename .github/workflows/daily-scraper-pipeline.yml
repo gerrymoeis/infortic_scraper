@@ -417,7 +417,7 @@ jobs:
           # Gemini API Keys (5 keys for proactive rotation)
           GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           
-          # OpenRouter API Keys (5 keys for rotation)
+          # OpenRouter API Keys (5 keys for rotation - FALLBACK)
           OPENROUTER_API_KEYS=${{ secrets.OPENROUTER_API_KEYS }}
           
           # Database
@@ -426,7 +426,7 @@ jobs:
           # Extractor Settings (optimized configuration)
           BATCH_SIZE=25
           DELAY_BETWEEN_REQUESTS=5
-          GEMINI_MODEL=gemini-3.1-flash-lite-preview
+          GEMINI_MODEL=${{ secrets.GEMINI_MODEL }}
           
           # AI Service Configuration (Optimized for GitHub Actions)
           PRIMARY_SERVICE=${{ secrets.PRIMARY_SERVICE }}

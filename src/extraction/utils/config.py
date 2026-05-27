@@ -36,12 +36,12 @@ class Config:
     # Fallback settings
     USE_OPENROUTER_FALLBACK = os.getenv('USE_OPENROUTER_FALLBACK', 'true').lower() == 'true'
     
-    # Model configuration - Use only gemini-3.1-flash-lite-preview
-    # This model has the BEST free tier limits: 15 RPM, 500 RPD, 250K TPM
-    # Other models have LOWER limits (5 RPM, 20 RPD) and should NOT be used as fallbacks
-    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-3.1-flash-lite-preview')
+    # Model configuration - Use GA version (no -preview suffix)
+    # GA version: gemini-3.1-flash-lite (Preview discontinued May 25, 2026)
+    # BEST free tier limits: 15 RPM, 500 RPD, 250K TPM
+    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-3.1-flash-lite')
     FALLBACK_MODELS = [
-        'gemini-3.1-flash-lite-preview',  # Only model - best free tier limits
+        'gemini-3.1-flash-lite',  # GA version - best free tier limits
     ]
     CURRENT_MODEL_INDEX = 0  # Track which model we're using
     

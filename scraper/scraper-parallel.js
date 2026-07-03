@@ -365,6 +365,17 @@ async function detectInstagramErrorPage(page, sessionName) {
                 };
             }
             
+            // Error Type 6: Scraping warning challenge
+            if (window.location.href.includes('scraping_warning') ||
+                bodyHTML.includes('scraping_warning')) {
+                return {
+                    hasError: true,
+                    errorType: 'scraping_warning',
+                    canRetry: false,
+                    hasReloadButton: false
+                };
+            }
+            
             return { hasError: false, errorType: null, canRetry: false, hasReloadButton: false };
         });
         

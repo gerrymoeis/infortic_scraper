@@ -893,13 +893,17 @@ async function main() {
                     
                     // Validate session has cookies
                     if (cookies && cookies.length > 0) {
+                        const sessionInfo = sessionManager.getInfo();
+                        const expiryNote = sessionInfo.sessionExpiry
+                            ? (new Date() > sessionInfo.sessionExpiry ? ' ⚠️  cookie may be expired' : '')
+                            : '';
                         availableSessions.push({
                             id: i,
                             file: sessionFile,
                             manager: sessionManager,
                             cookies: cookies
                         });
-                        console.log(`[SETUP] ✓ Session ${i} detected (${cookies.length} cookies)`);
+                        console.log(`[SETUP] ✓ Session ${i} detected (${cookies.length} cookies)${expiryNote}`);
                     } else {
                         console.log(`[SETUP] ⚠️  Session ${i} file exists but empty, skipping`);
                     }

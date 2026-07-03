@@ -530,10 +530,21 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
     try {
         // Navigate to Instagram and verify login
         console.log(`[${sessionName}] Navigating to Instagram...`);
-        await page.goto('https://www.instagram.com/', { 
-            waitUntil: 'domcontentloaded', 
-            timeout: 30000 
-        });
+        try {
+            await page.goto('https://www.instagram.com/', { 
+                waitUntil: 'domcontentloaded', 
+                timeout: 30000 
+            });
+        } catch (gotoError) {
+            if (gotoError.message.includes('ERR_TOO_MANY_REDIRECTS')) {
+                console.error(`[${sessionName}] ✗ Redirect loop detected — session cookie expired/invalid or account flagged for scraping`);
+                console.error(`[${sessionName}] ℹ️  Fix: Regenerate session${sessionNumber}.json and update GitHub Secret INSTAGRAM_SESSION_${sessionNumber}`);
+            } else {
+                console.error(`[${sessionName}] ✗ Navigation failed: ${gotoError.message}`);
+            }
+            await takeDebugScreenshot(page, sessionName, 'initial_goto_failed');
+            throw gotoError;
+        }
         await sleep(3000, 4000);
 
         // Check and dismiss automated behavior popup (after login)
@@ -795,6 +806,7 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
 
     } catch (error) {
         console.error(`\n[${sessionName}] ✗ Error:`, error.message);
+        try { await takeDebugScreenshot(page, sessionName, 'fatal_error'); } catch (e) {}
         try {
             await page.close();
         } catch (e) {}

@@ -38,7 +38,7 @@ chromium.use(stealth());
 // ============================================
 // Change this to generate 2, 3, or 5 sessions
 // Recommended: Start with 2-3 to avoid Instagram blocking
-const SESSION_COUNT = 3;  // Default: 3 sessions
+const SESSION_COUNT = 1;  // Default: 3 sessions
 
 // ============================================
 // BROWSER CONFIGURATIONS (Dynamic)
@@ -78,8 +78,8 @@ function generateBrowserConfigs(count) {
     ];
     
     // Validate count
-    if (count < 2 || count > 5) {
-        console.error(`\n✗ ERROR: SESSION_COUNT must be between 2 and 5 (got ${count})`);
+    if (count < 1 || count > 5) {
+        console.error(`\n✗ ERROR: SESSION_COUNT must be between 1 and 5 (got ${count})`);
         console.error('Please update SESSION_COUNT in the script and try again.');
         process.exit(1);
     }

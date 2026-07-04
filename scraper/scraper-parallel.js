@@ -138,47 +138,32 @@ async function dismissAutomatedBehaviorPopup(page, sessionName) {
 /**
  * Handle Instagram account selection/confirmation screen
  * Detects and clicks "Continue" button when Instagram asks to confirm account
+ * Uses getByRole (Playwright best practice) for reliable button detection
  */
 async function handleAccountSelectionScreen(page, sessionName) {
     try {
-        // Multiple selectors for "Continue" button (robustness)
-        const continueSelectors = [
-            'button:has-text("Continue")',
-            'button:text("Continue")',
-            'div[role="button"]:has-text("Continue")',
-            'a:has-text("Continue")',
-            'button[type="button"]:has-text("Continue")'
-        ];
-        
-        for (const selector of continueSelectors) {
-            const continueButton = page.locator(selector).first();
-            const count = await continueButton.count();
-            
-            if (count > 0) {
-                // Check if this is account selection screen (not other Continue buttons)
-                const pageText = await page.textContent('body').catch(() => '');
-                const isAccountSelection = pageText.includes('close friends') || 
-                                          pageText.includes('everyday moments') ||
-                                          pageText.includes('Use another profile');
-                
-                if (isAccountSelection) {
-                    console.log(`[${sessionName}] 🔄 Account selection screen detected`);
-                    
-                    // Natural delay before clicking (human-like)
-                    await sleep(1500, 2500);
-                    
-                    // Click Continue button
-                    await continueButton.click();
-                    console.log(`[${sessionName}] ✓ Clicked Continue button`);
-                    
-                    // Wait for navigation/redirect to homepage
-                    await sleep(3000, 4000);
-                    
-                    return true;
-                }
-            }
+        // Detect screen via specific unique elements — faster than textContent('body')
+        const isAccountSelectionScreen =
+            await page.getByText('Use another profile').isVisible().catch(() => false) ||
+            await page.getByText('everyday moments').isVisible().catch(() => false);
+
+        if (!isAccountSelectionScreen) return false;
+
+        console.log(`[${sessionName}] 🔄 Account selection screen detected`);
+        await takeDebugScreenshot(page, sessionName, 'account_selection_screen');
+
+        // getByRole is the most resilient selector per Playwright docs
+        const continueButton = page.getByRole('button', { name: 'Continue' });
+
+        if (await continueButton.isVisible().catch(() => false)) {
+            await sleep(1500, 2500);
+            await continueButton.click();
+            console.log(`[${sessionName}] ✓ Clicked Continue button`);
+            await sleep(3000, 4000);
+            return true;
         }
-        
+
+        console.log(`[${sessionName}] ⚠️  Continue button not found on account selection screen`);
         return false;
     } catch (error) {
         console.log(`[${sessionName}] Note: Account selection check failed (${error.message})`);
@@ -594,6 +579,9 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
             
             // Check and dismiss automated behavior popup (after profile navigation)
             await dismissAutomatedBehaviorPopup(page, sessionName);
+            
+            // Handle account selection screen (can appear at any point, not just on initial login)
+            await handleAccountSelectionScreen(page, sessionName);
             
             // NEW: Check for error page and retry if needed
             const errorHandleResult = await handleErrorPageWithRetry(page, sessionName, username);

@@ -138,11 +138,10 @@ async function dismissAutomatedBehaviorPopup(page, sessionName) {
 /**
  * Handle Instagram account selection/confirmation screen
  * Detects and clicks "Continue" button when Instagram asks to confirm account
- * Uses getByRole (Playwright best practice) for reliable button detection
+ * Uses multi-layer approach: getByRole.first() + getByText fallback + explicit error logging
  */
 async function handleAccountSelectionScreen(page, sessionName) {
     try {
-        // Detect screen via specific unique elements — faster than textContent('body')
         const isAccountSelectionScreen =
             await page.getByText('Use another profile').isVisible().catch(() => false) ||
             await page.getByText('everyday moments').isVisible().catch(() => false);
@@ -152,18 +151,45 @@ async function handleAccountSelectionScreen(page, sessionName) {
         console.log(`[${sessionName}] 🔄 Account selection screen detected`);
         await takeDebugScreenshot(page, sessionName, 'account_selection_screen');
 
-        // getByRole is the most resilient selector per Playwright docs
-        const continueButton = page.getByRole('button', { name: 'Continue' });
+        // Short wait for DOM to fully settle before attempting click
+        await sleep(800, 1000);
 
-        if (await continueButton.isVisible().catch(() => false)) {
-            await sleep(1500, 2500);
-            await continueButton.click();
+        let clicked = false;
+
+        // Primary: getByRole with .first() to avoid strict mode violation
+        try {
+            const continueButton = page.getByRole('button', { name: 'Continue' }).first();
+            if (await continueButton.isVisible()) {
+                await sleep(1500, 2000);
+                await continueButton.click();
+                clicked = true;
+            }
+        } catch (e) {
+            console.log(`[${sessionName}] ⚠️  Primary locator error: ${e.message}`);
+        }
+
+        // Fallback: getByText if primary locator failed
+        if (!clicked) {
+            try {
+                const fallback = page.getByText('Continue', { exact: true }).first();
+                if (await fallback.isVisible()) {
+                    await sleep(1500, 2000);
+                    await fallback.click();
+                    clicked = true;
+                    console.log(`[${sessionName}] ✓ Clicked Continue (fallback)`);
+                }
+            } catch (e) {
+                console.log(`[${sessionName}] ⚠️  Fallback locator error: ${e.message}`);
+            }
+        }
+
+        if (clicked) {
             console.log(`[${sessionName}] ✓ Clicked Continue button`);
             await sleep(3000, 4000);
             return true;
         }
 
-        console.log(`[${sessionName}] ⚠️  Continue button not found on account selection screen`);
+        console.log(`[${sessionName}] ⚠️  Continue button not clickable on account selection screen`);
         return false;
     } catch (error) {
         console.log(`[${sessionName}] Note: Account selection check failed (${error.message})`);

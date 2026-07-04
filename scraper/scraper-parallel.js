@@ -138,7 +138,7 @@ async function dismissAutomatedBehaviorPopup(page, sessionName) {
 /**
  * Handle Instagram account selection/confirmation screen
  * Detects and clicks "Continue" button when Instagram asks to confirm account
- * Uses multi-layer approach: getByRole.first() + getByText fallback + explicit error logging
+ * Uses multi-layer approach: getByRole.first() + CSS fallback + explicit error logging
  */
 async function handleAccountSelectionScreen(page, sessionName) {
     try {
@@ -168,10 +168,10 @@ async function handleAccountSelectionScreen(page, sessionName) {
             console.log(`[${sessionName}] ⚠️  Primary locator error: ${e.message}`);
         }
 
-        // Fallback: getByText if primary locator failed
+        // Fallback: CSS has-text on visible button — confirmed valid per Playwright docs
         if (!clicked) {
             try {
-                const fallback = page.getByText('Continue', { exact: true }).first();
+                const fallback = page.locator('button:has-text("Continue"):visible').first();
                 if (await fallback.isVisible()) {
                     await sleep(1500, 2000);
                     await fallback.click();

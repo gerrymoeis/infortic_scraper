@@ -200,27 +200,31 @@ async function handleAccountSelectionScreen(page, sessionName) {
 /**
  * Handle Instagram password challenge modal
  * Detects password prompt and enters password with human-like typing
+ * Uses comprehensive selector list — passes the actually-matched selector to typeHumanLike
  */
 async function handlePasswordChallenge(page, sessionName, sessionNumber, passwords) {
     try {
-        // Check for password modal
+        // Comprehensive selector list — covers modal context, placeholder, type, name, and aria variants
         const passwordModalSelectors = [
-            'input[name="password"]',
+            'input[placeholder="Password"]',
             'input[type="password"]',
-            'input[aria-label="Password"]'
+            'input[name="password"]',
+            'input[aria-label="Password"]',
+            'div[role="dialog"] input[type="password"]',
+            'div[role="dialog"] input[placeholder="Password"]'
         ];
         
-        let passwordInput = null;
+        let matchedSelector = null;
         for (const selector of passwordModalSelectors) {
             const input = page.locator(selector).first();
             const count = await input.count();
             if (count > 0) {
-                passwordInput = input;
+                matchedSelector = selector;
                 break;
             }
         }
         
-        if (!passwordInput) {
+        if (!matchedSelector) {
             return false; // No password challenge
         }
         
@@ -236,9 +240,12 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
             return false;
         }
         
-        // Type password with human-like delays
+        // Short wait for input to fully settle before typing
+        await sleep(500, 800);
+        
+        // Type password using the selector that actually matched — human-like delays
         console.log(`[${sessionName}] ⌨️  Typing password...`);
-        const typed = await typeHumanLike(page, passwordModalSelectors[0], password, sessionName);
+        const typed = await typeHumanLike(page, matchedSelector, password, sessionName);
         
         if (!typed) {
             console.log(`[${sessionName}] ❌ Failed to type password`);
@@ -247,8 +254,10 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
         
         console.log(`[${sessionName}] ✓ Password entered`);
         
-        // Find and click Log in button
+        // Log in button selectors — dialog-scoped first, then generic fallbacks
         const loginButtonSelectors = [
+            'div[role="dialog"] button[type="submit"]',
+            'div[role="dialog"] button:has-text("Log in")',
             'button[type="submit"]',
             'button:has-text("Log in")',
             'div[role="button"]:has-text("Log in")'
@@ -259,7 +268,7 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
             const button = page.locator(selector).first();
             const count = await button.count();
             if (count > 0) {
-                await sleep(500, 800); // Natural delay before clicking
+                await sleep(500, 800);
                 await button.click();
                 console.log(`[${sessionName}] ✓ Clicked Log in button`);
                 loginClicked = true;

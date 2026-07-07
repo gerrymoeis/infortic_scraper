@@ -217,8 +217,7 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
         let matchedSelector = null;
         for (const selector of passwordModalSelectors) {
             const input = page.locator(selector).first();
-            const count = await input.count();
-            if (count > 0) {
+            if (await input.isVisible().catch(() => false)) {
                 matchedSelector = selector;
                 break;
             }

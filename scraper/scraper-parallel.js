@@ -229,8 +229,9 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
         
         console.log(`[${sessionName}] 🔐 Password challenge detected`);
         
-        // Take screenshot before entering password
+        // Take screenshot + dump DOM info for accurate debugging
         await takeDebugScreenshot(page, sessionName, 'password_prompt');
+        await dumpPageDebugInfo(page, sessionName, 'password_prompt');
         
         // Get password for this session
         const password = passwords[sessionNumber];
@@ -315,6 +316,52 @@ async function takeDebugScreenshot(page, sessionName, context) {
         return filename;
     } catch (error) {
         console.log(`[${sessionName}] Warning: Could not take screenshot: ${error.message}`);
+        return null;
+    }
+}
+
+/**
+ * Dump page DOM info for accurate debugging
+ * Exports inputs, buttons, dialogs with visibility/attribute details to JSON
+ */
+async function dumpPageDebugInfo(page, sessionName, context) {
+    try {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `debug_${sessionName}_${context}_${timestamp}.json`;
+        const filepath = path.join(__dirname, 'debug_screenshots', filename);
+
+        const debugFolder = path.join(__dirname, 'debug_screenshots');
+        if (!fs.existsSync(debugFolder)) fs.mkdirSync(debugFolder, { recursive: true });
+
+        const info = await page.evaluate(() => {
+            const getAttrs = el => ({
+                tag: el.tagName.toLowerCase(),
+                type: el.type || null,
+                name: el.name || null,
+                placeholder: el.placeholder || null,
+                ariaLabel: el.getAttribute('aria-label') || null,
+                id: el.id || null,
+                role: el.getAttribute('role') || null,
+                text: (el.innerText || el.textContent || '').trim().substring(0, 100),
+                visible: el.offsetParent !== null && getComputedStyle(el).display !== 'none' && getComputedStyle(el).visibility !== 'hidden',
+                disabled: el.disabled || false
+            });
+            return {
+                url: window.location.href,
+                inputs: Array.from(document.querySelectorAll('input')).map(getAttrs),
+                buttons: Array.from(document.querySelectorAll('button, div[role="button"]')).map(getAttrs),
+                dialogs: Array.from(document.querySelectorAll('div[role="dialog"]')).map(d => ({
+                    childCount: d.children.length,
+                    text: (d.innerText || '').substring(0, 200)
+                }))
+            };
+        });
+
+        fs.writeFileSync(filepath, JSON.stringify(info, null, 2));
+        console.log(`[${sessionName}] 🔍 DOM debug info saved: ${filename}`);
+        return filename;
+    } catch (error) {
+        console.log(`[${sessionName}] Warning: Could not dump debug info: ${error.message}`);
         return null;
     }
 }

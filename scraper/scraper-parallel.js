@@ -254,25 +254,38 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
         
         console.log(`[${sessionName}] ✓ Password entered`);
         
-        // Log in button selectors — dialog-scoped first, then generic fallbacks
-        const loginButtonSelectors = [
-            'div[role="dialog"] button[type="submit"]',
-            'div[role="dialog"] button:has-text("Log in")',
-            'button[type="submit"]',
-            'button:has-text("Log in")',
-            'div[role="button"]:has-text("Log in")'
-        ];
-        
+        // Log in button — primary via getByRole (matches div[role="button"] too), fallback CSS selectors
         let loginClicked = false;
-        for (const selector of loginButtonSelectors) {
-            const button = page.locator(selector).first();
-            const count = await button.count();
-            if (count > 0) {
+
+        // Primary: getByRole matches both <button> and div[role="button"]
+        try {
+            const loginBtn = page.getByRole('button', { name: 'Log in' }).first();
+            if (await loginBtn.isVisible()) {
                 await sleep(500, 800);
-                await button.click();
+                await loginBtn.click();
                 console.log(`[${sessionName}] ✓ Clicked Log in button`);
                 loginClicked = true;
-                break;
+            }
+        } catch (e) {
+            console.log(`[${sessionName}] ⚠️  Primary Log in button error: ${e.message}`);
+        }
+
+        // CSS fallbacks if primary failed
+        if (!loginClicked) {
+            const loginButtonSelectors = [
+                'div[role="button"]:has-text("Log in")',
+                'button[type="submit"]',
+                'button:has-text("Log in")'
+            ];
+            for (const selector of loginButtonSelectors) {
+                const button = page.locator(selector).first();
+                if (await button.isVisible().catch(() => false)) {
+                    await sleep(500, 800);
+                    await button.click();
+                    console.log(`[${sessionName}] ✓ Clicked Log in button (fallback)`);
+                    loginClicked = true;
+                    break;
+                }
             }
         }
         
@@ -286,6 +299,14 @@ async function handlePasswordChallenge(page, sessionName, sessionNumber, passwor
         
         // Take screenshot after login attempt
         await takeDebugScreenshot(page, sessionName, 'after_password_login');
+
+        // Detect wrong password: check if modal still visible after login attempt
+        const modalStillOpen = await page.locator('input[type="password"]').isVisible().catch(() => false);
+        if (modalStillOpen) {
+            console.error(`[${sessionName}] ❌ Password rejected — modal still open after login attempt`);
+            await takeDebugScreenshot(page, sessionName, 'wrong_password');
+            await dumpPageDebugInfo(page, sessionName, 'wrong_password');
+        }
         
         return true;
         
@@ -631,14 +652,9 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
         await handleAccountSelectionScreen(page, sessionName);
 
         // Handle password challenge (if prompted)
-        await handlePasswordChallenge(page, sessionName, sessionNumber, passwords);
-
-        // Detect wrong password: if password modal is still visible after login attempt
-        const passwordModalStillVisible = await page.locator('input[type="password"]:visible').isVisible().catch(() => false);
-        if (passwordModalStillVisible) {
-            console.error(`[${sessionName}] ❌ Password incorrect or login failed — modal still visible`);
-            await takeDebugScreenshot(page, sessionName, 'wrong_password');
-            await dumpPageDebugInfo(page, sessionName, 'wrong_password');
+        const passwordHandled = await handlePasswordChallenge(page, sessionName, sessionNumber, passwords);
+        if (!passwordHandled) {
+            console.log(`[${sessionName}] ⚠️  Password challenge not resolved`);
         }
 
         const isLoggedIn = await page.locator('svg[aria-label*="Search"], svg[aria-label*="Home"]').count() > 0;

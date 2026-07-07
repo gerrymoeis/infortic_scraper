@@ -633,6 +633,14 @@ async function scrapeWithContext(context, accounts, sessionName, sessionNumber, 
         // Handle password challenge (if prompted)
         await handlePasswordChallenge(page, sessionName, sessionNumber, passwords);
 
+        // Detect wrong password: if password modal is still visible after login attempt
+        const passwordModalStillVisible = await page.locator('input[type="password"]:visible').isVisible().catch(() => false);
+        if (passwordModalStillVisible) {
+            console.error(`[${sessionName}] ❌ Password incorrect or login failed — modal still visible`);
+            await takeDebugScreenshot(page, sessionName, 'wrong_password');
+            await dumpPageDebugInfo(page, sessionName, 'wrong_password');
+        }
+
         const isLoggedIn = await page.locator('svg[aria-label*="Search"], svg[aria-label*="Home"]').count() > 0;
 
         if (!isLoggedIn) {
